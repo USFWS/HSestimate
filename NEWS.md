@@ -1,4 +1,8 @@
-# migbirdHS (dev version)
+# HSestimate (dev version)
+
+# HSestimate 2.0.0
+
+- Renamed and reconfigured the R package. Instead of checking Harvest Survey data, the package will use Harvest Survey data to calculate harvest estimates.
 
 # migbirdHS 1.0.0
 

@@ -1,9 +1,9 @@
 [
   {
-    "name": "migbirdHS",
+    "name": "HSestimate",
     "organization": "U.S. Fish and Wildlife",
-    "description": "An R package designed to analyze Migratory Bird online Harvest Survey data",
-    "version": "v0.3.0",
+    "description": "An R package designed to generate harvest estimates",
+    "version": "v2.0.0",
     "status": "Operational",
 
     "permissions": {
@@ -11,15 +11,15 @@
       "licenses": [
         {
           "name": "Public Domain, CC0-1.0",
-          "URL": "https://github.com/USFWS/migbirdHS/blob/main/LICENSE.md"
+          "URL": "https://github.com/USFWS/HSestimate/blob/main/LICENSE.md"
         }
       ]
     },
 
-    "homepageURL": "https://github.com/USFWS/migbirdHS",
-    "downloadURL": "https://github.com/USFWS/migbirdHS/archive/refs/heads/main.zip",
-    "disclaimerURL": "https://github.com/USFWS/migbirdHS/blob/main/DISCLAIMER.md",
-    "repositoryURL": "https://github.com/USFWS/migbirdHS.git",
+    "homepageURL": "https://github.com/USFWS/HSestimate",
+    "downloadURL": "https://github.com/USFWS/HSestimate/archive/refs/heads/main.zip",
+    "disclaimerURL": "https://github.com/USFWS/HSestimate/blob/main/DISCLAIMER.md",
+    "repositoryURL": "https://github.com/USFWS/HSestimate.git",
     "vcs": "git",
 
     "laborHours": 126,
@@ -39,7 +39,7 @@
     },
 
     "date": {
-      "metadataLastUpdated": "2025-02-13"
+      "metadataLastUpdated": "2025-04-07"
     }
   }
 ]
