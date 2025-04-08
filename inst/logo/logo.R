@@ -11,31 +11,32 @@ mall <- readPNG("man/figures/mall_silhouette_sm.png", native = TRUE)
 
 usa49 <-
   plot_usmap(
+    regions = "state",
     data = statepop,
     values = "pop_2022",
     fill = "#FFFFFF", color = "#0270bb", exclude = "Hawaii") +
   theme(
     plot.background = element_rect(fill = NA, color = NA),
-    plot.margin = unit(c(0, 0, 0, 0), "cm"))
+    plot.margin = unit(c(0, .2, 0, 0), "cm"))
 
-orange_mall <-
+map_mall <-
   ggdraw(usa49) +
-  draw_image(mall, x = 0, y = .1, width = .95, height = .9)
+  draw_image(mall, x = .03, y = .15, width = .95, height = .9, scale = 0.9)
 
 # PNG sticker
 hexSticker::sticker(
-  orange_mall, 
+  map_mall,
   package = "HSestimate", p_color = "#FFFFFF",
-  p_size = 19, s_x = 1, s_y = .75, s_width = 1.2, s_height = .9,
-  h_fill = "#faa225", h_color = "#ffd151", 
+  p_size = 19, s_x = 1, s_y = .75, s_width = 1.4, s_height = .9,
+  h_fill = "#faa225", h_color = "#ffd151",
   dpi = 320,
   filename = "man/figures/logo.png")
 
 # SVG sticker
 hexSticker::sticker(
-  orange_mall, 
+  map_mall,
   package = "HSestimate", p_color = "#FFFFFF",
-  p_size = 6, s_x = 1, s_y = .75, s_width = 1.2, s_height = .9,
-  h_fill = "#faa225", h_color = "#ffd151", 
+  p_size = 6, s_x = 1, s_y = .75, s_width = 1.4, s_height = .9,
+  h_fill = "#faa225", h_color = "#ffd151",
   dpi = 320,
   filename = "man/figures/logo.svg")
