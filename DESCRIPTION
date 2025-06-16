@@ -7,14 +7,9 @@ Imports:
     stringr,
     purrr,
     readr,
-    tibble,
     rlang,
     lubridate,
     ggplot2,
-    patchwork,
-    treemapify,
-    viridis,
-    MetBrewer,
     rmarkdown
 Suggests:
     knitr,
