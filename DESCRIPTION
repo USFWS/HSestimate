@@ -14,7 +14,8 @@ Imports:
 Suggests:
     knitr,
     DT,
-    ggnewscale
+    ggnewscale,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Authors@R: 
     person(given = "Abby",
@@ -31,3 +32,4 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Depends: 
     R (>= 2.10)
+Config/testthat/edition: 3
