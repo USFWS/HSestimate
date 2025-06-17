@@ -1,35 +1,24 @@
-Package: HSestimate
 Type: Package
-Title: Calculate Harvest Estimates from the USFWS Migratory Bird Harvest Survey Data in R
+Package: HSestimate
+Title: Calculate Harvest Estimates from the USFWS Migratory Bird Harvest
+    Survey Data in R
 Version: 2.0.0
-Imports: 
-    dplyr,
-    stringr,
-    purrr,
-    readr,
-    rlang,
-    lubridate,
-    ggplot2,
-    rmarkdown
-Suggests:
-    knitr,
-    DT,
-    ggnewscale,
-    testthat (>= 3.0.0)
-VignetteBuilder: knitr
 Authors@R: 
-    person(given = "Abby",
-           family = "Walter",
-           role = c("aut", "cre"),
-           email = "abby_walter@fws.gov",
+    person("Abby", "Walter", , "abby_walter@fws.gov", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-4017-5596"))
 Maintainer: Abby Walter <abby_walter@fws.gov>
-Description: Functions designed for the USFWS Migratory Bird Program to generate harvest estimates using Harvest Survey response data.
+Description: Functions designed for the USFWS Migratory Bird Program to
+    generate harvest estimates using Harvest Survey response data.
 License: CC0
+Depends: 
+    R (>= 2.10)
+Imports: 
+    dplyr (>= 1.1.0),
+    rlang (>= 1.1.6)
+Suggests:
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
-Depends: 
-    R (>= 2.10)
-Config/testthat/edition: 3
