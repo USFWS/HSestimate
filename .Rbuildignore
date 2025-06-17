@@ -1,2 +1,9 @@
-^.*\.Rproj$
+^HSestimate\.Rproj$
 ^\.Rproj\.user$
+^LICENSE\.md$
+^README\.Rmd$
+^DISCLAIMER\.md$
+^code\.json$
+^\.github$
+^\.gitignore$
+^\.git$
