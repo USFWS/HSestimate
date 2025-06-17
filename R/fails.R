@@ -6,7 +6,7 @@
 #' @importFrom dplyr distinct
 #' @importFrom rlang .data
 #'
-#' @param totals_df Season data tibble
+#' @param season_df Season data tibble
 #' @param dailies_df Daily data tibble
 #' @param n_states Number of expected states in the data
 #'
@@ -14,25 +14,25 @@
 #' @references \url{https://github.com/USFWS/HSestimate}
 
 fails <-
-  function(totals_df, dailies_df, n_states) {
+  function(season_df, dailies_df, n_states) {
     # Fail if n_states is not double
     stopifnot("n_states must be type double" = is.double(n_states))
     
     # Fail if there are NA values in days_hunted
     stopifnot(
       "NA in totals days_hunted" = 
-        nrow(filter(totals_df, is.na(.data$days_hunted))) == 0)
+        nrow(filter(season_df, is.na(.data$days_hunted))) == 0)
     
     # Fail if there are NA values in retrieved
     stopifnot(
       "NA in totals retrieved" = 
-        nrow(filter(totals_df, is.na(.data$retrieved))) == 0)
+        nrow(filter(season_df, is.na(.data$retrieved))) == 0)
     stopifnot(
       "NA in dailies retrieved" = 
         nrow(filter(dailies_df, is.na(.data$retrieved))) == 0)
     
     # Error message if there are not all n_states in the data
-    if(nrow(distinct(totals_df, .data$sampled_state)) != n_states) {
+    if(nrow(distinct(season_df, .data$sampled_state)) != n_states) {
       message(paste0("Number of states in totals file != ", n_states, "."))
     }
     if(nrow(distinct(dailies_df, .data$sampled_state)) != n_states) {

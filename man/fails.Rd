@@ -4,10 +4,10 @@
 \alias{fails}
 \title{Fail data}
 \usage{
-fails(totals_df, dailies_df, n_states)
+fails(season_df, dailies_df, n_states)
 }
 \arguments{
-\item{totals_df}{Season data tibble}
+\item{season_df}{Season data tibble}
 
 \item{dailies_df}{Daily data tibble}
 
