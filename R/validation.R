@@ -92,13 +92,13 @@ tooManyDaysHunted <-
         season_df |> 
         mutate(
           error2 = 
-            ifelse(.data$days_hunted > .data$day_limit, "too_many_days", NA))
+            ifelse(.data$days_hunted > day_limit, "too_many_days", NA))
       
       message(
         paste(
           "Season: There are", 
-          nrow(season_df |> filter(.data$days_hunted > .data$day_limit)), 
-          "records with >", .data$day_limit, "days_hunted.", sep = " ")
+          nrow(season_df |> filter(.data$days_hunted > day_limit)), 
+          "records with >", day_limit, "days_hunted.", sep = " ")
       )
     }
     return(totals_validated)
