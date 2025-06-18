@@ -88,4 +88,5 @@ REF_N_STATES_WK <- 35
 
 # party -------------------------------------------------------------------
 
-REGEX_PARTY_NUMERIC <- "([0-9]{1,2})(?= (m(a|e)n|person|hunter|guy|people))"
+REGEX_PARTY_NUMERIC <- 
+  "([0-9]{1,2})(?=( )?((wo)?m(a|e)n|person|hunter|guy|people))"

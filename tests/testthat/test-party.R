@@ -22,6 +22,30 @@ test_that("getPartySize gets numeric party size", {
   expect_identical(getPartySize(test_party)$party_size, c("6", "5", "10", "7"))
 })
 
+test_that("REGEX_PARTY_NUMERIC works", {
+  test_party <-
+    dplyr::tibble(
+      retrieved = rep(6, 11),
+      comment = 
+        c("successful 5 woman harvest",
+          "4 women hunters",
+          "was 6 men hunt",
+          "3 man party",
+          "2man party",
+          "10 person group",
+          "9 hunter",
+          "group of 7 hunters, 2 dogs",
+          "4 guys",
+          "2 guy",
+          "20 people in the field today"
+          )
+    )
+  
+  expect_identical(
+    getPartySize(test_party)$party_size, 
+    c("5", "4", "6", "3", "2", "10", "9", "7", "4", "2", "20"))
+})
+
 test_that("getPartySize gets alphabetical party size", {
   test_party <-
     dplyr::tibble(
