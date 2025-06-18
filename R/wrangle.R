@@ -40,7 +40,7 @@ wrangleRef <-
               .data$st %in% REF_STATES_DUCKMERG & 
               .data$species %in% c("Ducks", "Mergansers", 
                                    "Ducks and mergansers") & 
-              !is.na(possession),
+              !is.na(.data$possession),
             REF_BAG_LIMIT_DUCKMERG*3,
             .data$possession),
         # Change Brant speciesgroup to "Brant" instead of "Goose"; change 
@@ -210,6 +210,7 @@ wrangleMaxBag <-
 #' @importFrom dplyr rename
 #' @importFrom dplyr mutate
 #' @importFrom dplyr bind_rows
+#' @importFrom lubridate ymd
 #' @importFrom rlang .data
 #'
 #' @param ref_data Reference data
