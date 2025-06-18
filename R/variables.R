@@ -56,6 +56,9 @@ REF_STATES_DUCKMERG <-
   c("AL", "AR", "CO", "DE", "FL", "IA", "IL", "IN", "KS", "KY", "LA", "MA", 
     "ME", "MI", "MN", "MS", "NC", "ND", "NE", "NH", "NJ", "OH", "OK", "PA", 
     "RI", "SC", "SD", "TN", "TX", "VA", "VT", "WI", "WV", "WY", "GA")
+# AF and MF only... 
+# must be changed CT, MD, NY, MO are "ducks including"...? ask bob
+
 
 # Create a vector of White-winged Dove (WWDO) main/primary harvest states
 REF_STATES_WWDO_MAIN <- 

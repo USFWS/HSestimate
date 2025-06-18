@@ -44,7 +44,7 @@ fails <-
 #'
 #' Internal function used to repeat species code validation.
 #'
-#' @param species Species code string, may be one of: 'WF', 'DV', 'SCRG', 'WK', or 'CR'.
+#' @param species Species abbreviation, may be one of: 'WF', 'DV', 'SCRG', 'WK', or 'CR'.
 #'
 #' @author Abby Walter, \email{abby_walter@@fws.gov}
 #' @references \url{https://github.com/USFWS/HSestimate}

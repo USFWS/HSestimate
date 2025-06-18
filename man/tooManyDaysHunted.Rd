@@ -9,7 +9,7 @@ tooManyDaysHunted(season_df, species)
 \arguments{
 \item{season_df}{Season data tibble}
 
-\item{species}{Species code string, may be one of: 'WF', 'DV', 'SCRG', 'WK', or 'CR'.}
+\item{species}{Species abbreviation, may be one of: 'WF', 'DV', 'SCRG', 'WK', or 'CR'.}
 }
 \description{
 Internal function used in \code{\link{checkSeason}}. Find season records with too many days hunted.
