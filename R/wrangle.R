@@ -130,7 +130,7 @@ wrangleMaxBag <-
       # Join in state names
       left_join(REF_STATES_AND_ABBRS, by = "state") |> 
       select(-c("state", "seasonyear")) |>
-      rename(sp_group_estimated = spp)
+      rename(sp_group_estimated = .data$spp)
     
     # Create a seaduck max bag table
     sd_maxbag <-

@@ -22,12 +22,12 @@ dailyErrorIDs <-
         filter(!is.na(.data$error1) |
                  !is.na(.data$error2) | 
                  !is.na(.data$error3)) |>
-        distinct(surveyID) |> 
+        distinct(.data$surveyID) |> 
         pull()
     } else if(species %in% c("SCRG", "WK", "CR")) {
       daily_checked |> 
         filter(!is.na(.data$error1) | !is.na(.data$error3)) |>
-        distinct(surveyID) |> 
+        distinct(.data$surveyID) |> 
         pull()
     }
   }
@@ -54,6 +54,6 @@ seasonErrorIDs <-
           !is.na(.data$error2) |
           !is.na(.data$error3) | 
           !is.na(.data$error4)) |>
-      distinct(surveyID) |> 
+      distinct(.data$surveyID) |> 
       pull()
   }
