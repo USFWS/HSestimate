@@ -5,14 +5,10 @@
 
 ## Overview
 
-The HSestimate package contains a set of R functions for the U.S. Fish
-and Wildlife Service Migratory Bird Program to generate harvest
-estimates using [Harvest Survey](https://www.fws.gov/harvestsurvey)
-data.
-
-Tasks that can be accomplished with this package include:
-
-- …
+The Harvest Survey estimation R package `HSestimate` is used by the U.S.
+Fish and Wildlife Service Migratory Bird Program to generate migratory
+game bird harvest estimates using [Harvest
+Survey](https://www.fws.gov/harvestsurvey) response data.
 
 ## Installation
 
