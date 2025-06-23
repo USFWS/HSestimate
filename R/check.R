@@ -120,7 +120,7 @@ checkSeason <-
       # Proof WWDO days_hunted, retrieved, and unretrieved
       season_totals_df_wwdo <-
         season_totals_df |> 
-        seasonWWDO()
+        convertWWDO(type = "season")
       
       season_check_NAdays <- naDaysHunted(season_totals_df_wwdo)
       season_check_overdays <- tooManyDaysHunted(season_check_NAdays, species)
@@ -151,7 +151,7 @@ checkDaily <-
       daily_check_overbag <- dailyOverBag(daily_check_party, maxbag_df)
       
     } else if(species == "DV") {
-      dailies_wwdo_proofed <- dailyWWDO(dailies_df)
+      dailies_wwdo_proofed <- convertWWDO(dailies_df, type = "daily")
       daily_check_party <- partyHuntFinder(dailies_wwdo_proofed, maxbag_df)
       daily_check_WWMOoverbag <- dailyOverBagWWMO(daily_check_party, maxbag_df)
       daily_check_overbag <- dailyOverBag(daily_check_WWMOoverbag, maxbag_df)

@@ -148,8 +148,6 @@ convertSeaDuckToDuck <-
 #' @author Abby Walter, \email{abby_walter@@fws.gov}
 #' @references \url{https://github.com/USFWS/HSestimate}
 
-# If there are any brant records from non-brant states in the daily data, add
-# them to goose records in the season totals
 convertBrantToGeese <-
   function(dailies_df, season_df) {
     
@@ -238,4 +236,174 @@ convertBrantToGeese <-
           "Daily data does not contain any brant harvested in non-brant ",
           "states."))
     }
+  }
+
+#' Find season or daily WWDO harvest effort in non-WWDO states and convert to zero
+#'
+#' Internal function used in \code{\link{checkSeason}} and \code{\link{checkDaily}}. Find any harvest of WWDO in non-wwdo states and WWDO in edge states that exceed the designated limit; for these cases, change WWDO days_hunted, retrieved, and unretrieved values to 0.
+#' 
+#' @importFrom dplyr left_join
+#' @importFrom dplyr select
+#' @importFrom dplyr mutate
+#' @importFrom dplyr case_when
+#' @importFrom dplyr filter
+#' @importFrom dplyr distinct
+#' @importFrom stringr str_to_title
+#' @importFrom rlang .data
+#' 
+#' @param data_df Season or daily data tibble
+#' @param type "season" or "daily"
+#' @param summary Whether a summary of WWDO errors should be returned; TRUE or FALSE
+#' 
+#' @author Abby Walter, \email{abby_walter@@fws.gov}
+#' @references \url{https://github.com/USFWS/HSestimate}
+
+convertWWDO <-
+  function(data_df, type, summary = F) {
+    
+    stopifnot(
+      "`type` must be 'season' or 'daily'." = type %in% c("season", "daily"))
+    
+    stopifnot(
+      "`summary` must be TRUE or FALSE." = summary %in% c(T, F, TRUE, FALSE))
+    
+    errors_df <-
+      data_df |>
+      left_join(REF_STATES_WWDO_DF |> select(-"state"), by = "sampled_state") |>
+      mutate(
+        wwdo_error =
+          case_when(
+            # SEASON: flag WWDO records from non-WWDO states when days_hunted,
+            # retrieved, or unretrieved is > 0
+            type == "season" &
+              .data$sp_group_estimated == "White-Winged Dove" &
+              .data$wwdo_state_status == "none" &
+              (.data$days_hunted > 0 | 
+                 .data$retrieved > 0 | 
+                 .data$unretrieved > 0) ~
+              paste("non-WWDO state reported value(s) > 0 for days_hunted,",
+                    "retrieved, and/or unretrieved"),
+            # DAILY: flag WWDO records from non-WWDO states when days_hunted,
+            # retrieved, or unretrieved is > 0
+            type == "daily" &
+              .data$sp_group_estimated == "White-Winged Dove" &
+              .data$wwdo_state_status == "none" &
+              (.data$retrieved > 0 | .data$unretrieved > 0) ~
+              paste("non-WWDO state reported value(s) > 0 for retrieved and/or",
+                    "unretrieved"),
+            # Flag WWDO records from edge WWDO states with retrieved +
+            # unretrieved > edge state limit
+            .data$sp_group_estimated == "White-Winged Dove" &
+              .data$wwdo_state_status == "edge" &
+              (.data$retrieved + .data$unretrieved) > REF_BAG_LIMIT_WWDO_EDGE ~
+              paste("edge WWDO state reported >", REF_BAG_LIMIT_WWDO_EDGE,
+                    "for retrieved and/or unretrieved"),
+            TRUE ~ NA_character_))
+    
+    if (type == "season") {
+      wwdo_validated <-
+        errors_df |> 
+        # If non-WWDO state reported days_hunted, retrieved, and/or unretrieved
+        # > 0, OR if edge WWDO state reported retrieved + unretrieved > edge
+        # limit, change days_hunted, retrieved, and unretrieved to 0
+        mutate(
+          days_hunted = ifelse(!is.na(.data$wwdo_error), 0, .data$days_hunted),
+          retrieved = ifelse(!is.na(.data$wwdo_error), 0, .data$retrieved),
+          unretrieved = ifelse(!is.na(.data$wwdo_error), 0, .data$unretrieved)
+        ) |> 
+        select(-"wwdo_state_status")
+      
+    } else if(type == "daily") {
+      wwdo_validated <-
+        errors_df |> 
+        # If non-WWDO state reported retrieved and/or unretrieved > 0, OR if
+        # edge WWDO state reported retrieved + unretrieved > edge limit, change
+        # retrieved and unretrieved to 0
+        mutate(
+          retrieved = ifelse(!is.na(.data$wwdo_error), 0, .data$retrieved),
+          unretrieved = ifelse(!is.na(.data$wwdo_error), 0, .data$unretrieved)
+        ) |> 
+        select(-"wwdo_state_status")
+    }
+    
+    # Create a tibble of the records with WWDO error
+    errors_df_sm <- errors_df |> filter(!is.na(.data$wwdo_error))
+    
+    # Count the number of states involved in record changes
+    n_states <- errors_df_sm |> distinct(.data$sampled_state) |> nrow()
+    
+    message(
+      paste(
+        paste0(str_to_title(type), ":"), "A total of", nrow(errors_df_sm), 
+        "records from", n_states, "states had their WWDO days_hunted,",
+        "retrieved, and unretrieved values changed to 0."))
+    
+    # Summarize errors
+    if (summary == TRUE) {
+      error_summary <- summarizeWWDO(errors_df, type = type)
+      print(error_summary, n = nrow(error_summary))
+    }
+    return(wwdo_validated)
+  }
+
+#' Summarize WWDO errors
+#'
+#' Internal function used in \code{\link{convertWWDO}}.
+#' 
+#' @importFrom dplyr filter
+#' @importFrom dplyr summarize
+#' @importFrom dplyr n
+#' @importFrom dplyr arrange
+#' @importFrom rlang .data
+#' 
+#' @param errors_df Season or daily data tibble
+#' @param type "season" or "daily"
+#' 
+#' @author Abby Walter, \email{abby_walter@@fws.gov}
+#' @references \url{https://github.com/USFWS/HSestimate}
+
+summarizeWWDO <-
+  function(errors_df, type) {
+    stopifnot(
+      "`type` must be 'season' or 'daily'." = type %in% c("season", "daily"))
+    
+    if (type == "season") {
+      errors_df |>
+        filter(!is.na(.data$wwdo_error)) |>
+        #group_by(sampled_state, wwdo_error) |>
+        summarize(
+          max_days_hunted = max(.data$days_hunted, na.rm = T),
+          max_retrieved = max(.data$retrieved, na.rm = T),
+          max_unretrieved = max(.data$unretrieved, na.rm = T),
+          n = n(),
+          .by = c("sampled_state", "wwdo_error"),
+          .groups = "drop"
+        ) |>
+        arrange(.data$wwdo_error)
+      
+    } else if (type == "daily") {
+      errors_df |>
+        filter(!is.na(.data$wwdo_error)) |>
+        #group_by(sampled_state, wwdo_error) |>
+        # Due to smaller sample sizes, make sure the vector supplied to max()
+        # does not contain only NAs; this ifelse avoids annoying warning and
+        # -Inf result
+        summarize(
+          max_retrieved = 
+            ifelse(
+              !all(is.na(.data$retrieved)), 
+              max(.data$retrieved, na.rm = T), 
+              NA),
+          max_unretrieved = 
+            ifelse(
+              !all(is.na(.data$unretrieved)), 
+              max(.data$unretrieved, na.rm = T), 
+              NA),
+          n = n(),
+          .by = c("sampled_state", "wwdo_error"),
+          .groups = "drop"
+          ) |>
+        arrange(.data$wwdo_error)
+    }
+    
   }
