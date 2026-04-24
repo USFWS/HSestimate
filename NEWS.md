@@ -1,5 +1,11 @@
 # HSestimate (dev version)
 
+## Major changes & new features
+
+## Minor changes / bug fixes
+
+- Renamed `variables.R` to `constants.R`
+
 # HSestimate 2.0.0
 
 -   Renamed to `HSestimate`
