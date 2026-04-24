@@ -277,16 +277,16 @@ dailyOverBagDKSD <-
               "duck_plus_seaduck_limit_exceeded",
             # Check AF states: duck limit is 6 OR 11 and SD limit is 4
             # AF ducks + seaducks 
-            .data$state %in% REF_STATES_AF &
+            .data$state %in% REF_STATES_SD_AF &
               .data$ducks + .data$seaducks > 
               (.data$duck_maxbag + REF_BAG_TOLERANCE) ~ 
               "duck_plus_seaduck_limit_exceeded",
             # AF ducks
-            .data$state %in% REF_STATES_AF &
+            .data$state %in% REF_STATES_SD_AF &
               .data$ducks > (.data$duck_maxbag + REF_BAG_TOLERANCE) ~ 
               "duck_limit_exceeded",
             # AF seaducks
-            .data$state %in% REF_STATES_AF &
+            .data$state %in% REF_STATES_SD_AF &
               .data$seaducks > (.data$sd_maxbag + REF_BAG_TOLERANCE) ~ 
               "seaduck_limit_exceeded",
             # Ducks only

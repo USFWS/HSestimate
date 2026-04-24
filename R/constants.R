@@ -48,6 +48,8 @@ REF_STATES_SD_ONLY <- "ME"
 # Create a vector of SD states
 REF_STATES_SD <- c(REF_STATES_SD_BR, REF_STATES_SD_ONLY, "OR", "WA")
 
+REF_STATES_SD_AF <- REF_STATES_SD[!REF_STATES_SD %in% c("AK", "CA", "OR", "WA")]
+
 # Create a vector of BR states
 REF_STATES_BR <- c(REF_STATES_SD_BR, "OR", "WA")
 
@@ -79,7 +81,19 @@ REF_STATES_WWDO_DF <-
 
 # flyways -----------------------------------------------------------------
 
-REF_STATES_AF <- REF_STATES_SD[!REF_STATES_SD %in% c("AK", "CA", "OR", "WA")]
+REF_STATES_AF <- 
+  c("CT", "DE", "FL", "GA", "ME", "MD", "MA", "NH", "NJ", "NY", "NC", "PA", 
+    "RI", "SC", "VT", "VA", "WV")
+
+REF_STATES_MF <-
+  c("AL", "AR", "IL", "IN", "IA", "KY", "LA", "MI", "MN", "MS", "MO", "OH", 
+    "TN", "WI")
+
+REF_STATES_CF <- 
+  c("CO", "KS", "NE", "NM", "ND", "OK", "SD", "TX", "WY")
+
+REF_STATES_PF <- 
+  c("AZ", "CA", "ID", "MT", "NV", "OR", "UT", "WA")
 
 # number of expected states -----------------------------------------------
 
