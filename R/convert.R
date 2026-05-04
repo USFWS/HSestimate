@@ -1,9 +1,11 @@
 #' Convert sea ducks to ducks and brant to geese
 #'
-#' Internal function used in \code{\link{editCheck}}. 
-#' 
-#' @param daily_corrected Daily data corrected by \code{\link{dailyCorrect}}
-#' @param season_precorrected Season data pre-corrected by \code{\link{seasonCorrect}}
+#' Internal function used in \code{\link{surveyCheck}}.
+#'
+#' @param daily_corrected Daily data corrected by the \code{dailyCorrect} family
+#'   of functions
+#' @param season_precorrected Season data pre-corrected by the
+#'   \code{seasonCorrect} family of functions
 #'
 #' @author Abby Walter, \email{abby_walter@@fws.gov}
 #' @references \url{https://github.com/USFWS/HSestimate}
@@ -18,7 +20,7 @@ convertSDBR <-
 
 #' Convert sea ducks to ducks for sea duck records from non-sea duck states
 #'
-#' Internal function used in \code{\link{editCheck}}. 
+#' Internal function used in \code{\link{surveyCheck}}. 
 #' 
 #' @importFrom dplyr tibble
 #' @importFrom dplyr left_join
@@ -129,7 +131,7 @@ convertSeaDuckToDuck <-
 
 #' Convert brant to geese for brant records from non-brant states
 #'
-#' Internal function used in \code{\link{editCheck}}. 
+#' Internal function used in \code{\link{surveyCheck}}. 
 #' 
 #' @importFrom dplyr tibble
 #' @importFrom dplyr left_join
@@ -238,10 +240,14 @@ convertBrantToGeese <-
     }
   }
 
-#' Find season or daily WWDO harvest effort in non-WWDO states and convert to zero
+#' Find season or daily WWDO harvest effort in non-WWDO states and convert to
+#' zero
 #'
-#' Internal function used in \code{\link{checkSeason}} and \code{\link{checkDaily}}. Find any harvest of WWDO in non-wwdo states and WWDO in edge states that exceed the designated limit; for these cases, change WWDO days_hunted, retrieved, and unretrieved values to 0.
-#' 
+#' Internal function used in \code{checkSeason} and \code{checkDaily} function
+#' families. Find any harvest of WWDO in non-wwdo states and WWDO in edge states
+#' that exceed the designated limit; for these cases, change WWDO days_hunted,
+#' retrieved, and unretrieved values to 0.
+#'
 #' @importFrom dplyr left_join
 #' @importFrom dplyr select
 #' @importFrom dplyr mutate
@@ -250,11 +256,12 @@ convertBrantToGeese <-
 #' @importFrom dplyr distinct
 #' @importFrom stringr str_to_title
 #' @importFrom rlang .data
-#' 
+#'
 #' @param data_df Season or daily data tibble
 #' @param type "season" or "daily"
-#' @param summary Whether a summary of WWDO errors should be returned; TRUE or FALSE
-#' 
+#' @param summary Whether a summary of WWDO errors should be returned; TRUE or
+#'   FALSE
+#'
 #' @author Abby Walter, \email{abby_walter@@fws.gov}
 #' @references \url{https://github.com/USFWS/HSestimate}
 
@@ -267,40 +274,33 @@ convertWWDO <-
     stopifnot(
       "`summary` must be TRUE or FALSE." = summary %in% c(T, F, TRUE, FALSE))
     
-    errors_df <-
-      data_df |>
-      left_join(REF_STATES_WWDO_DF |> select(-"state"), by = "sampled_state") |>
-      mutate(
-        wwdo_error =
-          case_when(
-            # SEASON: flag WWDO records from non-WWDO states when days_hunted,
-            # retrieved, or unretrieved is > 0
-            type == "season" &
-              .data$sp_group_estimated == "White-Winged Dove" &
-              .data$wwdo_state_status == "none" &
-              (.data$days_hunted > 0 | 
-                 .data$retrieved > 0 | 
-                 .data$unretrieved > 0) ~
-              paste("non-WWDO state reported value(s) > 0 for days_hunted,",
-                    "retrieved, and/or unretrieved"),
-            # DAILY: flag WWDO records from non-WWDO states when days_hunted,
-            # retrieved, or unretrieved is > 0
-            type == "daily" &
-              .data$sp_group_estimated == "White-Winged Dove" &
-              .data$wwdo_state_status == "none" &
-              (.data$retrieved > 0 | .data$unretrieved > 0) ~
-              paste("non-WWDO state reported value(s) > 0 for retrieved and/or",
-                    "unretrieved"),
-            # Flag WWDO records from edge WWDO states with retrieved +
-            # unretrieved > edge state limit
-            .data$sp_group_estimated == "White-Winged Dove" &
-              .data$wwdo_state_status == "edge" &
-              (.data$retrieved + .data$unretrieved) > REF_BAG_LIMIT_WWDO_EDGE ~
-              paste("edge WWDO state reported >", REF_BAG_LIMIT_WWDO_EDGE,
-                    "for retrieved and/or unretrieved"),
-            TRUE ~ NA_character_))
-    
     if (type == "season") {
+      
+      errors_df <-
+        data_df |>
+        left_join(
+          REF_STATES_WWDO_DF |> select(-"state"), by = "sampled_state") |>
+        mutate(
+          wwdo_error =
+            case_when(
+              # SEASON: flag WWDO records from non-WWDO states when days_hunted,
+              # retrieved, or unretrieved is > 0
+              .data$sp_group_estimated == "White-Winged Dove" &
+                .data$wwdo_state_status == "none" &
+                (.data$days_hunted > 0 | 
+                   .data$retrieved > 0 | 
+                   .data$unretrieved > 0) ~
+                paste("non-WWDO state reported value(s) > 0 for days_hunted,",
+                      "retrieved, and/or unretrieved"),
+              # Flag WWDO records from edge WWDO states with retrieved +
+              # unretrieved > edge state limit
+              .data$sp_group_estimated == "White-Winged Dove" &
+                .data$wwdo_state_status == "edge" &
+                (.data$retrieved + .data$unretrieved) > REF_BAG_LIMIT_WWDO_EDGE ~
+                paste("edge WWDO state reported >", REF_BAG_LIMIT_WWDO_EDGE,
+                      "for retrieved and/or unretrieved"),
+              TRUE ~ NA_character_))
+      
       wwdo_validated <-
         errors_df |> 
         # If non-WWDO state reported days_hunted, retrieved, and/or unretrieved
@@ -314,6 +314,30 @@ convertWWDO <-
         select(-"wwdo_state_status")
       
     } else if(type == "daily") {
+      
+      errors_df <-
+        data_df |>
+        left_join(
+          REF_STATES_WWDO_DF |> select(-"state"), by = "sampled_state") |>
+        mutate(
+          wwdo_error =
+            case_when(
+              # DAILY: flag WWDO records from non-WWDO states when days_hunted,
+              # retrieved, or unretrieved is > 0
+              .data$sp_group_estimated == "White-Winged Dove" &
+                .data$wwdo_state_status == "none" &
+                (.data$retrieved > 0 | .data$unretrieved > 0) ~
+                paste("non-WWDO state reported value(s) > 0 for retrieved and/or",
+                      "unretrieved"),
+              # Flag WWDO records from edge WWDO states with retrieved +
+              # unretrieved > edge state limit
+              .data$sp_group_estimated == "White-Winged Dove" &
+                .data$wwdo_state_status == "edge" &
+                (.data$retrieved + .data$unretrieved) > REF_BAG_LIMIT_WWDO_EDGE ~
+                paste("edge WWDO state reported >", REF_BAG_LIMIT_WWDO_EDGE,
+                      "for retrieved and/or unretrieved"),
+              TRUE ~ NA_character_))
+      
       wwdo_validated <-
         errors_df |> 
         # If non-WWDO state reported retrieved and/or unretrieved > 0, OR if
@@ -345,6 +369,7 @@ convertWWDO <-
     }
     return(wwdo_validated)
   }
+
 
 #' Summarize WWDO errors
 #'
@@ -402,7 +427,7 @@ summarizeWWDO <-
           n = n(),
           .by = c("sampled_state", "wwdo_error"),
           .groups = "drop"
-          ) |>
+        ) |>
         arrange(.data$wwdo_error)
     }
     
