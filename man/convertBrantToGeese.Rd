@@ -12,7 +12,7 @@ convertBrantToGeese(dailies_df, season_df)
 \item{season_df}{Season data tibble}
 }
 \description{
-Internal function used in \code{\link{editCheck}}.
+Internal function used in \code{\link{surveyCheck}}.
 }
 \references{
 \url{https://github.com/USFWS/HSestimate}

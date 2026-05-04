@@ -12,7 +12,8 @@ partyHuntFinder(dailies_df, maxbag_df)
 \item{maxbag_df}{Reference data tibble}
 }
 \description{
-Parse comment strings to check if a daily record was a party hunt and calculate revised retrieved field if value exceeds max bag.
+Parse comment strings to check if a daily record was a party hunt and
+calculate revised retrieved field if value exceeds max bag.
 }
 \references{
 \url{https://github.com/USFWS/HSestimate}

@@ -10,7 +10,8 @@ wrangleRef(ref_data)
 \item{ref_data}{Reference data}
 }
 \description{
-Internal function used in \code{\link{wrangleMaxBag}} and \code{\link{wrangleDates}}, which does initial data cleaning.
+Internal function used in \code{\link{wrangleMaxBag}} and
+\code{\link{wrangleDates}}, which does initial data cleaning.
 }
 \references{
 \url{https://github.com/USFWS/HSestimate}

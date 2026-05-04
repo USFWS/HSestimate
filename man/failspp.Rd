@@ -7,7 +7,8 @@
 failspp(species)
 }
 \arguments{
-\item{species}{Species abbreviation, may be one of: 'WF', 'DV', 'SCRG', 'WK', or 'CR'.}
+\item{species}{Species abbreviation, may be one of: 'WF', 'DV', 'SCRG', 'WK',
+or 'CR'.}
 }
 \description{
 Internal function used to repeat species code validation.

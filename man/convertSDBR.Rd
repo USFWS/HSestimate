@@ -7,12 +7,14 @@
 convertSDBR(daily_corrected, season_precorrected)
 }
 \arguments{
-\item{daily_corrected}{Daily data corrected by \code{\link{dailyCorrect}}}
+\item{daily_corrected}{Daily data corrected by the \code{dailyCorrect} family
+of functions}
 
-\item{season_precorrected}{Season data pre-corrected by \code{\link{seasonCorrect}}}
+\item{season_precorrected}{Season data pre-corrected by the
+\code{seasonCorrect} family of functions}
 }
 \description{
-Internal function used in \code{\link{editCheck}}.
+Internal function used in \code{\link{surveyCheck}}.
 }
 \references{
 \url{https://github.com/USFWS/HSestimate}

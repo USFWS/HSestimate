@@ -10,7 +10,8 @@ getPartySize(dailies_df)
 \item{dailies_df}{Daily data tibble}
 }
 \description{
-Internal function used in \code{\link{partyHuntFinder}}. Pull out obvious group sizes from strings and put them in a new 'party_size' field.
+Internal function used in \code{\link{partyHuntFinder}}. Pull out obvious
+group sizes from strings and put them in a new 'party_size' field.
 }
 \references{
 \url{https://github.com/USFWS/HSestimate}

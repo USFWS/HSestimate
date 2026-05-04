@@ -10,7 +10,8 @@ recalcPartyBag(dailies_df)
 \item{dailies_df}{Daily data tibble}
 }
 \description{
-Internal function used in \code{\link{partyHuntFinder}}. Recalculate retrieved value for party hunt over bags by dividing retrieved by party size.
+Internal function used in \code{\link{partyHuntFinder}}. Recalculate
+retrieved value for party hunt over bags by dividing retrieved by party size.
 }
 \references{
 \url{https://github.com/USFWS/HSestimate}
