@@ -1,7 +1,8 @@
 #' Plot White-winged Dove survey data
 #'
-#' Create a box plot of non-zero White-winged Dove days hunted, retrieved, or unretrieved.
-#' 
+#' Create a box plot of non-zero White-winged Dove days hunted, retrieved, or
+#' unretrieved.
+#'
 #' @importFrom dplyr left_join
 #' @importFrom dplyr select
 #' @importFrom dplyr filter
@@ -18,14 +19,17 @@
 #' @importFrom ggplot2 coord_cartesian
 #' @importFrom rlang .data
 #' @importFrom rlang sym
-#' 
+#'
 #' @param season_df Season data tibble
-#' @param variable Variable to plot; should be one of "days_hunted", "retrieved" or "unretrieved"
-#' @param y_limits If "auto", \code{ggplot2::coord_cartesian} \code{ylim} supplied as \code{c(0, 50)} for days_hunted and retrieved, \code{c(0, 20)} for unretrieved; otherwise, provide custom limits. 
-#' 
+#' @param variable Variable to plot; should be one of "days_hunted", "retrieved"
+#'   or "unretrieved"
+#' @param y_limits If "auto", \code{ggplot2::coord_cartesian} \code{ylim}
+#'   supplied as \code{c(0, 50)} for days_hunted and retrieved, \code{c(0, 20)}
+#'   for unretrieved; otherwise, provide custom limits.
+#'
 #' @author Abby Walter, \email{abby_walter@@fws.gov}
 #' @references \url{https://github.com/USFWS/HSestimate}
-#' 
+#'
 #' @export
 
 boxPlotWWDO <-

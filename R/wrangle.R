@@ -1,7 +1,8 @@
 #' Wrangle reference data
 #'
-#' Internal function used in \code{\link{wrangleMaxBag}} and \code{\link{wrangleDates}}, which does initial data cleaning. 
-#' 
+#' Internal function used in \code{\link{wrangleMaxBag}} and
+#' \code{\link{wrangleDates}}, which does initial data cleaning.
+#'
 #' @importFrom dplyr rename_all
 #' @importFrom dplyr filter
 #' @importFrom stringr str_detect
