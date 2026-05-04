@@ -1,6 +1,7 @@
 #' Party hunt finder
 #'
-#' Parse comment strings to check if a daily record was a party hunt and calculate revised retrieved field if value exceeds max bag.
+#' Parse comment strings to check if a daily record was a party hunt and
+#' calculate revised retrieved field if value exceeds max bag.
 #'
 #' @importFrom dplyr left_join
 #' @importFrom dplyr select
@@ -14,7 +15,7 @@
 #'
 #' @author Abby Walter, \email{abby_walter@@fws.gov}
 #' @references \url{https://github.com/USFWS/HSestimate}
-#' 
+#'
 #' @export
 
 partyHuntFinder <- 
@@ -52,7 +53,8 @@ partyHuntFinder <-
 
 #' Recalculate party bag
 #'
-#' Internal function used in \code{\link{partyHuntFinder}}. Recalculate retrieved value for party hunt over bags by dividing retrieved by party size.
+#' Internal function used in \code{\link{partyHuntFinder}}. Recalculate
+#' retrieved value for party hunt over bags by dividing retrieved by party size.
 #'
 #' @importFrom dplyr mutate
 #' @importFrom rlang .data
@@ -83,7 +85,8 @@ recalcPartyBag <-
 
 #' Get party size
 #'
-#' Internal function used in \code{\link{partyHuntFinder}}. Pull out obvious group sizes from strings and put them in a new 'party_size' field.
+#' Internal function used in \code{\link{partyHuntFinder}}. Pull out obvious
+#' group sizes from strings and put them in a new 'party_size' field.
 #'
 #' @importFrom dplyr mutate
 #' @importFrom dplyr case_when
