@@ -19,57 +19,81 @@ REF_BAG_TOLERANCE <- 2
 
 REF_DAY_LIMIT_WF <- 107
 REF_DAY_LIMIT_DV <- 107
-REF_DAY_LIMIT_WK <- 107
+REF_DAY_LIMIT_WK <- 63
 REF_DAY_LIMIT_SCRG <- 107
 REF_DAY_LIMIT_CR_AK <- 106
 REF_DAY_LIMIT_CR_SOUTH <- 92
 REF_DAY_LIMIT_CR_NORTH <- 60
 
+# flyways -----------------------------------------------------------------
+
+REF_STATES_AF <- 
+  c("CT", "DE", "FL", "GA", "MA", "MD", "ME", "NC", "NH", "NJ", "NY", "PA", 
+    "RI", "SC", "VA", "VT", "WV")
+
+REF_STATES_MF <-
+  c("AL", "AR", "IA", "IL", "IN", "KY", "LA", "MI", "MN", "MO", "MS", "OH", 
+    "TN", "WI")
+
+REF_STATES_CF <- 
+  c("CO", "KS", "ND", "NE", "NM", "OK", "SD", "TX", "WY")
+
+REF_STATES_PF <- 
+  c("AZ", "CA", "ID", "MT", "NV", "OR", "UT", "WA")
+
 # states ------------------------------------------------------------------
 
-# Create a table of state names and their abbreviations
+# Table of state names and their abbreviations
 REF_STATES_AND_ABBRS <-
   tibble(
     state = state.abb,
     sampled_state = state.name) |> 
   filter(state != "HI")
 
-REF_STATES_CR_SOUTH <- c("Texas", "New Mexico", "Oklahoma")
+# Southern states with a Sandhill Crane season
+REF_STATES_CR_SOUTH <- 
+  c("Texas", "New Mexico", "Oklahoma")
 
+# Northern states with a Sandhill Crane season
 REF_STATES_CR_NORTH <- 
   c("South Dakota", "North Dakota", "Wyoming", "Colorado", "Utah", "Montana", 
     "Kansas")
 
-REF_STATES_SD_BR <- 
-  c("AK", "CA", "CT", "DE", "MA", "MD", "NC", "NH", "NJ", "NY", "RI", "VA")
+# States with a Band-tailed Pigeon (BTPI) season
+REF_STATES_BTPI <- 
+  c("AZ", "CA", "CO", "NM", "OR", "UT", "WA")
 
-REF_STATES_SD_ONLY <- "ME"
+# States with a Sea Duck season
+REF_STATES_SD <- 
+  c("AK", "CA", "CT", "DE", "MA", "MD", "ME", "NH", "NJ", "NY", "OR", "RI", 
+    "VA", "WA")
 
-# Create a vector of SD states
-REF_STATES_SD <- c(REF_STATES_SD_BR, REF_STATES_SD_ONLY, "OR", "WA")
+# Sea Duck states in the Atlantic Flyway
+REF_STATES_SD_AF <- 
+  REF_STATES_SD[REF_STATES_SD %in% REF_STATES_AF]
 
-REF_STATES_SD_AF <- REF_STATES_SD[!REF_STATES_SD %in% c("AK", "CA", "OR", "WA")]
+# States with a Brant season
+REF_STATES_BR <- 
+  c("AK", "CA", "CT", "DE", "MA", "MD", "ME", "NC", "NH", "NJ", "NY", "OR", 
+    "RI", "VA", "WA")
 
-# Create a vector of BR states
-REF_STATES_BR <- c(REF_STATES_SD_BR, "OR", "WA")
-
-# Define the states that have a combined duck and merganser season
+# States with a combined duck and merganser season
 REF_STATES_DUCKMERG <-
-  c("AL", "AR", "CO", "DE", "FL", "IA", "IL", "IN", "KS", "KY", "LA", "MA", 
-    "ME", "MI", "MN", "MS", "NC", "ND", "NE", "NH", "NJ", "OH", "OK", "PA", 
-    "RI", "SC", "SD", "TN", "TX", "VA", "VT", "WI", "WV", "WY", "GA")
+  c("AL", "AR", "CO", "DE", "FL", "GA", "IA", "IL", "IN", "KS", "KY", "LA", 
+    "MA", "ME", "MI", "MN", "MS", "NC", "ND", "NE", "NH", "NJ", "OH", "OK", 
+    "PA", "RI", "SC", "SD", "TN", "TX", "VA", "VT", "WI", "WV", "WY")
 # AF and MF only... 
-# must be changed CT, MD, NY, MO are "ducks including"...? ask bob
+# must be changed CT, MD, NY, MO are "ducks including"...? ask RR
 
-
-# Create a vector of White-winged Dove (WWDO) main/primary harvest states
+# White-winged Dove (WWDO) main/primary harvest states
 REF_STATES_WWDO_MAIN <- 
-  c("CA", "NV", "AZ", "NM", "TX", "OK", "LA", "MS", "AL", "FL")
+  c("AL", "AZ", "CA", "FL", "LA", "MS", "NM", "NV", "OK", "TX")
 
-# Create a vector of WWDO edge states (these states border the main states)
-REF_STATES_WWDO_EDGE <- c("UT", "CO", "KS", "AR", "GA")
+# White-winged Dove (WWDO) edge states (these states border the main states)
+REF_STATES_WWDO_EDGE <- 
+  c("AR", "CO", "GA", "KS", "UT")
 
-# Table of expected WWDO occurrence by state
+# Table of expected White-winged Dove (WWDO) occurrence by state
 REF_STATES_WWDO_DF <-
   REF_STATES_AND_ABBRS |> 
   mutate(
@@ -79,21 +103,18 @@ REF_STATES_WWDO_DF <-
         state %in% REF_STATES_WWDO_EDGE ~ "edge",
         TRUE ~ "none"))
 
-# flyways -----------------------------------------------------------------
+# States with NO open season for American Coots
+REF_STATES_NO_COOTS <- "AK"
 
-REF_STATES_AF <- 
-  c("CT", "DE", "FL", "GA", "ME", "MD", "MA", "NH", "NJ", "NY", "NC", "PA", 
-    "RI", "SC", "VT", "VA", "WV")
+# States with NO open season for rails
+REF_STATES_NO_RAILS <- 
+  c("AK", "AZ", "CA", "ID", "MT", "ND", "NH", "NV", "OR", "SD", "UT", "VT", 
+    "WA")
 
-REF_STATES_MF <-
-  c("AL", "AR", "IL", "IN", "IA", "KY", "LA", "MI", "MN", "MS", "MO", "OH", 
-    "TN", "WI")
-
-REF_STATES_CF <- 
-  c("CO", "KS", "NE", "NM", "ND", "OK", "SD", "TX", "WY")
-
-REF_STATES_PF <- 
-  c("AZ", "CA", "ID", "MT", "NV", "OR", "UT", "WA")
+# States with NO open season for gallinules
+REF_STATES_NO_GALLS <- 
+  c("AK", "CO", "CT", "IA", "ID", "IL", "IN", "KS", "MA", "MD", "ME", "MO", 
+    "MT", "ND", "NE", "NH", "OR", "RI", "SD", "UT", "VT", "WA", "WY")
 
 # number of expected states -----------------------------------------------
 
