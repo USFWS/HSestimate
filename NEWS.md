@@ -1,7 +1,9 @@
-# HSestimate (dev version)
+# HSestimate 2.0.0
 
 ## Major changes & new features
 
+-   Package renamed to `HSestimate`
+    -   In addition to checking Harvest Survey data, `HSestimate` will now also generate totals files and calculate harvest estimates.
 -   `Imports`
     -   Add `{purrr}`
 -   Introduced `@family` tags to function documentation to help navigate networks of helper functions and species groups. New tags include:
@@ -74,10 +76,9 @@
     -   Reordered and alphabetized vectors.
     -   Added `REF_STATES_NO_COOTS`, `REF_STATES_NO_GALLS`, and `REF_STATES_NO_RAILS`
 
-# HSestimate 2.0.0
+# migbirdHS 1.0.1
 
--   Renamed to `HSestimate`
-    -   In addition to checking Harvest Survey data, the package will now also generate totals files and calculate harvest estimates.
+-   Last version for `migbirdHS`
 
 # migbirdHS 1.0.0
 

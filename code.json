@@ -2,8 +2,8 @@
   {
     "name": "HSestimate",
     "organization": "U.S. Fish and Wildlife",
-    "description": "An R package designed to generate harvest estimates",
-    "version": "v2.0.0",
+    "description": "An R package for migratory game bird harvest estimation",
+    "version": "v1.0.1",
     "status": "Operational",
 
     "permissions": {
@@ -22,7 +22,7 @@
     "repositoryURL": "https://github.com/USFWS/HSestimate.git",
     "vcs": "git",
 
-    "laborHours": 290,
+    "laborHours": 330,
 
     "tags": [
       "usfws",
@@ -39,7 +39,7 @@
     },
 
     "date": {
-      "metadataLastUpdated": "2026-04-24"
+      "metadataLastUpdated": "2026-05-05"
     }
   }
 ]
