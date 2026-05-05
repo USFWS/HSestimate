@@ -12,8 +12,8 @@ dailyOverBagWWMO(dailies_df, maxbag_df)
 \item{maxbag_df}{Reference data tibble}
 }
 \description{
-Internal function used in the \code{checkDaily} family of functions. Used to
-find daily overbag for WWDO and MODO.
+Internal function used in \code{\link{checkDailyDV}}. Used to find daily
+overbag for WWDO and MODO. Creates field \code{error2}.
 }
 \seealso{
 Other checking functions: 
@@ -59,6 +59,7 @@ Other error assigning functions:
 
 Other dove functions: 
 \code{\link{auditDV}()},
+\code{\link{boxPlotWWDO}()},
 \code{\link{checkDailyDV}()},
 \code{\link{checkSeasonDV}()},
 \code{\link{convertWWDO}()},

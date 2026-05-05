@@ -13,7 +13,8 @@ audit(daily_check, season_check)
 }
 \description{
 Internal function that checks season and daily data to return corrections and
-audits.
+audits. Used for cranes, snipe, coot, rails, gallinules, and woodcock. For
+doves, use \code{\link{auditDV}}. For waterfowl, use \code{\link{checkWF}}.
 }
 \seealso{
 Other checking functions: 

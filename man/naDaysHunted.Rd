@@ -10,8 +10,10 @@ naDaysHunted(season_df)
 \item{season_df}{Season data tibble}
 }
 \description{
-Internal function used in the \code{checkSeason} family of functions. Finds
-season records with \code{NA} values in \code{days_hunted} field.
+Internal function used in \code{\link{checkSeasonWFSCRGWK}},
+\code{\link{checkSeasonCR}}, and \code{\link{checkSeasonDV}}. Finds season
+records with \code{NA} values in \code{days_hunted} field. Creates field
+\code{error1}.
 }
 \seealso{
 Other checking functions: 
@@ -70,6 +72,7 @@ Other crane functions:
 
 Other dove functions: 
 \code{\link{auditDV}()},
+\code{\link{boxPlotWWDO}()},
 \code{\link{checkDailyDV}()},
 \code{\link{checkSeasonDV}()},
 \code{\link{convertWWDO}()},

@@ -15,7 +15,7 @@ checkWF(dailies_df, season_df, maxbag_df)
 }
 \description{
 Internal function that checks season and daily data for waterfowl and returns
-corrections and audits.
+corrections and audits in a list.
 }
 \seealso{
 Other checking functions: 

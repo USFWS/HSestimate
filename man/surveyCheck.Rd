@@ -18,7 +18,7 @@ or 'CR'.}
 }
 \description{
 The \code{surveyCheck} function checks season and daily survey data for a
-given species and returns corrections and audits.
+given species and returns corrections and audits in a list.
 }
 \seealso{
 Other checking functions: 
@@ -54,6 +54,7 @@ Other crane functions:
 
 Other dove functions: 
 \code{\link{auditDV}()},
+\code{\link{boxPlotWWDO}()},
 \code{\link{checkDailyDV}()},
 \code{\link{checkSeasonDV}()},
 \code{\link{convertWWDO}()},

@@ -12,7 +12,8 @@ checkDailySCRGWKCR(dailies_df, maxbag_df)
 \item{maxbag_df}{Reference data tibble}
 }
 \description{
-Internal function to check daily survey data for SC, RG, WK, CR.
+Internal function to check daily survey data for SC, RG, WK, CR. Used in
+\code{\link{surveyCheck}}.
 }
 \seealso{
 Other checking functions: 

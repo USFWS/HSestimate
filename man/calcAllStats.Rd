@@ -2,7 +2,7 @@
 % Please edit documentation in R/estimate.R
 \name{calcAllStats}
 \alias{calcAllStats}
-\title{Calculate all stats}
+\title{Calculate all statistics}
 \usage{
 calcAllStats(licenseSumMeanVar, licenseFreq, spp_counts, type)
 }
@@ -18,8 +18,9 @@ calcAllStats(licenseSumMeanVar, licenseFreq, spp_counts, type)
 'Rails', 'Gallinules', 'BTPI'.}
 }
 \description{
-The internal \code{calcAllStats} function calculates all stats using the
-products of \code{\link{calcSumMeanVar}} and \code{\link{calcFreq}}.
+The internal \code{calcAllStats} function combines all stratum-level hunter
+statistics using the products of \code{\link{calcSumMeanVar}} and
+\code{\link{calcFreq}}.
 }
 \seealso{
 Other estimation functions: 

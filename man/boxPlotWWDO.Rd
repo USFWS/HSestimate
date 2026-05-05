@@ -18,8 +18,24 @@ for unretrieved; otherwise, provide custom limits.}
 }
 \description{
 Create a box plot of non-zero White-winged Dove days hunted, retrieved, or
-unretrieved.
+unretrieved values.
+}
+\seealso{
+Other dove functions: 
+\code{\link{auditDV}()},
+\code{\link{checkDailyDV}()},
+\code{\link{checkSeasonDV}()},
+\code{\link{convertWWDO}()},
+\code{\link{dailyOverBag}()},
+\code{\link{dailyOverBagWWMO}()},
+\code{\link{naDaysHunted}()},
+\code{\link{partyHuntFinder}()},
+\code{\link{seasonDNH}()},
+\code{\link{seasonOverBagDV}()},
+\code{\link{surveyCheck}()},
+\code{\link{tooManyDaysHunted}()}
 }
 \author{
 Abby Walter, \email{abby_walter@fws.gov}
 }
+\concept{dove functions}

@@ -10,8 +10,8 @@ wrangleRef(ref_data)
 \item{ref_data}{Reference data}
 }
 \description{
-Internal function used in \code{\link{wrangleMaxBag}} and
-\code{\link{wrangleDates}}, which does initial data cleaning.
+Internal function which does initial data cleaning in
+\code{\link{wrangleMaxBag}} and \code{\link{wrangleDates}}.
 }
 \seealso{
 Other wrangling functions: 

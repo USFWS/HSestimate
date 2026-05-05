@@ -11,7 +11,7 @@ failspp(species)
 or 'CR'.}
 }
 \description{
-Internal function used to repeat species code validation.
+Internal function used to validate the \code{species} provided.
 }
 \seealso{
 Other failure functions: 

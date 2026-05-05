@@ -1,7 +1,7 @@
 #' Fail if NA values in days_hunted field
 #'
-#' Internal function that fails if NA values are found in the \code{days_hunted}
-#' field of season data.
+#' Internal function that fails if \code{NA} values are found in the
+#' \code{days_hunted} field of season data.
 #'
 #' @importFrom dplyr filter
 #' @importFrom rlang .data
@@ -23,8 +23,8 @@ failNADaysHunted <-
 
 #' Fail if NA values in retrieved field
 #'
-#' Internal function that fails if NA values are found in the \code{retrieved}
-#' field of season and/or daily data.
+#' Internal function that fails if \code{NA} values are found in the
+#' \code{retrieved} field of season and/or daily data.
 #'
 #' @importFrom dplyr filter
 #' @importFrom rlang .data
@@ -75,7 +75,7 @@ failStateCount <-
 
 #' Fail species
 #'
-#' Internal function used to repeat species code validation.
+#' Internal function used to validate the \code{species} provided.
 #'
 #' @param species Species abbreviation, may be one of: 'WF', 'DV', 'SCRG', 'WK',
 #'   or 'CR'.
@@ -93,7 +93,8 @@ failspp <-
 
 #' Fail type
 #'
-#' Internal function used to validate calculation type.
+#' Internal function used to validate the \code{type} provided, which aids in
+#' harvest estimation calculation.
 #'
 #' @param type Type of estimation being calculated, may be one of: 'Ducks',
 #'   'Geese', 'Brant', 'SeaDucks', 'MODO', 'WWDO', 'SACR', 'Woodcock', 'Snipe',

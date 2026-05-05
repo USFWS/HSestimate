@@ -12,7 +12,8 @@ checkSeasonCR(season_df, maxbag_df)
 \item{maxbag_df}{Reference data tibble}
 }
 \description{
-Internal function to check season survey data for cranes.
+Internal function to check season survey data for cranes. Used in
+\code{\link{surveyCheck}}.
 }
 \seealso{
 Other checking functions: 

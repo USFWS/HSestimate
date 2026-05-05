@@ -13,13 +13,15 @@ convertWWDO(data_df, type, summary = FALSE)
 \item{type}{"season" or "daily"}
 
 \item{summary}{Whether a summary of WWDO errors should be returned; TRUE or
-FALSE}
+FALSE (default is FALSE)}
 }
 \description{
-Internal function used in \code{checkSeason} and \code{checkDaily} function
-families. Find any harvest of WWDO in non-wwdo states and WWDO in edge states
-that exceed the designated limit; for these cases, change WWDO days_hunted,
-retrieved, and unretrieved values to 0.
+Internal function used in \code{\link{checkDailyDV}} and
+\code{\link{checkSeasonDV}}. Find any harvest of White-winged Dove in states
+without expected White-winged Dove harvest and in edge states that exceed the
+designated limit; for these cases, change White-winged Dove
+\code{days_hunted}, \code{retrieved}, and \code{unretrieved} values to
+\code{0}.
 }
 \seealso{
 Other conversion functions: 
@@ -52,6 +54,7 @@ Other season data helpers:
 
 Other dove functions: 
 \code{\link{auditDV}()},
+\code{\link{boxPlotWWDO}()},
 \code{\link{checkDailyDV}()},
 \code{\link{checkSeasonDV}()},
 \code{\link{dailyOverBag}()},

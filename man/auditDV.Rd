@@ -37,6 +37,7 @@ Other checking functions:
 \code{\link{tooManyDaysHuntedCR}()}
 
 Other dove functions: 
+\code{\link{boxPlotWWDO}()},
 \code{\link{checkDailyDV}()},
 \code{\link{checkSeasonDV}()},
 \code{\link{convertWWDO}()},

@@ -1,7 +1,7 @@
 #' Check survey data
 #'
 #' The \code{surveyCheck} function checks season and daily survey data for a
-#' given species and returns corrections and audits.
+#' given species and returns corrections and audits in a list.
 #'
 #' @param dailies_df Daily data tibble
 #' @param season_df Season data tibble
@@ -67,7 +67,8 @@ surveyCheck <-
 #' Check survey data
 #'
 #' Internal function that checks season and daily data to return corrections and
-#' audits.
+#' audits. Used for cranes, snipe, coot, rails, gallinules, and woodcock. For
+#' doves, use \code{\link{auditDV}}. For waterfowl, use \code{\link{checkWF}}.
 #'
 #' @importFrom dplyr filter
 #' @importFrom dplyr if_any
@@ -210,7 +211,7 @@ auditDV <-
 #' Check waterfowl survey data
 #'
 #' Internal function that checks season and daily data for waterfowl and returns
-#' corrections and audits.
+#' corrections and audits in a list.
 #'
 #' @importFrom dplyr filter
 #' @importFrom dplyr if_any
@@ -300,7 +301,8 @@ checkWF <-
 
 #' Check waterfowl daily data
 #'
-#' Internal function to check daily survey data for waterfowl.
+#' Internal function to check daily survey data for waterfowl. Used in
+#' \code{\link{checkWF}}.
 #'
 #' @param dailies_df Daily data tibble
 #' @param maxbag_df Reference data tibble
@@ -322,7 +324,8 @@ checkDailyWF <-
 
 #' Check daily data
 #'
-#' Internal function to check daily survey data for SC, RG, WK, CR.
+#' Internal function to check daily survey data for SC, RG, WK, CR. Used in
+#' \code{\link{surveyCheck}}.
 #'
 #' @param dailies_df Daily data tibble
 #' @param maxbag_df Reference data tibble
@@ -345,7 +348,8 @@ checkDailySCRGWKCR <-
 
 #' Check dove daily data
 #'
-#' Internal function to check daily survey data for doves.
+#' Internal function to check daily survey data for doves. Used in
+#' \code{\link{surveyCheck}}.
 #'
 #' @param dailies_df Daily data tibble
 #' @param maxbag_df Reference data tibble
@@ -371,7 +375,7 @@ checkDailyDV <-
 #' Check season data
 #'
 #' Internal function to check season survey data for waterfowl, snipe, coot,
-#' rails, gallinules, and woodcock.
+#' rails, gallinules, and woodcock. Used in \code{\link{surveyCheck}}.
 #'
 #' @importFrom dplyr left_join
 #' @importFrom dplyr select
@@ -413,7 +417,8 @@ checkSeasonWFSCRGWK <-
 
 #' Check crane season data
 #'
-#' Internal function to check season survey data for cranes.
+#' Internal function to check season survey data for cranes. Used in
+#' \code{\link{surveyCheck}}.
 #'
 #' @importFrom dplyr left_join
 #' @importFrom dplyr select
@@ -452,7 +457,8 @@ checkSeasonCR <-
 
 #' Check dove season data
 #'
-#' Internal function to check season survey data for doves.
+#' Internal function to check season survey data for doves. Used in
+#' \code{\link{surveyCheck}}.
 #'
 #' @importFrom dplyr left_join
 #' @importFrom dplyr select
@@ -492,8 +498,10 @@ checkSeasonDV <-
 
 #' Find records with NA days hunted
 #'
-#' Internal function used in the \code{checkSeason} family of functions. Finds
-#' season records with \code{NA} values in \code{days_hunted} field.
+#' Internal function used in \code{\link{checkSeasonWFSCRGWK}},
+#' \code{\link{checkSeasonCR}}, and \code{\link{checkSeasonDV}}. Finds season
+#' records with \code{NA} values in \code{days_hunted} field. Creates field
+#' \code{error1}.
 #'
 #' @importFrom dplyr mutate
 #' @importFrom dplyr filter
@@ -531,8 +539,10 @@ naDaysHunted <-
 
 #' Find records with too many days hunted
 #'
-#' Internal function used in the \code{checkSeason} family of functions. Find
-#' season records with too many days hunted.
+#' Internal function used in \code{\link{checkSeasonWFSCRGWK}} and
+#' \code{\link{checkSeasonDV}}. Finds season records with too many days hunted.
+#' Creates field \code{error2}. For cranes, see
+#' \code{\link{tooManyDaysHuntedCR}}.
 #'
 #' @importFrom dplyr mutate
 #' @importFrom dplyr filter
@@ -574,8 +584,9 @@ tooManyDaysHunted <-
 
 #' Find records with too many days hunting cranes
 #'
-#' Internal function used in the \code{checkSeason} family of functions. Find
-#' season records with too many days hunted for cranes.
+#' Internal function used in \code{\link{checkSeasonCR}}. Finds season records
+#' with too many days hunted for cranes. Creates field \code{error2}. For
+#' species other than cranes, see \code{\link{tooManyDaysHunted}}.
 #'
 #' @importFrom dplyr mutate
 #' @importFrom dplyr case_when
@@ -644,9 +655,10 @@ tooManyDaysHuntedCR <-
 
 #' Find season did-not-hunts
 #'
-#' Internal function used in the \code{checkSeason} family of functions. Find
-#' season records with a sum of \code{0} for \code{days_hunted} and sum greater
-#' than \code{0} for \code{retrieved}.
+#' Internal function used in \code{\link{checkSeasonWFSCRGWK}},
+#' \code{\link{checkSeasonCR}}, and \code{\link{checkSeasonDV}}. Finds season
+#' records with a sum of \code{0} for \code{days_hunted} and sum greater than
+#' \code{0} for \code{retrieved}. Creates field \code{error4}.
 #'
 #' @importFrom dplyr mutate
 #' @importFrom dplyr select
@@ -698,9 +710,10 @@ seasonDNH <-
 
 #' Season over bag
 #'
-#' Internal function used in the \code{checkSeason} family of functions. Flag
-#' records with average overbags in season totals more than the overbag
-#' tolerance.
+#' Internal function used in \code{\link{checkSeasonWFSCRGWK}} and
+#' \code{\link{checkSeasonCR}}. Flags records with average overbags in season
+#' totals more than the overbag tolerance. Creates field \code{error3}. For
+#' doves, see \code{\link{seasonOverBagDV}}.
 #'
 #' @importFrom dplyr mutate
 #' @importFrom dplyr filter
@@ -751,9 +764,10 @@ seasonOverBag <-
 
 #' Dove season over bag
 #'
-#' Internal function used in the \code{checkSeason} family of functions. Flag
-#' records with an average overbag in season totals for doves more than the
-#' overbag tolerance.
+#' Internal function used in \code{\link{checkSeasonDV}}. Flags records with an
+#' average overbag in season totals for doves more than the overbag tolerance.
+#' Creates field \code{error3}. For species other than doves, see
+#' \code{\link{seasonOverBag}}.
 #'
 #' @importFrom dplyr mutate
 #' @importFrom dplyr select
@@ -829,8 +843,10 @@ seasonOverBagDV <-
 
 #' Daily over bag
 #'
-#' Internal function used in the \code{checkDaily} family of functions. Flag
-#' daily records where daily bag is more than the overbag tolerance over limit.
+#' Internal function used in \code{\link{checkDailySCRGWKCR}},
+#' \code{\link{checkDailyDV}}, and \code{\link{checkDailyWF}}. Flags daily
+#' records where daily bag is more than the overbag tolerance over limit.
+#' Creates field \code{error3}.
 #'
 #' @importFrom dplyr left_join
 #' @importFrom dplyr select
@@ -884,8 +900,8 @@ dailyOverBag <-
 
 #' Daily WWDO and MODO over bag
 #'
-#' Internal function used in the \code{checkDaily} family of functions. Used to
-#' find daily overbag for WWDO and MODO.
+#' Internal function used in \code{\link{checkDailyDV}}. Used to find daily
+#' overbag for WWDO and MODO. Creates field \code{error2}.
 #'
 #' @importFrom dplyr filter
 #' @importFrom dplyr mutate
@@ -990,8 +1006,8 @@ dailyOverBagWWMO <-
 
 #' Duck and sea duck over bag
 #'
-#' Internal function used in the \code{checkDaily} family of functions. Used to
-#' find daily overbag for ducks and sea ducks.
+#' Internal function used in \code{\link{checkDailyWF}}. Used to find daily
+#' overbag for ducks and sea ducks. Creates field \code{error2}.
 #'
 #' @importFrom dplyr filter
 #' @importFrom dplyr mutate

@@ -10,8 +10,8 @@ failNADaysHunted(season_df)
 \item{season_df}{Season data tibble}
 }
 \description{
-Internal function that fails if NA values are found in the \code{days_hunted}
-field of season data.
+Internal function that fails if \code{NA} values are found in the
+\code{days_hunted} field of season data.
 }
 \seealso{
 Other failure functions: 

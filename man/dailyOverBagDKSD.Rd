@@ -12,8 +12,8 @@ dailyOverBagDKSD(dailies_df, maxbag_df)
 \item{maxbag_df}{Reference data tibble}
 }
 \description{
-Internal function used in the \code{checkDaily} family of functions. Used to
-find daily overbag for ducks and sea ducks.
+Internal function used in \code{\link{checkDailyWF}}. Used to find daily
+overbag for ducks and sea ducks. Creates field \code{error2}.
 }
 \seealso{
 Other checking functions: 

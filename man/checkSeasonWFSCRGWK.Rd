@@ -15,7 +15,7 @@ checkSeasonWFSCRGWK(season_df, maxbag_df, day_limit)
 }
 \description{
 Internal function to check season survey data for waterfowl, snipe, coot,
-rails, gallinules, and woodcock.
+rails, gallinules, and woodcock. Used in \code{\link{surveyCheck}}.
 }
 \seealso{
 Other checking functions: 

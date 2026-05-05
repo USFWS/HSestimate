@@ -12,7 +12,8 @@ checkDailyDV(dailies_df, maxbag_df)
 \item{maxbag_df}{Reference data tibble}
 }
 \description{
-Internal function to check daily survey data for doves.
+Internal function to check daily survey data for doves. Used in
+\code{\link{surveyCheck}}.
 }
 \seealso{
 Other checking functions: 
@@ -47,6 +48,7 @@ Other daily data helpers:
 
 Other dove functions: 
 \code{\link{auditDV}()},
+\code{\link{boxPlotWWDO}()},
 \code{\link{checkSeasonDV}()},
 \code{\link{convertWWDO}()},
 \code{\link{dailyOverBag}()},

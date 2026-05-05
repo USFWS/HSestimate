@@ -12,8 +12,10 @@ dailyOverBag(dailies_df, maxbag_df)
 \item{maxbag_df}{Reference data tibble}
 }
 \description{
-Internal function used in the \code{checkDaily} family of functions. Flag
-daily records where daily bag is more than the overbag tolerance over limit.
+Internal function used in \code{\link{checkDailySCRGWKCR}},
+\code{\link{checkDailyDV}}, and \code{\link{checkDailyWF}}. Flags daily
+records where daily bag is more than the overbag tolerance over limit.
+Creates field \code{error3}.
 }
 \seealso{
 Other checking functions: 
@@ -70,6 +72,7 @@ Other crane functions:
 
 Other dove functions: 
 \code{\link{auditDV}()},
+\code{\link{boxPlotWWDO}()},
 \code{\link{checkDailyDV}()},
 \code{\link{checkSeasonDV}()},
 \code{\link{convertWWDO}()},

@@ -12,8 +12,10 @@ tooManyDaysHunted(season_df, day_limit)
 \item{day_limit}{Day limit for species being checked}
 }
 \description{
-Internal function used in the \code{checkSeason} family of functions. Find
-season records with too many days hunted.
+Internal function used in \code{\link{checkSeasonWFSCRGWK}} and
+\code{\link{checkSeasonDV}}. Finds season records with too many days hunted.
+Creates field \code{error2}. For cranes, see
+\code{\link{tooManyDaysHuntedCR}}.
 }
 \seealso{
 Other checking functions: 
@@ -61,6 +63,7 @@ Other error assigning functions:
 
 Other dove functions: 
 \code{\link{auditDV}()},
+\code{\link{boxPlotWWDO}()},
 \code{\link{checkDailyDV}()},
 \code{\link{checkSeasonDV}()},
 \code{\link{convertWWDO}()},

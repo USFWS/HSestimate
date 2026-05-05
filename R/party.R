@@ -1,7 +1,9 @@
 #' Party hunt finder
 #'
 #' Parse comment strings to check if a daily record was a party hunt and
-#' calculate revised retrieved field if value exceeds max bag.
+#' calculate revised retrieved field if value exceeds max bag. Used in
+#' \code{\link{checkDailySCRGWKCR}}, \code{\link{checkDailyDV}}, and
+#' \code{\link{checkDailyWF}}. Creates field \code{error1}.
 #'
 #' @importFrom dplyr left_join
 #' @importFrom dplyr select

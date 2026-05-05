@@ -1,7 +1,7 @@
 #' Wrangle reference data
 #'
-#' Internal function used in \code{\link{wrangleMaxBag}} and
-#' \code{\link{wrangleDates}}, which does initial data cleaning.
+#' Internal function which does initial data cleaning in
+#' \code{\link{wrangleMaxBag}} and \code{\link{wrangleDates}}.
 #'
 #' @importFrom dplyr rename_all
 #' @importFrom dplyr filter
@@ -90,7 +90,8 @@ wrangleRef <-
 
 #' Wrangle max bag
 #'
-#' Wrangle the raw max bag reference table.
+#' Wrangle the raw max bag reference table to get bag limits for all states and
+#' species.
 #'
 #' @importFrom dplyr filter
 #' @importFrom dplyr distinct
@@ -203,9 +204,10 @@ wrangleMaxBag <-
     return(maxbag)
   }
 
-#' Wrangle max bag
+#' Wrangle dates
 #'
-#' Wrangle the raw max bag reference table.
+#' Wrangle the raw max bag reference table to get hunting season dates for all
+#' states and species.
 #'
 #' @importFrom dplyr select
 #' @importFrom dplyr filter

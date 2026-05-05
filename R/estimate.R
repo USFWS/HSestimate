@@ -103,10 +103,11 @@ calcFreq <-
       rename(n_hunters = "n")
   }
 
-#' Calculate all stats
+#' Calculate all statistics
 #'
-#' The internal \code{calcAllStats} function calculates all stats using the
-#' products of \code{\link{calcSumMeanVar}} and \code{\link{calcFreq}}.
+#' The internal \code{calcAllStats} function combines all stratum-level hunter
+#' statistics using the products of \code{\link{calcSumMeanVar}} and
+#' \code{\link{calcFreq}}.
 #'
 #' @importFrom purrr reduce
 #' @importFrom dplyr full_join

@@ -10,9 +10,10 @@ seasonOverBagDV(dvtotals_df)
 \item{dvtotals_df}{Season data tibble}
 }
 \description{
-Internal function used in the \code{checkSeason} family of functions. Flag
-records with an average overbag in season totals for doves more than the
-overbag tolerance.
+Internal function used in \code{\link{checkSeasonDV}}. Flags records with an
+average overbag in season totals for doves more than the overbag tolerance.
+Creates field \code{error3}. For species other than doves, see
+\code{\link{seasonOverBag}}.
 }
 \seealso{
 Other checking functions: 
@@ -60,6 +61,7 @@ Other error assigning functions:
 
 Other dove functions: 
 \code{\link{auditDV}()},
+\code{\link{boxPlotWWDO}()},
 \code{\link{checkDailyDV}()},
 \code{\link{checkSeasonDV}()},
 \code{\link{convertWWDO}()},

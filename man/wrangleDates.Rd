@@ -2,7 +2,7 @@
 % Please edit documentation in R/wrangle.R
 \name{wrangleDates}
 \alias{wrangleDates}
-\title{Wrangle max bag}
+\title{Wrangle dates}
 \usage{
 wrangleDates(ref_data)
 }
@@ -10,7 +10,8 @@ wrangleDates(ref_data)
 \item{ref_data}{Reference data}
 }
 \description{
-Wrangle the raw max bag reference table.
+Wrangle the raw max bag reference table to get hunting season dates for all
+states and species.
 }
 \seealso{
 Other wrangling functions: 

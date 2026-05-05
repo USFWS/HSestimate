@@ -12,7 +12,8 @@ failtype(type)
 'Coots', 'Rails', 'Gallinules', 'BTPI'.}
 }
 \description{
-Internal function used to validate calculation type.
+Internal function used to validate the \code{type} provided, which aids in
+harvest estimation calculation.
 }
 \seealso{
 Other failure functions: 

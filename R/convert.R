@@ -1,11 +1,11 @@
 #' Convert sea ducks to ducks and brant to geese
 #'
-#' Internal function used in \code{\link{surveyCheck}}.
+#' Internal function used in \code{\link{checkWF}}. If harvest is reported from
+#' a state without a sea duck season and/or brant season, convert the sea duck
+#' harvest to duck harvest and brant harvest to goose harvest.
 #'
-#' @param daily_corrected Daily data corrected by the \code{dailyCorrect} family
-#'   of functions
-#' @param season_precorrected Season data pre-corrected by the
-#'   \code{seasonCorrect} family of functions
+#' @param daily_corrected Corrected daily data tibble
+#' @param season_precorrected Corrected season data tibble
 #'
 #' @family conversion functions
 #' @family daily data helpers
@@ -24,7 +24,7 @@ convertSDBR <-
 
 #' Convert sea ducks to ducks for sea duck records from non-sea duck states
 #'
-#' Internal function used in \code{\link{surveyCheck}}.
+#' Internal function used in \code{\link{convertSDBR}}.
 #'
 #' @importFrom dplyr tibble
 #' @importFrom dplyr left_join
@@ -136,7 +136,7 @@ convertSeaDuckToDuck <-
 
 #' Convert brant to geese for brant records from non-brant states
 #'
-#' Internal function used in \code{\link{surveyCheck}}.
+#' Internal function used in \code{\link{convertSDBR}}.
 #'
 #' @importFrom dplyr tibble
 #' @importFrom dplyr left_join
@@ -249,10 +249,12 @@ convertBrantToGeese <-
 #' Find season or daily WWDO harvest effort in non-WWDO states and convert to
 #' zero
 #'
-#' Internal function used in \code{checkSeason} and \code{checkDaily} function
-#' families. Find any harvest of WWDO in non-wwdo states and WWDO in edge states
-#' that exceed the designated limit; for these cases, change WWDO days_hunted,
-#' retrieved, and unretrieved values to 0.
+#' Internal function used in \code{\link{checkDailyDV}} and
+#' \code{\link{checkSeasonDV}}. Find any harvest of White-winged Dove in states
+#' without expected White-winged Dove harvest and in edge states that exceed the
+#' designated limit; for these cases, change White-winged Dove
+#' \code{days_hunted}, \code{retrieved}, and \code{unretrieved} values to
+#' \code{0}.
 #'
 #' @importFrom dplyr left_join
 #' @importFrom dplyr select
@@ -266,7 +268,7 @@ convertBrantToGeese <-
 #' @param data_df Season or daily data tibble
 #' @param type "season" or "daily"
 #' @param summary Whether a summary of WWDO errors should be returned; TRUE or
-#'   FALSE
+#'   FALSE (default is FALSE)
 #'
 #' @family conversion functions
 #' @family daily data helpers

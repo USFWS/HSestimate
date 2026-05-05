@@ -7,14 +7,14 @@
 convertSDBR(daily_corrected, season_precorrected)
 }
 \arguments{
-\item{daily_corrected}{Daily data corrected by the \code{dailyCorrect} family
-of functions}
+\item{daily_corrected}{Corrected daily data tibble}
 
-\item{season_precorrected}{Season data pre-corrected by the
-\code{seasonCorrect} family of functions}
+\item{season_precorrected}{Corrected season data tibble}
 }
 \description{
-Internal function used in \code{\link{surveyCheck}}.
+Internal function used in \code{\link{checkWF}}. If harvest is reported from
+a state without a sea duck season and/or brant season, convert the sea duck
+harvest to duck harvest and brant harvest to goose harvest.
 }
 \seealso{
 Other conversion functions: 

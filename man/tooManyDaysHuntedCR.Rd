@@ -10,8 +10,9 @@ tooManyDaysHuntedCR(crtotals_df)
 \item{crtotals_df}{Crane data}
 }
 \description{
-Internal function used in the \code{checkSeason} family of functions. Find
-season records with too many days hunted for cranes.
+Internal function used in \code{\link{checkSeasonCR}}. Finds season records
+with too many days hunted for cranes. Creates field \code{error2}. For
+species other than cranes, see \code{\link{tooManyDaysHunted}}.
 }
 \seealso{
 Other checking functions: 

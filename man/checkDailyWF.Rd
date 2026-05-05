@@ -12,7 +12,8 @@ checkDailyWF(dailies_df, maxbag_df)
 \item{maxbag_df}{Reference data tibble}
 }
 \description{
-Internal function to check daily survey data for waterfowl.
+Internal function to check daily survey data for waterfowl. Used in
+\code{\link{checkWF}}.
 }
 \seealso{
 Other checking functions: 

@@ -10,9 +10,10 @@ seasonOverBag(season_df)
 \item{season_df}{Season data tibble}
 }
 \description{
-Internal function used in the \code{checkSeason} family of functions. Flag
-records with average overbags in season totals more than the overbag
-tolerance.
+Internal function used in \code{\link{checkSeasonWFSCRGWK}} and
+\code{\link{checkSeasonCR}}. Flags records with average overbags in season
+totals more than the overbag tolerance. Creates field \code{error3}. For
+doves, see \code{\link{seasonOverBagDV}}.
 }
 \seealso{
 Other checking functions: 

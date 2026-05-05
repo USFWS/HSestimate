@@ -10,8 +10,8 @@ failNARetrieved(data)
 \item{data}{Season or daily data tibble}
 }
 \description{
-Internal function that fails if NA values are found in the \code{retrieved}
-field of season and/or daily data.
+Internal function that fails if \code{NA} values are found in the
+\code{retrieved} field of season and/or daily data.
 }
 \seealso{
 Other failure functions: 

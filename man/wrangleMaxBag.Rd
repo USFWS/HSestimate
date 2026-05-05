@@ -10,7 +10,8 @@ wrangleMaxBag(ref_data)
 \item{ref_data}{Reference data}
 }
 \description{
-Wrangle the raw max bag reference table.
+Wrangle the raw max bag reference table to get bag limits for all states and
+species.
 }
 \seealso{
 Other wrangling functions: 

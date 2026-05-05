@@ -12,7 +12,8 @@ checkSeasonDV(season_df, maxbag_df)
 \item{maxbag_df}{Reference data tibble}
 }
 \description{
-Internal function to check season survey data for doves.
+Internal function to check season survey data for doves. Used in
+\code{\link{surveyCheck}}.
 }
 \seealso{
 Other checking functions: 
@@ -49,6 +50,7 @@ Other season data helpers:
 
 Other dove functions: 
 \code{\link{auditDV}()},
+\code{\link{boxPlotWWDO}()},
 \code{\link{checkDailyDV}()},
 \code{\link{convertWWDO}()},
 \code{\link{dailyOverBag}()},
