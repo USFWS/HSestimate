@@ -17,9 +17,15 @@ calcSumMeanVar(totals_df, type)
 The internal \code{calcSumMeanVar} function the calculates sum, mean, and
 variance of data, given a species group.
 }
-\references{
-\url{https://github.com/USFWS/HSestimate}
+\seealso{
+Other estimation functions: 
+\code{\link{calcAllStats}()},
+\code{\link{calcFreq}()},
+\code{\link{calcVar}()},
+\code{\link{estimate}()},
+\code{\link{summarizeByState}()}
 }
 \author{
 Abby Walter, \email{abby_walter@fws.gov}
 }
+\concept{estimation functions}

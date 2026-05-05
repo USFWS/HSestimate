@@ -17,9 +17,15 @@ calcFreq(totals_df, type)
 The internal \code{calcFreq} function calculates the number of hunters by
 state and stratum.
 }
-\references{
-\url{https://github.com/USFWS/HSestimate}
+\seealso{
+Other estimation functions: 
+\code{\link{calcAllStats}()},
+\code{\link{calcSumMeanVar}()},
+\code{\link{calcVar}()},
+\code{\link{estimate}()},
+\code{\link{summarizeByState}()}
 }
 \author{
 Abby Walter, \email{abby_walter@fws.gov}
 }
+\concept{estimation functions}

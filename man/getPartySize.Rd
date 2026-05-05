@@ -13,9 +13,12 @@ getPartySize(dailies_df)
 Internal function used in \code{\link{partyHuntFinder}}. Pull out obvious
 group sizes from strings and put them in a new 'party_size' field.
 }
-\references{
-\url{https://github.com/USFWS/HSestimate}
+\seealso{
+Other party hunt functions: 
+\code{\link{partyHuntFinder}()},
+\code{\link{recalcPartyBag}()}
 }
 \author{
 Abby Walter, \email{abby_walter@fws.gov}
 }
+\concept{party hunt functions}

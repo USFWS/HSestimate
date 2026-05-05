@@ -15,9 +15,99 @@ partyHuntFinder(dailies_df, maxbag_df)
 Parse comment strings to check if a daily record was a party hunt and
 calculate revised retrieved field if value exceeds max bag.
 }
-\references{
-\url{https://github.com/USFWS/HSestimate}
+\seealso{
+Other party hunt functions: 
+\code{\link{getPartySize}()},
+\code{\link{recalcPartyBag}()}
+
+Other daily data helpers: 
+\code{\link{checkDailyDV}()},
+\code{\link{checkDailySCRGWKCR}()},
+\code{\link{checkDailyWF}()},
+\code{\link{convertSDBR}()},
+\code{\link{convertWWDO}()},
+\code{\link{dailyOverBag}()},
+\code{\link{dailyOverBagDKSD}()},
+\code{\link{dailyOverBagWWMO}()}
+
+Other error assigning functions: 
+\code{\link{dailyOverBag}()},
+\code{\link{dailyOverBagDKSD}()},
+\code{\link{dailyOverBagWWMO}()},
+\code{\link{naDaysHunted}()},
+\code{\link{seasonDNH}()},
+\code{\link{seasonOverBag}()},
+\code{\link{seasonOverBagDV}()},
+\code{\link{tooManyDaysHunted}()},
+\code{\link{tooManyDaysHuntedCR}()}
+
+Other crane functions: 
+\code{\link{audit}()},
+\code{\link{checkDailySCRGWKCR}()},
+\code{\link{checkSeasonCR}()},
+\code{\link{dailyOverBag}()},
+\code{\link{naDaysHunted}()},
+\code{\link{seasonDNH}()},
+\code{\link{seasonOverBag}()},
+\code{\link{surveyCheck}()},
+\code{\link{tooManyDaysHuntedCR}()}
+
+Other dove functions: 
+\code{\link{auditDV}()},
+\code{\link{checkDailyDV}()},
+\code{\link{checkSeasonDV}()},
+\code{\link{convertWWDO}()},
+\code{\link{dailyOverBag}()},
+\code{\link{dailyOverBagWWMO}()},
+\code{\link{naDaysHunted}()},
+\code{\link{seasonDNH}()},
+\code{\link{seasonOverBagDV}()},
+\code{\link{surveyCheck}()},
+\code{\link{tooManyDaysHunted}()}
+
+Other SCRG functions: 
+\code{\link{audit}()},
+\code{\link{checkDailySCRGWKCR}()},
+\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{dailyOverBag}()},
+\code{\link{naDaysHunted}()},
+\code{\link{seasonDNH}()},
+\code{\link{seasonOverBag}()},
+\code{\link{surveyCheck}()},
+\code{\link{tooManyDaysHunted}()}
+
+Other waterfowl functions: 
+\code{\link{checkDailyWF}()},
+\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{checkWF}()},
+\code{\link{convertSDBR}()},
+\code{\link{dailyOverBag}()},
+\code{\link{dailyOverBagDKSD}()},
+\code{\link{naDaysHunted}()},
+\code{\link{seasonDNH}()},
+\code{\link{seasonOverBag}()},
+\code{\link{surveyCheck}()},
+\code{\link{tooManyDaysHunted}()}
+
+Other woodcock functions: 
+\code{\link{audit}()},
+\code{\link{checkDailySCRGWKCR}()},
+\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{dailyOverBag}()},
+\code{\link{naDaysHunted}()},
+\code{\link{seasonDNH}()},
+\code{\link{seasonOverBag}()},
+\code{\link{surveyCheck}()},
+\code{\link{tooManyDaysHunted}()}
 }
 \author{
 Abby Walter, \email{abby_walter@fws.gov}
 }
+\concept{SCRG functions}
+\concept{crane functions}
+\concept{daily data helpers}
+\concept{dove functions}
+\concept{error assigning functions}
+\concept{party hunt functions}
+\concept{waterfowl functions}
+\concept{woodcock functions}

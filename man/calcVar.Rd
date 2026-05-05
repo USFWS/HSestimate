@@ -7,18 +7,25 @@
 calcVar(alldata_df, type)
 }
 \arguments{
-\item{alldata_df}{Data tibble}
+\item{alldata_df}{Product of \code{calcAllStats}}
 
 \item{type}{Type of calculation to run, may be one of: 'Ducks', 'Geese',
 'Brant', 'SeaDucks', 'MODO', 'WWDO', 'SACR', 'Woodcock', 'Snipe', 'Coots',
 'Rails', 'Gallinules', 'BTPI'.}
 }
 \description{
-The internal \code{calcFreq} function calculates variance and other values.
+The internal \code{calcVar} function calculates variance and other values
+using the product of \code{\link{calcAllStats}}.
 }
-\references{
-\url{https://github.com/USFWS/HSestimate}
+\seealso{
+Other estimation functions: 
+\code{\link{calcAllStats}()},
+\code{\link{calcFreq}()},
+\code{\link{calcSumMeanVar}()},
+\code{\link{estimate}()},
+\code{\link{summarizeByState}()}
 }
 \author{
 Abby Walter, \email{abby_walter@fws.gov}
 }
+\concept{estimation functions}

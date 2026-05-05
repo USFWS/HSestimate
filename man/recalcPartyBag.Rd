@@ -13,9 +13,12 @@ recalcPartyBag(dailies_df)
 Internal function used in \code{\link{partyHuntFinder}}. Recalculate
 retrieved value for party hunt over bags by dividing retrieved by party size.
 }
-\references{
-\url{https://github.com/USFWS/HSestimate}
+\seealso{
+Other party hunt functions: 
+\code{\link{getPartySize}()},
+\code{\link{partyHuntFinder}()}
 }
 \author{
 Abby Walter, \email{abby_walter@fws.gov}
 }
+\concept{party hunt functions}

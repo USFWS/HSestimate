@@ -13,9 +13,14 @@ failNARetrieved(data)
 Internal function that fails if NA values are found in the \code{retrieved}
 field of season and/or daily data.
 }
-\references{
-\url{https://github.com/USFWS/HSestimate}
+\seealso{
+Other failure functions: 
+\code{\link{failNADaysHunted}()},
+\code{\link{failStateCount}()},
+\code{\link{failspp}()},
+\code{\link{failtype}()}
 }
 \author{
 Abby Walter, \email{abby_walter@fws.gov}
 }
+\concept{failure functions}

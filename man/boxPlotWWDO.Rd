@@ -20,9 +20,6 @@ for unretrieved; otherwise, provide custom limits.}
 Create a box plot of non-zero White-winged Dove days hunted, retrieved, or
 unretrieved.
 }
-\references{
-\url{https://github.com/USFWS/HSestimate}
-}
 \author{
 Abby Walter, \email{abby_walter@fws.gov}
 }

@@ -13,9 +13,12 @@ wrangleRef(ref_data)
 Internal function used in \code{\link{wrangleMaxBag}} and
 \code{\link{wrangleDates}}, which does initial data cleaning.
 }
-\references{
-\url{https://github.com/USFWS/HSestimate}
+\seealso{
+Other wrangling functions: 
+\code{\link{wrangleDates}()},
+\code{\link{wrangleMaxBag}()}
 }
 \author{
 Abby Walter, \email{abby_walter@fws.gov}
 }
+\concept{wrangling functions}

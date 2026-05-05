@@ -14,9 +14,53 @@ checkDailyWF(dailies_df, maxbag_df)
 \description{
 Internal function to check daily survey data for waterfowl.
 }
-\references{
-\url{https://github.com/USFWS/HSestimate}
+\seealso{
+Other checking functions: 
+\code{\link{audit}()},
+\code{\link{auditDV}()},
+\code{\link{checkDailyDV}()},
+\code{\link{checkDailySCRGWKCR}()},
+\code{\link{checkSeasonCR}()},
+\code{\link{checkSeasonDV}()},
+\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{checkWF}()},
+\code{\link{dailyOverBag}()},
+\code{\link{dailyOverBagDKSD}()},
+\code{\link{dailyOverBagWWMO}()},
+\code{\link{naDaysHunted}()},
+\code{\link{seasonDNH}()},
+\code{\link{seasonOverBag}()},
+\code{\link{seasonOverBagDV}()},
+\code{\link{surveyCheck}()},
+\code{\link{tooManyDaysHunted}()},
+\code{\link{tooManyDaysHuntedCR}()}
+
+Other daily data helpers: 
+\code{\link{checkDailyDV}()},
+\code{\link{checkDailySCRGWKCR}()},
+\code{\link{convertSDBR}()},
+\code{\link{convertWWDO}()},
+\code{\link{dailyOverBag}()},
+\code{\link{dailyOverBagDKSD}()},
+\code{\link{dailyOverBagWWMO}()},
+\code{\link{partyHuntFinder}()}
+
+Other waterfowl functions: 
+\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{checkWF}()},
+\code{\link{convertSDBR}()},
+\code{\link{dailyOverBag}()},
+\code{\link{dailyOverBagDKSD}()},
+\code{\link{naDaysHunted}()},
+\code{\link{partyHuntFinder}()},
+\code{\link{seasonDNH}()},
+\code{\link{seasonOverBag}()},
+\code{\link{surveyCheck}()},
+\code{\link{tooManyDaysHunted}()}
 }
 \author{
 Abby Walter, \email{abby_walter@fws.gov}
 }
+\concept{checking functions}
+\concept{daily data helpers}
+\concept{waterfowl functions}

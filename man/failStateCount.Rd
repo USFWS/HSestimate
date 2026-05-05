@@ -16,9 +16,14 @@ failStateCount(season_df, dailies_df, n_states)
 \description{
 Internal function that fails if the number of states expected is not met.
 }
-\references{
-\url{https://github.com/USFWS/HSestimate}
+\seealso{
+Other failure functions: 
+\code{\link{failNADaysHunted}()},
+\code{\link{failNARetrieved}()},
+\code{\link{failspp}()},
+\code{\link{failtype}()}
 }
 \author{
 Abby Walter, \email{abby_walter@fws.gov}
 }
+\concept{failure functions}

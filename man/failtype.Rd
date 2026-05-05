@@ -14,9 +14,14 @@ failtype(type)
 \description{
 Internal function used to validate calculation type.
 }
-\references{
-\url{https://github.com/USFWS/HSestimate}
+\seealso{
+Other failure functions: 
+\code{\link{failNADaysHunted}()},
+\code{\link{failNARetrieved}()},
+\code{\link{failStateCount}()},
+\code{\link{failspp}()}
 }
 \author{
 Abby Walter, \email{abby_walter@fws.gov}
 }
+\concept{failure functions}

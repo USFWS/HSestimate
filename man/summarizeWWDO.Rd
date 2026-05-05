@@ -14,9 +14,14 @@ summarizeWWDO(errors_df, type)
 \description{
 Internal function used in \code{\link{convertWWDO}}.
 }
-\references{
-\url{https://github.com/USFWS/HSestimate}
+\seealso{
+Other conversion functions: 
+\code{\link{convertBrantToGeese}()},
+\code{\link{convertSDBR}()},
+\code{\link{convertSeaDuckToDuck}()},
+\code{\link{convertWWDO}()}
 }
 \author{
 Abby Walter, \email{abby_walter@fws.gov}
 }
+\concept{conversion functions}

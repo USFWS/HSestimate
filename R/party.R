@@ -13,41 +13,49 @@
 #' @param dailies_df Daily data tibble
 #' @param maxbag_df Reference data tibble
 #'
+#' @family party hunt functions
+#' @family daily data helpers
+#' @family error assigning functions
+#' @family crane functions
+#' @family dove functions
+#' @family SCRG functions
+#' @family waterfowl functions
+#' @family woodcock functions
+#'
 #' @author Abby Walter, \email{abby_walter@@fws.gov}
-#' @references \url{https://github.com/USFWS/HSestimate}
 #'
 #' @export
 
-partyHuntFinder <- 
+partyHuntFinder <-
   function(dailies_df, maxbag_df) {
-    
+
     parties <-
-      dailies_df |> 
+      dailies_df |>
       # Pull out obvious group sizes from strings and put them in a new
       # 'party_size' field
-      getPartySize() |> 
+      getPartySize() |>
       # Add max bag field
       left_join(
-        maxbag_df |> 
+        maxbag_df |>
           select(.data$sampled_state, .data$sp_group_estimated, .data$maxbag),
-        by = c("sampled_state", "sp_group_estimated")) |> 
+        by = c("sampled_state", "sp_group_estimated")) |>
       # Edit the retrieved value to be divided by the party size for records
       # that are a party hunt and the retrieved bag is greater than the max
       # daily bag
       recalcPartyBag()
-    
+
     message(
       paste(
-        "Daily: There are", nrow(filter(parties, !is.na(.data$party_size))), 
-        "parties. A total of", nrow(filter(parties, !is.na(.data$error1))), 
+        "Daily: There are", nrow(filter(parties, !is.na(.data$party_size))),
+        "parties. A total of", nrow(filter(parties, !is.na(.data$error1))),
         "bag values were recalculated.", sep = " "))
-    
+
     dailies_validated <-
-      parties |> 
-      select(-c("party_size", "maxbag", "retrieved")) |> 
-      rename(retrieved = .data$retrieved2) |> 
+      parties |>
+      select(-c("party_size", "maxbag", "retrieved")) |>
+      rename(retrieved = .data$retrieved2) |>
       relocate(.data$retrieved, .before = "unretrieved")
-    
+
     return(dailies_validated)
   }
 
@@ -61,26 +69,27 @@ partyHuntFinder <-
 #'
 #' @param dailies_df Daily data tibble
 #'
+#' @family party hunt functions
+#'
 #' @author Abby Walter, \email{abby_walter@@fws.gov}
-#' @references \url{https://github.com/USFWS/HSestimate}
 
 recalcPartyBag <-
   function(dailies_df) {
-    dailies_df |> 
+    dailies_df |>
       mutate(
-        retrieved2 = 
+        retrieved2 =
           ifelse(
             !is.na(.data$party_size) & .data$retrieved > .data$maxbag,
-            round(.data$retrieved/as.numeric(.data$party_size), 0),
+            round(.data$retrieved / as.numeric(.data$party_size), 0),
             .data$retrieved),
-        error1 = 
+        error1 =
           ifelse(
             !is.na(.data$party_size) & .data$retrieved > .data$maxbag,
             paste0(
-              "retrieved_value_recalculated: ", 
+              "retrieved_value_recalculated: ",
               as.character(.data$retrieved), "/",
               as.character(.data$party_size)),
-            NA)) 
+            NA))
   }
 
 #' Get party size
@@ -96,65 +105,104 @@ recalcPartyBag <-
 #'
 #' @param dailies_df Daily data tibble
 #'
+#' @family party hunt functions
+#'
 #' @author Abby Walter, \email{abby_walter@@fws.gov}
-#' @references \url{https://github.com/USFWS/HSestimate}
 
 getPartySize <-
   function(dailies_df) {
-    
-    dailies_df |> 
+
+    dailies_df |>
       mutate(
         # Pull out obvious group sizes from strings and put them in a new
         # 'party_size' field
-        party_size = 
+        party_size =
           case_when(
-            str_detect(.data$comment, REGEX_PARTY_NUMERIC) & 
-              .data$retrieved != 0 ~ 
+            str_detect(.data$comment, REGEX_PARTY_NUMERIC) &
+              .data$retrieved != 0 ~
               str_extract(.data$comment, REGEX_PARTY_NUMERIC),
-            str_detect(.data$comment, "(party|group) of [0-9]{1,2}") & 
-              .data$retrieved != 0~ 
+            str_detect(.data$comment, "(party|group) of [0-9]{1,2}") &
+              .data$retrieved != 0 ~
               str_extract(.data$comment, "(?<=(party|group) of )[0-9]{1,2}"),
-            str_detect(.data$comment, 
-                       paste0("((party|group) of two)|(two(?= (m(a|e)n|person|",
-                              "hunter|guy|people)))")) & .data$retrieved != 0 ~ 
+            str_detect(
+              .data$comment,
+              paste0(
+                "((party|group) of two)|(two(?= (m(a|e)n|person|",
+                "hunter|guy|people)))"
+              )
+            ) & .data$retrieved != 0 ~
               "2",
-            str_detect(.data$comment, 
-                       paste0("((party|group) of three)|(three(?= (m(a|e)n|per",
-                              "son|hunter|guy|people)))")) & 
-              .data$retrieved != 0 ~ 
+            str_detect(
+              .data$comment,
+              paste0(
+                "((party|group) of three)|(three(?= (m(a|e)n|per",
+                "son|hunter|guy|people)))"
+              )
+            ) &
+              .data$retrieved != 0 ~
               "3",
-            str_detect(.data$comment, 
-                       paste0("((party|group) of four)|(four(?= (m(a|e)n|perso",
-                              "n|hunter|guy|people)))")) & 
-              .data$retrieved != 0 ~ 
+            str_detect(
+              .data$comment,
+              paste0(
+                "((party|group) of four)|(four(?= (m(a|e)n|perso",
+                "n|hunter|guy|people)))"
+              )
+            ) &
+              .data$retrieved != 0 ~
               "4",
-            str_detect(.data$comment, 
-                       paste0("((party|group) of four)|(four(?= (m(a|e)n|perso",
-                              "n|hunter|guy|people)))")) & 
-              .data$retrieved != 0 ~ 
+            str_detect(
+              .data$comment,
+              paste0(
+                "((party|group) of four)|(four(?= (m(a|e)n|perso",
+                "n|hunter|guy|people)))"
+              )
+            ) &
+              .data$retrieved != 0 ~
               "5",
-            str_detect(.data$comment, 
-                       paste0("((party|group) of six)|(six(?= (m(a|e)n|person|",
-                              "hunter|guy|people)))")) & .data$retrieved != 0 ~ 
+            str_detect(
+              .data$comment,
+              paste0(
+                "((party|group) of six)|(six(?= (m(a|e)n|person|",
+                "hunter|guy|people)))"
+              )
+            ) & .data$retrieved != 0 ~
               "6",
-            str_detect(.data$comment, 
-                       paste0("((party|group) of seven)|(seven(?= (m(a|e)n|per",
-                              "son|hunter|guy|people)))")) & 
-              .data$retrieved != 0 ~ 
+            str_detect(
+              .data$comment,
+              paste0(
+                "((party|group) of seven)|(seven(?= (m(a|e)n|per",
+                "son|hunter|guy|people)))"
+              )
+            ) &
+              .data$retrieved != 0 ~
               "7",
-            str_detect(.data$comment, 
-                       paste0("((party|group) of eight)|(eight(?= (m(a|e)n|per",
-                              "son|hunter|guy|people)))")) & 
-              .data$retrieved != 0 ~ 
+            str_detect(
+              .data$comment,
+              paste0(
+                "((party|group) of eight)|(eight(?= (m(a|e)n|per",
+                "son|hunter|guy|people)))"
+              )
+            ) &
+              .data$retrieved != 0 ~
               "8",
-            str_detect(.data$comment, 
-                       paste0("((party|group) of nine)|(nine(?= (m(a|e)n|perso",
-                              "n|hunter|guy|people)))")) & 
-              .data$retrieved != 0 ~ 
+            str_detect(
+              .data$comment,
+              paste0(
+                "((party|group) of nine)|(nine(?= (m(a|e)n|perso",
+                "n|hunter|guy|people)))"
+              )
+            ) &
+              .data$retrieved != 0 ~
               "9",
-            str_detect(.data$comment, 
-                       paste0("((party|group) of ten)|(ten(?= (m(a|e)n|person|",
-                              "hunter|guy|people)))")) & .data$retrieved != 0 ~ 
+            str_detect(
+              .data$comment,
+              paste0(
+                "((party|group) of ten)|(ten(?= (m(a|e)n|person|",
+                "hunter|guy|people)))"
+              )
+            ) & .data$retrieved != 0 ~
               "10",
-            TRUE ~ NA_character_))
+            TRUE ~ NA_character_
+          )
+      )
   }

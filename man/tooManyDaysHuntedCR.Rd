@@ -13,9 +13,65 @@ tooManyDaysHuntedCR(crtotals_df)
 Internal function used in the \code{checkSeason} family of functions. Find
 season records with too many days hunted for cranes.
 }
-\references{
-\url{https://github.com/USFWS/HSestimate}
+\seealso{
+Other checking functions: 
+\code{\link{audit}()},
+\code{\link{auditDV}()},
+\code{\link{checkDailyDV}()},
+\code{\link{checkDailySCRGWKCR}()},
+\code{\link{checkDailyWF}()},
+\code{\link{checkSeasonCR}()},
+\code{\link{checkSeasonDV}()},
+\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{checkWF}()},
+\code{\link{dailyOverBag}()},
+\code{\link{dailyOverBagDKSD}()},
+\code{\link{dailyOverBagWWMO}()},
+\code{\link{naDaysHunted}()},
+\code{\link{seasonDNH}()},
+\code{\link{seasonOverBag}()},
+\code{\link{seasonOverBagDV}()},
+\code{\link{surveyCheck}()},
+\code{\link{tooManyDaysHunted}()}
+
+Other season data helpers: 
+\code{\link{checkSeasonCR}()},
+\code{\link{checkSeasonDV}()},
+\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{convertSDBR}()},
+\code{\link{convertWWDO}()},
+\code{\link{naDaysHunted}()},
+\code{\link{seasonDNH}()},
+\code{\link{seasonOverBag}()},
+\code{\link{seasonOverBagDV}()},
+\code{\link{tooManyDaysHunted}()}
+
+Other error assigning functions: 
+\code{\link{dailyOverBag}()},
+\code{\link{dailyOverBagDKSD}()},
+\code{\link{dailyOverBagWWMO}()},
+\code{\link{naDaysHunted}()},
+\code{\link{partyHuntFinder}()},
+\code{\link{seasonDNH}()},
+\code{\link{seasonOverBag}()},
+\code{\link{seasonOverBagDV}()},
+\code{\link{tooManyDaysHunted}()}
+
+Other crane functions: 
+\code{\link{audit}()},
+\code{\link{checkDailySCRGWKCR}()},
+\code{\link{checkSeasonCR}()},
+\code{\link{dailyOverBag}()},
+\code{\link{naDaysHunted}()},
+\code{\link{partyHuntFinder}()},
+\code{\link{seasonDNH}()},
+\code{\link{seasonOverBag}()},
+\code{\link{surveyCheck}()}
 }
 \author{
 Abby Walter, \email{abby_walter@fws.gov}
 }
+\concept{checking functions}
+\concept{crane functions}
+\concept{error assigning functions}
+\concept{season data helpers}

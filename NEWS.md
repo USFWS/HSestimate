@@ -4,6 +4,21 @@
 
 -   `Imports`
     -   Add `{purrr}`
+-   Introduced `@family` tags to function documentation to help navigate networks of helper functions and species groups. New tags include:
+    -   `crane functions`
+    -   `dove functions`
+    -   `SCRG functions`
+    -   `waterfowl functions`
+    -   `woodcock functions`
+    -   `checking functions`
+        -   `daily data helpers` - used across `check.R`, `party.R`, and `convert.R`
+        -   `season data helpers` - used across `check.R` and `convert.R`
+        -   `error assigning functions` - used across `check.R` and `party.R`
+    -   `conversion functions`
+    -   `estimation functions`
+    -   `failure functions`
+    -   `party hunt functions`
+    -   `wrangling functions`
 -   Refactor checking functions in `R/check.R`
     -   Create more internal helper functions and move most of the internal helpers back in to `R/check.R`; other files like `R/errorIDs.R` and `R/overbag.R` were deleted (see [e6656cf](https://github.com/USFWS/HSestimate/commit/e6656cf2c2560bed2732792ef858c8f70893a0bd)).
     -   Create `surveyCheck()` (previously named `editCheck()`), the exported checking function which runs internal functions depending on species group.

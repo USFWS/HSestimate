@@ -13,9 +13,14 @@ failNADaysHunted(season_df)
 Internal function that fails if NA values are found in the \code{days_hunted}
 field of season data.
 }
-\references{
-\url{https://github.com/USFWS/HSestimate}
+\seealso{
+Other failure functions: 
+\code{\link{failNARetrieved}()},
+\code{\link{failStateCount}()},
+\code{\link{failspp}()},
+\code{\link{failtype}()}
 }
 \author{
 Abby Walter, \email{abby_walter@fws.gov}
 }
+\concept{failure functions}

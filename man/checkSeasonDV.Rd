@@ -14,9 +14,55 @@ checkSeasonDV(season_df, maxbag_df)
 \description{
 Internal function to check season survey data for doves.
 }
-\references{
-\url{https://github.com/USFWS/HSestimate}
+\seealso{
+Other checking functions: 
+\code{\link{audit}()},
+\code{\link{auditDV}()},
+\code{\link{checkDailyDV}()},
+\code{\link{checkDailySCRGWKCR}()},
+\code{\link{checkDailyWF}()},
+\code{\link{checkSeasonCR}()},
+\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{checkWF}()},
+\code{\link{dailyOverBag}()},
+\code{\link{dailyOverBagDKSD}()},
+\code{\link{dailyOverBagWWMO}()},
+\code{\link{naDaysHunted}()},
+\code{\link{seasonDNH}()},
+\code{\link{seasonOverBag}()},
+\code{\link{seasonOverBagDV}()},
+\code{\link{surveyCheck}()},
+\code{\link{tooManyDaysHunted}()},
+\code{\link{tooManyDaysHuntedCR}()}
+
+Other season data helpers: 
+\code{\link{checkSeasonCR}()},
+\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{convertSDBR}()},
+\code{\link{convertWWDO}()},
+\code{\link{naDaysHunted}()},
+\code{\link{seasonDNH}()},
+\code{\link{seasonOverBag}()},
+\code{\link{seasonOverBagDV}()},
+\code{\link{tooManyDaysHunted}()},
+\code{\link{tooManyDaysHuntedCR}()}
+
+Other dove functions: 
+\code{\link{auditDV}()},
+\code{\link{checkDailyDV}()},
+\code{\link{convertWWDO}()},
+\code{\link{dailyOverBag}()},
+\code{\link{dailyOverBagWWMO}()},
+\code{\link{naDaysHunted}()},
+\code{\link{partyHuntFinder}()},
+\code{\link{seasonDNH}()},
+\code{\link{seasonOverBagDV}()},
+\code{\link{surveyCheck}()},
+\code{\link{tooManyDaysHunted}()}
 }
 \author{
 Abby Walter, \email{abby_walter@fws.gov}
 }
+\concept{checking functions}
+\concept{dove functions}
+\concept{season data helpers}

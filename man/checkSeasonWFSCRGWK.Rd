@@ -17,9 +17,79 @@ checkSeasonWFSCRGWK(season_df, maxbag_df, day_limit)
 Internal function to check season survey data for waterfowl, snipe, coot,
 rails, gallinules, and woodcock.
 }
-\references{
-\url{https://github.com/USFWS/HSestimate}
+\seealso{
+Other checking functions: 
+\code{\link{audit}()},
+\code{\link{auditDV}()},
+\code{\link{checkDailyDV}()},
+\code{\link{checkDailySCRGWKCR}()},
+\code{\link{checkDailyWF}()},
+\code{\link{checkSeasonCR}()},
+\code{\link{checkSeasonDV}()},
+\code{\link{checkWF}()},
+\code{\link{dailyOverBag}()},
+\code{\link{dailyOverBagDKSD}()},
+\code{\link{dailyOverBagWWMO}()},
+\code{\link{naDaysHunted}()},
+\code{\link{seasonDNH}()},
+\code{\link{seasonOverBag}()},
+\code{\link{seasonOverBagDV}()},
+\code{\link{surveyCheck}()},
+\code{\link{tooManyDaysHunted}()},
+\code{\link{tooManyDaysHuntedCR}()}
+
+Other season data helpers: 
+\code{\link{checkSeasonCR}()},
+\code{\link{checkSeasonDV}()},
+\code{\link{convertSDBR}()},
+\code{\link{convertWWDO}()},
+\code{\link{naDaysHunted}()},
+\code{\link{seasonDNH}()},
+\code{\link{seasonOverBag}()},
+\code{\link{seasonOverBagDV}()},
+\code{\link{tooManyDaysHunted}()},
+\code{\link{tooManyDaysHuntedCR}()}
+
+Other SCRG functions: 
+\code{\link{audit}()},
+\code{\link{checkDailySCRGWKCR}()},
+\code{\link{dailyOverBag}()},
+\code{\link{naDaysHunted}()},
+\code{\link{partyHuntFinder}()},
+\code{\link{seasonDNH}()},
+\code{\link{seasonOverBag}()},
+\code{\link{surveyCheck}()},
+\code{\link{tooManyDaysHunted}()}
+
+Other waterfowl functions: 
+\code{\link{checkDailyWF}()},
+\code{\link{checkWF}()},
+\code{\link{convertSDBR}()},
+\code{\link{dailyOverBag}()},
+\code{\link{dailyOverBagDKSD}()},
+\code{\link{naDaysHunted}()},
+\code{\link{partyHuntFinder}()},
+\code{\link{seasonDNH}()},
+\code{\link{seasonOverBag}()},
+\code{\link{surveyCheck}()},
+\code{\link{tooManyDaysHunted}()}
+
+Other woodcock functions: 
+\code{\link{audit}()},
+\code{\link{checkDailySCRGWKCR}()},
+\code{\link{dailyOverBag}()},
+\code{\link{naDaysHunted}()},
+\code{\link{partyHuntFinder}()},
+\code{\link{seasonDNH}()},
+\code{\link{seasonOverBag}()},
+\code{\link{surveyCheck}()},
+\code{\link{tooManyDaysHunted}()}
 }
 \author{
 Abby Walter, \email{abby_walter@fws.gov}
 }
+\concept{SCRG functions}
+\concept{checking functions}
+\concept{season data helpers}
+\concept{waterfowl functions}
+\concept{woodcock functions}

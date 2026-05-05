@@ -8,15 +8,16 @@
 #'
 #' @param season_df Season data tibble
 #'
+#' @family failure functions
+#'
 #' @author Abby Walter, \email{abby_walter@@fws.gov}
-#' @references \url{https://github.com/USFWS/HSestimate}
 
 failNADaysHunted <-
   function(season_df) {
 
     # Fail if there are NA values in days_hunted
     stopifnot(
-      "NA in totals days_hunted" = 
+      "NA in totals days_hunted" =
         nrow(filter(season_df, is.na(.data$days_hunted))) == 0)
   }
 
@@ -30,15 +31,16 @@ failNADaysHunted <-
 #'
 #' @param data Season or daily data tibble
 #'
+#' @family failure functions
+#'
 #' @author Abby Walter, \email{abby_walter@@fws.gov}
-#' @references \url{https://github.com/USFWS/HSestimate}
 
 failNARetrieved <-
   function(data) {
-    
+
     # Fail if there are NA values in retrieved
     stopifnot(
-      "NA in retrieved" = 
+      "NA in retrieved" =
         nrow(filter(data, is.na(.data$retrieved))) == 0)
   }
 
@@ -53,19 +55,20 @@ failNARetrieved <-
 #' @param dailies_df Daily data tibble
 #' @param n_states Number of expected states in the data
 #'
+#' @family failure functions
+#'
 #' @author Abby Walter, \email{abby_walter@@fws.gov}
-#' @references \url{https://github.com/USFWS/HSestimate}
 
 failStateCount <-
   function(season_df, dailies_df, n_states) {
     # Fail if n_states is not double
     stopifnot("n_states must be type double" = is.double(n_states))
-    
+
     # Error message if there are not all n_states in the data
-    if(nrow(distinct(season_df, .data$sampled_state)) != n_states) {
+    if (nrow(distinct(season_df, .data$sampled_state)) != n_states) {
       message(paste0("Number of states in totals file != ", n_states, "."))
     }
-    if(nrow(distinct(dailies_df, .data$sampled_state)) != n_states) {
+    if (nrow(distinct(dailies_df, .data$sampled_state)) != n_states) {
       message(paste0("Number of states in dailies file != ", n_states, "."))
     }
   }
@@ -77,16 +80,16 @@ failStateCount <-
 #' @param species Species abbreviation, may be one of: 'WF', 'DV', 'SCRG', 'WK',
 #'   or 'CR'.
 #'
+#' @family failure functions
+#'
 #' @author Abby Walter, \email{abby_walter@@fws.gov}
-#' @references \url{https://github.com/USFWS/HSestimate}
 
 failspp <-
   function(species) {
     stopifnot(
-      "`species` must be 'WF', 'DV', 'SCRG', 'WK', or 'CR'." = 
+      "`species` must be 'WF', 'DV', 'SCRG', 'WK', or 'CR'." =
         species %in% c("WF", "DV", "SCRG", "WK", "CR"))
   }
-
 
 #' Fail type
 #'
@@ -96,12 +99,28 @@ failspp <-
 #'   'Geese', 'Brant', 'SeaDucks', 'MODO', 'WWDO', 'SACR', 'Woodcock', 'Snipe',
 #'   'Coots', 'Rails', 'Gallinules', 'BTPI'.
 #'
+#' @family failure functions
+#'
 #' @author Abby Walter, \email{abby_walter@@fws.gov}
-#' @references \url{https://github.com/USFWS/HSestimate}
 
 failtype <-
   function(type) {
     stopifnot(
-      "Error: type must be one of: 'Ducks', 'Geese', 'Brant', 'SeaDucks', 'MODO', 'WWDO', 'SACR', 'Woodcock', 'Snipe', 'Coots', 'Rails', 'Gallinules', 'BTPI'" = 
-        type %in% c("Ducks", "Geese", "Brant", "SeaDucks", "MODO", "WWDO", "SACR", "Woodcock", "Snipe", "Coots", "Rails", "Gallinules", "BTPI"))
+      "Error: type must be one of: 'Ducks', 'Geese', 'Brant'... etc" =
+        type %in% c(
+          "Ducks",
+          "Geese",
+          "Brant",
+          "SeaDucks",
+          "MODO",
+          "WWDO",
+          "SACR",
+          "Woodcock",
+          "Snipe",
+          "Coots",
+          "Rails",
+          "Gallinules",
+          "BTPI"
+        )
+    )
   }

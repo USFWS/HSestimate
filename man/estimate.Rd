@@ -18,9 +18,15 @@ estimate(totals_df, spp_counts, type)
 \description{
 Estimate harvest, given a species group.
 }
-\references{
-\url{https://github.com/USFWS/HSestimate}
+\seealso{
+Other estimation functions: 
+\code{\link{calcAllStats}()},
+\code{\link{calcFreq}()},
+\code{\link{calcSumMeanVar}()},
+\code{\link{calcVar}()},
+\code{\link{summarizeByState}()}
 }
 \author{
 Abby Walter, \email{abby_walter@fws.gov}
 }
+\concept{estimation functions}

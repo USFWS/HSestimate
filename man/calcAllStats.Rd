@@ -18,11 +18,18 @@ calcAllStats(licenseSumMeanVar, licenseFreq, spp_counts, type)
 'Rails', 'Gallinules', 'BTPI'.}
 }
 \description{
-The internal \code{calcAllStats} function calculates all stats.
+The internal \code{calcAllStats} function calculates all stats using the
+products of \code{\link{calcSumMeanVar}} and \code{\link{calcFreq}}.
 }
-\references{
-\url{https://github.com/USFWS/HSestimate}
+\seealso{
+Other estimation functions: 
+\code{\link{calcFreq}()},
+\code{\link{calcSumMeanVar}()},
+\code{\link{calcVar}()},
+\code{\link{estimate}()},
+\code{\link{summarizeByState}()}
 }
 \author{
 Abby Walter, \email{abby_walter@fws.gov}
 }
+\concept{estimation functions}

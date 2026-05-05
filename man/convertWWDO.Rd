@@ -5,7 +5,7 @@
 \title{Find season or daily WWDO harvest effort in non-WWDO states and convert to
 zero}
 \usage{
-convertWWDO(data_df, type, summary = F)
+convertWWDO(data_df, type, summary = FALSE)
 }
 \arguments{
 \item{data_df}{Season or daily data tibble}
@@ -21,9 +21,52 @@ families. Find any harvest of WWDO in non-wwdo states and WWDO in edge states
 that exceed the designated limit; for these cases, change WWDO days_hunted,
 retrieved, and unretrieved values to 0.
 }
-\references{
-\url{https://github.com/USFWS/HSestimate}
+\seealso{
+Other conversion functions: 
+\code{\link{convertBrantToGeese}()},
+\code{\link{convertSDBR}()},
+\code{\link{convertSeaDuckToDuck}()},
+\code{\link{summarizeWWDO}()}
+
+Other daily data helpers: 
+\code{\link{checkDailyDV}()},
+\code{\link{checkDailySCRGWKCR}()},
+\code{\link{checkDailyWF}()},
+\code{\link{convertSDBR}()},
+\code{\link{dailyOverBag}()},
+\code{\link{dailyOverBagDKSD}()},
+\code{\link{dailyOverBagWWMO}()},
+\code{\link{partyHuntFinder}()}
+
+Other season data helpers: 
+\code{\link{checkSeasonCR}()},
+\code{\link{checkSeasonDV}()},
+\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{convertSDBR}()},
+\code{\link{naDaysHunted}()},
+\code{\link{seasonDNH}()},
+\code{\link{seasonOverBag}()},
+\code{\link{seasonOverBagDV}()},
+\code{\link{tooManyDaysHunted}()},
+\code{\link{tooManyDaysHuntedCR}()}
+
+Other dove functions: 
+\code{\link{auditDV}()},
+\code{\link{checkDailyDV}()},
+\code{\link{checkSeasonDV}()},
+\code{\link{dailyOverBag}()},
+\code{\link{dailyOverBagWWMO}()},
+\code{\link{naDaysHunted}()},
+\code{\link{partyHuntFinder}()},
+\code{\link{seasonDNH}()},
+\code{\link{seasonOverBagDV}()},
+\code{\link{surveyCheck}()},
+\code{\link{tooManyDaysHunted}()}
 }
 \author{
 Abby Walter, \email{abby_walter@fws.gov}
 }
+\concept{conversion functions}
+\concept{daily data helpers}
+\concept{dove functions}
+\concept{season data helpers}

@@ -7,7 +7,7 @@
 summarizeByState(strat_est_df, type)
 }
 \arguments{
-\item{strat_est_df}{Stratum estimates tibble}
+\item{strat_est_df}{Stratum estimates tibble, the product of \code{calcVar}}
 
 \item{type}{Type of calculation to run, may be one of: 'Ducks', 'Geese',
 'Brant', 'SeaDucks', 'MODO', 'WWDO', 'SACR', 'Woodcock', 'Snipe', 'Coots',
@@ -15,11 +15,17 @@ summarizeByState(strat_est_df, type)
 }
 \description{
 The internal \code{summarizeByState} function summarizes harvest estimates by
-state.
+state using the product of \code{\link{calcVar}}.
 }
-\references{
-\url{https://github.com/USFWS/HSestimate}
+\seealso{
+Other estimation functions: 
+\code{\link{calcAllStats}()},
+\code{\link{calcFreq}()},
+\code{\link{calcSumMeanVar}()},
+\code{\link{calcVar}()},
+\code{\link{estimate}()}
 }
 \author{
 Abby Walter, \email{abby_walter@fws.gov}
 }
+\concept{estimation functions}

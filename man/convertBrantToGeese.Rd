@@ -14,9 +14,14 @@ convertBrantToGeese(dailies_df, season_df)
 \description{
 Internal function used in \code{\link{surveyCheck}}.
 }
-\references{
-\url{https://github.com/USFWS/HSestimate}
+\seealso{
+Other conversion functions: 
+\code{\link{convertSDBR}()},
+\code{\link{convertSeaDuckToDuck}()},
+\code{\link{convertWWDO}()},
+\code{\link{summarizeWWDO}()}
 }
 \author{
 Abby Walter, \email{abby_walter@fws.gov}
 }
+\concept{conversion functions}

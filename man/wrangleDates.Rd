@@ -12,9 +12,12 @@ wrangleDates(ref_data)
 \description{
 Wrangle the raw max bag reference table.
 }
-\references{
-\url{https://github.com/USFWS/HSestimate}
+\seealso{
+Other wrangling functions: 
+\code{\link{wrangleMaxBag}()},
+\code{\link{wrangleRef}()}
 }
 \author{
 Abby Walter, \email{abby_walter@fws.gov}
 }
+\concept{wrangling functions}
