@@ -66,9 +66,10 @@ surveyCheck <-
 
 #' Check survey data
 #'
-#' Internal function that checks season and daily data to return corrections and
-#' audits. Used for cranes, snipe, coot, rails, gallinules, and woodcock. For
-#' doves, use \code{\link{auditDV}}. For waterfowl, use \code{\link{checkWF}}.
+#' Internal function used in \code{\link{surveyCheck}} that returns corrections
+#' and audits. Used for cranes, snipe, coot, rails, gallinules, and woodcock.
+#' For doves, use \code{\link{auditDV}}. For waterfowl, use
+#' \code{\link{checkWF}}.
 #'
 #' @importFrom dplyr filter
 #' @importFrom dplyr if_any
@@ -139,8 +140,8 @@ audit <-
 
 #' Check dove survey data
 #'
-#' Internal function that checks season and daily data for doves to return
-#' corrections and audits.
+#' Internal function used in \code{\link{surveyCheck}} that returns corrections
+#' and audits for doves.
 #'
 #' @importFrom dplyr filter
 #' @importFrom dplyr if_any
@@ -210,8 +211,8 @@ auditDV <-
 
 #' Check waterfowl survey data
 #'
-#' Internal function that checks season and daily data for waterfowl and returns
-#' corrections and audits in a list.
+#' Internal function used in \code{\link{surveyCheck}} that checks season and
+#' daily data for waterfowl and returns corrections and audits in a list.
 #'
 #' @importFrom dplyr filter
 #' @importFrom dplyr if_any
@@ -377,11 +378,6 @@ checkDailyDV <-
 #' Internal function to check season survey data for waterfowl, snipe, coot,
 #' rails, gallinules, and woodcock. Used in \code{\link{surveyCheck}}.
 #'
-#' @importFrom dplyr left_join
-#' @importFrom dplyr select
-#' @importFrom dplyr distinct
-#' @importFrom rlang .data
-#'
 #' @param season_df Season data tibble
 #' @param maxbag_df Reference data tibble
 #' @param day_limit Day limit for species being checked
@@ -397,16 +393,7 @@ checkDailyDV <-
 checkSeasonWFSCRGWK <-
   function(season_df, maxbag_df, day_limit) {
 
-    season_totals_df <-
-      season_df |>
-      # Join in the maxbag table
-      left_join(maxbag_df |>
-                  select(-c("state", "stateno")),
-                by = c("sampled_state", "sp_group_estimated")) |>
-      left_join(maxbag_df |>
-                  distinct(.data$sampled_state, .data$state, .data$stateno),
-                by = "sampled_state")
-
+    season_totals_df <- joinSeason(season_df, maxbag_df)
     season_check1 <- naDaysHunted(season_totals_df)
     season_check2 <- tooManyDaysHunted(season_check1, day_limit)
     season_check3 <- seasonOverBag(season_check2)
@@ -420,11 +407,6 @@ checkSeasonWFSCRGWK <-
 #' Internal function to check season survey data for cranes. Used in
 #' \code{\link{surveyCheck}}.
 #'
-#' @importFrom dplyr left_join
-#' @importFrom dplyr select
-#' @importFrom dplyr distinct
-#' @importFrom rlang .data
-#'
 #' @param season_df Season data tibble
 #' @param maxbag_df Reference data tibble
 #'
@@ -437,16 +419,7 @@ checkSeasonWFSCRGWK <-
 checkSeasonCR <-
   function(season_df, maxbag_df) {
 
-    season_totals_df <-
-      season_df |>
-      # Join in the maxbag table
-      left_join(maxbag_df |>
-                  select(-c("state", "stateno")),
-                by = c("sampled_state", "sp_group_estimated")) |>
-      left_join(maxbag_df |>
-                  distinct(.data$sampled_state, .data$state, .data$stateno),
-                by = "sampled_state")
-
+    season_totals_df <- joinSeason(season_df, maxbag_df)
     season_check1 <- naDaysHunted(season_totals_df)
     season_check2 <- tooManyDaysHuntedCR(season_check1)
     season_check3 <- seasonOverBag(season_check2)
@@ -460,11 +433,6 @@ checkSeasonCR <-
 #' Internal function to check season survey data for doves. Used in
 #' \code{\link{surveyCheck}}.
 #'
-#' @importFrom dplyr left_join
-#' @importFrom dplyr select
-#' @importFrom dplyr distinct
-#' @importFrom rlang .data
-#'
 #' @param season_df Season data tibble
 #' @param maxbag_df Reference data tibble
 #'
@@ -477,16 +445,7 @@ checkSeasonCR <-
 checkSeasonDV <-
   function(season_df, maxbag_df) {
 
-    season_totals_df <-
-      season_df |>
-      # Join in the maxbag table
-      left_join(maxbag_df |>
-                  select(-c("state", "stateno")),
-                by = c("sampled_state", "sp_group_estimated")) |>
-      left_join(maxbag_df |>
-                  distinct(.data$sampled_state, .data$state, .data$stateno),
-                by = "sampled_state")
-
+    season_totals_df <- joinSeason(season_df, maxbag_df)
     season_totals_df_wwdo <- convertWWDO(season_totals_df, type = "season")
     season_check1 <- naDaysHunted(season_totals_df_wwdo)
     season_check2 <- tooManyDaysHunted(season_check1, REF_DAY_LIMIT_DV)
@@ -494,6 +453,36 @@ checkSeasonDV <-
     season_check4 <- seasonDNH(season_check3)
 
     return(season_check4)
+  }
+
+#' Join maxbag to season data
+#'
+#' Internal function to join in maxbag fields to season data. Used in
+#' \code{\link{checkSeasonWFSCRGWK}}, \code{\link{checkSeasonDV}}, and
+#' \code{\link{checkSeasonCR}}.
+#'
+#' @importFrom dplyr left_join
+#' @importFrom dplyr select
+#' @importFrom dplyr distinct
+#' @importFrom rlang .data
+#'
+#' @param season_df Season data tibble
+#' @param maxbag_df Reference data tibble
+#'
+#' @family checking functions
+#' @family season data helpers
+#'
+#' @author Abby Walter, \email{abby_walter@@fws.gov}
+
+joinSeason <-
+  function(season_df, maxbag_df) {
+    season_df |>
+      left_join(maxbag_df |>
+                  select(-c("state", "stateno")),
+                by = c("sampled_state", "sp_group_estimated")) |>
+      left_join(maxbag_df |>
+                  distinct(.data$sampled_state, .data$state, .data$stateno),
+                by = "sampled_state")
   }
 
 #' Find records with NA days hunted

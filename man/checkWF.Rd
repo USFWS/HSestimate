@@ -14,8 +14,8 @@ checkWF(dailies_df, season_df, maxbag_df)
 \item{maxbag_df}{Reference data tibble}
 }
 \description{
-Internal function that checks season and daily data for waterfowl and returns
-corrections and audits in a list.
+Internal function used in \code{\link{surveyCheck}} that checks season and
+daily data for waterfowl and returns corrections and audits in a list.
 }
 \seealso{
 Other checking functions: 
@@ -30,6 +30,7 @@ Other checking functions:
 \code{\link{dailyOverBag}()},
 \code{\link{dailyOverBagDKSD}()},
 \code{\link{dailyOverBagWWMO}()},
+\code{\link{joinSeason}()},
 \code{\link{naDaysHunted}()},
 \code{\link{seasonDNH}()},
 \code{\link{seasonOverBag}()},

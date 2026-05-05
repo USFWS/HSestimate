@@ -30,6 +30,7 @@ Other checking functions:
 \code{\link{checkWF}()},
 \code{\link{dailyOverBagDKSD}()},
 \code{\link{dailyOverBagWWMO}()},
+\code{\link{joinSeason}()},
 \code{\link{naDaysHunted}()},
 \code{\link{seasonDNH}()},
 \code{\link{seasonOverBag}()},

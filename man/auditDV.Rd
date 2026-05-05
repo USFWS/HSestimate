@@ -12,8 +12,8 @@ auditDV(daily_check, season_check)
 \item{season_check}{Tibble output from a \code{checkSeason} function}
 }
 \description{
-Internal function that checks season and daily data for doves to return
-corrections and audits.
+Internal function used in \code{\link{surveyCheck}} that returns corrections
+and audits for doves.
 }
 \seealso{
 Other checking functions: 
@@ -28,6 +28,7 @@ Other checking functions:
 \code{\link{dailyOverBag}()},
 \code{\link{dailyOverBagDKSD}()},
 \code{\link{dailyOverBagWWMO}()},
+\code{\link{joinSeason}()},
 \code{\link{naDaysHunted}()},
 \code{\link{seasonDNH}()},
 \code{\link{seasonOverBag}()},

@@ -38,6 +38,7 @@ Other season data helpers:
 \code{\link{checkSeasonDV}()},
 \code{\link{checkSeasonWFSCRGWK}()},
 \code{\link{convertWWDO}()},
+\code{\link{joinSeason}()},
 \code{\link{naDaysHunted}()},
 \code{\link{seasonDNH}()},
 \code{\link{seasonOverBag}()},

@@ -12,9 +12,10 @@ audit(daily_check, season_check)
 \item{season_check}{Tibble output from a \code{checkSeason} function}
 }
 \description{
-Internal function that checks season and daily data to return corrections and
-audits. Used for cranes, snipe, coot, rails, gallinules, and woodcock. For
-doves, use \code{\link{auditDV}}. For waterfowl, use \code{\link{checkWF}}.
+Internal function used in \code{\link{surveyCheck}} that returns corrections
+and audits. Used for cranes, snipe, coot, rails, gallinules, and woodcock.
+For doves, use \code{\link{auditDV}}. For waterfowl, use
+\code{\link{checkWF}}.
 }
 \seealso{
 Other checking functions: 
@@ -29,6 +30,7 @@ Other checking functions:
 \code{\link{dailyOverBag}()},
 \code{\link{dailyOverBagDKSD}()},
 \code{\link{dailyOverBagWWMO}()},
+\code{\link{joinSeason}()},
 \code{\link{naDaysHunted}()},
 \code{\link{seasonDNH}()},
 \code{\link{seasonOverBag}()},
