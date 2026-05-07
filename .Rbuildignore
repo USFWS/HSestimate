@@ -8,3 +8,5 @@
 ^\.gitignore$
 ^\.git$
 ^\.lintr$
+^\.positai$
+^\.claude$
