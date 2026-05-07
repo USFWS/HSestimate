@@ -1,6 +1,10 @@
-#' Estimate harvest
+#' Estimate harvest for a species group
 #'
-#' Estimate harvest, given a species group.
+#' Estimate species group harvest; sum the weighted stratum means.
+#'
+#' @importFrom dplyr rename
+#' @importFrom rlang sym
+#' @importFrom rlang :=
 #'
 #' @param totals_df Data tibble
 #' @param spp_counts Count data tibble
@@ -14,10 +18,24 @@
 #'
 #' @export
 
-estimate <-
+speciesEstimate <-
   function(totals_df, spp_counts, type) {
 
-    # Get stats for all licensed hunters
+    if (type %in% c("Snipe", "Coots")) {
+      spp_counts <-
+        spp_counts |>
+        rename(
+          !!sym(paste0("estimation_stratum_", type)) := "estimation_stratum_SC")
+
+    } else if (type %in% c("Rails", "Gallinules")) {
+      spp_counts <-
+        spp_counts |>
+        rename(
+          !!sym(paste0("estimation_stratum_", type)) := "estimation_stratum_RG")
+
+    }
+
+    # Get stats for all registered/licensed hunters
     licenseSumMeanVar <- calcSumMeanVar(totals_df, type)
 
     # Get number of hunters by state and stratum
@@ -30,7 +48,7 @@ estimate <-
     strat_est <- calcVar(all_stats, type)
 
     # Sum the weighted stratum means
-    est_tot <- summarizeByState(strat_est, type)
+    est_tot <- stateTotals(strat_est, type)
 
     return(est_tot)
   }
@@ -264,7 +282,7 @@ calcVar <-
 
 #' Summarize estimates by state
 #'
-#' The internal \code{summarizeByState} function summarizes harvest estimates by
+#' The internal \code{stateTotals} function summarizes harvest estimates by
 #' state using the product of \code{\link{calcVar}}.
 #'
 #' @importFrom dplyr summarize
@@ -280,7 +298,7 @@ calcVar <-
 #'
 #' @author Abby Walter, \email{abby_walter@@fws.gov}
 
-summarizeByState <-
+stateTotals <-
   function(strat_est_df, type) {
     failtype(type)
 
@@ -306,3 +324,678 @@ summarizeByState <-
         .by = "state") |>
       rename(BigN = "stratum_count")
   }
+
+#' Assign flyway
+#'
+#' The internal \code{assignFlyway} function assigns flyway abbreviations and
+#' flyway numbers to estimation data. To assign flyways to sea duck or brant
+#' estimation data, see \code{\link{assignFlywaySDBR}}.
+#'
+#' @importFrom dplyr mutate
+#' @importFrom dplyr case_when
+#' @importFrom dplyr relocate
+#' @importFrom rlang .data
+#'
+#' @param data Estimation data
+#'
+#' @family estimation functions
+#'
+#' @author Abby Walter, \email{abby_walter@@fws.gov}
+
+assignFlyway <-
+  function(data) {
+    data |> 
+      # Define flyway units
+      mutate(
+        flyway = 
+          case_when(
+            .data$state %in% REF_STATES_AF ~ "AF",
+            .data$state %in% REF_STATES_MF ~ "MF",
+            .data$state %in% REF_STATES_CF ~ "CF",
+            .data$state %in% REF_STATES_PF ~ "PF",
+            .data$state == "AK" ~ "AK",
+            TRUE ~ NA_character_),
+        flyNo = 
+          case_when(
+            .data$flyway == "AF" ~ 1,
+            .data$flyway == "MF" ~ 2,
+            .data$flyway == "CF" ~ 3,
+            .data$flyway == "PF" ~ 4,
+            .data$flyway == "AK" ~ 5,
+            TRUE ~ NA_integer_)) |> 
+      relocate(.data$flyway, .before = "state") |> 
+      relocate(.data$flyNo, .after = "flyway")
+  }
+
+#' Assign flyway to sea duck and brant estimates
+#'
+#' The internal \code{assignFlywaySDBR} function assigns flyway abbreviations
+#' and flyway numbers to sea duck and brant estimation data.
+#'
+#' @importFrom dplyr mutate
+#' @importFrom dplyr case_when
+#' @importFrom dplyr relocate
+#' @importFrom rlang .data
+#'
+#' @param data Estimation data
+#'
+#' @family estimation functions
+#'
+#' @author Abby Walter, \email{abby_walter@@fws.gov}
+
+assignFlywaySDBR <-
+  function(data) {
+    data |> 
+      # Define flyway units
+      mutate(
+        flyway = 
+          case_when(
+            .data$state %in% REF_STATES_SD_AF ~ "AF",
+            .data$state %in% c("CA", "OR", "WA") ~ "PF",
+            .data$state == "AK" ~ "AK",
+            TRUE ~ NA_character_),
+        flyNo = 
+          case_when(
+            .data$flyway == "AF" ~ 1,
+            .data$flyway == "PF" ~ 4,
+            .data$flyway == "AK" ~ 5,
+            TRUE ~ NA_integer_)) |> 
+      relocate(.data$flyway, .before = "state") |> 
+      relocate(.data$flyNo, .after = "flyway")
+  }
+
+#' Assign management units
+#'
+#' The internal \code{assignMgmtUnit} function assigns management unit abbreviations
+#' and management unit numbers to estimation data.
+#'
+#' @importFrom dplyr left_join
+#' @importFrom dplyr mutate
+#' @importFrom dplyr case_when
+#' @importFrom dplyr relocate
+#' @importFrom rlang .data
+#'
+#' @param data Estimation data
+#' @param management_units Tibble of management units
+#'
+#' @family estimation functions
+#'
+#' @author Abby Walter, \email{abby_walter@@fws.gov}
+
+assignMgmtUnit <-
+  function(data, management_units) {
+    data |> 
+      # Define management units
+      left_join(management_units, by = "state") |> 
+      mutate(
+        mu_no = 
+          case_when(
+            .data$mu_abbr == "EMU" ~ 1, 
+            .data$mu_abbr == "CMU" ~ 2, 
+            .data$mu_abbr == "WMU" ~ 3,
+            TRUE ~ NA_integer_)) |> 
+      relocate(.data$mu_abbr, .before = "state") |> 
+      relocate(.data$mu_no, .before = "mu_abbr")
+  }
+
+#' Hunter estimates
+#'
+#' The internal \code{hunterEstimates} function calculates variables for
+#' state-level estimates.
+#'
+#' @importFrom dplyr mutate
+#' @importFrom rlang .data
+#'
+#' @param data Estimation data
+#'
+#' @family estimation functions
+#'
+#' @author Abby Walter, \email{abby_walter@@fws.gov}
+
+hunterEstimates <-
+  function(data) {
+    data |>
+      mutate(
+        # Denominator for variance of state proportions
+        bign_squared = 
+          .data$BigN^2,
+        # State proportion of active hunters
+        s_t_p_active_hunters = 
+          .data$t_p_active_hunters / .data$BigN,
+        # State proportion of successful hunters
+        s_t_p_successful_hunters = 
+          .data$t_p_successful_hunters / .data$BigN,
+        # Variance of state proportion of active hunters
+        var_s_t_p_active_hunters = 
+          .data$var_t_p_active_hunters / .data$bign_squared,
+        # Variance of state proportion of successful hunters
+        var_s_t_p_successful_hunters = 
+          .data$var_t_p_successful_hunters / .data$bign_squared
+      )
+  }
+
+#' Calculate harvest estimation fields
+#'
+#' The internal \code{harvestEstimates} function calculates variables for estimates.
+#'
+#' @importFrom dplyr mutate
+#' @importFrom rlang .data
+#'
+#' @param data Estimation data
+#'
+#' @family estimation functions
+#'
+#' @author Abby Walter, \email{abby_walter@@fws.gov}
+
+harvestEstimates <-
+  function(data) {
+    data |>
+      mutate(
+        # Bag per active hunter
+        retrieved_per_active_hunter = 
+          .data$t_retrieved / .data$t_p_active_hunters,
+        # Variance for bag per active hunter
+        var_retrieved_per_active_hunter =
+          (.data$var_t_retrieved +
+              (.data$t_retrieved * 
+                 .data$t_retrieved * 
+                 .data$var_t_p_active_hunters) /
+              (.data$t_p_active_hunters * .data$t_p_active_hunters)) /
+          (.data$t_p_active_hunters * .data$t_p_active_hunters),
+        # Bag per hunter standard error
+        se_retrieved_per_active_hunter = 
+          sqrt(.data$var_retrieved_per_active_hunter),
+        # Bag per hunter 95% confidence interval
+        ci_retrieved_per_active_hunter = 
+          1.96 * .data$se_retrieved_per_active_hunter,
+        # Bag per hunter +/- % 95%
+        pct_ci_retrieved_per_active_hunter = 
+          100 * (.data$ci_retrieved_per_active_hunter / 
+                   .data$retrieved_per_active_hunter),
+        # Days hunted standard error
+        se_t_days_hunted = sqrt(.data$var_t_days_hunted),
+        # Days hunted 95% confidence interval
+        ci_t_days_hunted  = 1.96 * .data$se_t_days_hunted,
+        # Days hunted +/- % 95%
+        pct_ci_t_days_hunted = 
+          100 * (.data$ci_t_days_hunted / .data$t_days_hunted),
+        # Retrieved standard error
+        se_t_retrieved = sqrt(.data$var_t_retrieved),
+        # Retrieved 95% confidence interval
+        ci_t_retrieved = 1.96 * .data$se_t_retrieved,
+        # Retrieved +/- % 95%
+        pct_ci_t_retrieved = 
+          100 * (.data$ci_t_retrieved / .data$t_retrieved),
+        # Unretrieved standard error
+        se_t_unretrieved = sqrt(.data$var_t_unretrieved),
+        # Unretrieved 95% confidence interval
+        ci_t_unretrieved = 1.96 * .data$se_t_unretrieved,
+        # Unretrieved +/- % 95%
+        pct_ci_t_unretrieved = 
+          100 * (.data$ci_t_unretrieved / .data$t_unretrieved),
+        # Proportion of active hunters standard error
+        pact_se = sqrt(.data$var_s_t_p_active_hunters),
+        # Proportion of active hunters 95% confidence interval
+        ci_pact = 1.96 * .data$pact_se,
+        # Proportion of active hunters +/- % 95%
+        percCIActHunt = 100 * (.data$ci_pact / .data$s_t_p_active_hunters),
+        # Proportion of successful Hunters standard error
+        psuc_se = sqrt(.data$var_s_t_p_successful_hunters),
+        # Proportion of successful hunters 95% confidence interval
+        ci_psuc = 1.96 * .data$psuc_se,
+        # Proportion of successful hunters +/- % 95%
+        cipers = 100 * (.data$ci_psuc / .data$s_t_p_successful_hunters)
+      )
+  }
+
+#' Select fields for state level estimates
+#'
+#' The internal \code{stateSelect} function selects desired state level
+#' estimate data fields.
+#'
+#' @importFrom dplyr select
+#'
+#' @param data Estimation data
+#'
+#' @family estimation functions
+#'
+#' @author Abby Walter, \email{abby_walter@@fws.gov}
+
+stateSelect <-
+  function(data) {
+    data |>
+      select(
+        c(
+          "flyway",
+          "flyNo",
+          "state",
+          "BigN",
+          "t_days_hunted",
+          "var_t_days_hunted",
+          "pct_ci_t_days_hunted",
+          "t_retrieved",
+          "var_t_retrieved",
+          "pct_ci_t_retrieved",
+          "t_unretrieved",
+          "var_t_unretrieved",
+          "pct_ci_t_unretrieved",
+          "t_p_active_hunters",
+          "var_t_p_active_hunters",
+          "percCIActHunt",
+          "retrieved_per_active_hunter",
+          "var_retrieved_per_active_hunter",
+          "pct_ci_retrieved_per_active_hunter"
+        )
+      )
+  }
+
+#' Select fields for management unit level estimates
+#'
+#' The internal \code{mgmtUnitSelect} function selects desired management unit level
+#' estimate data fields.
+#'
+#' @importFrom dplyr select
+#'
+#' @param data Estimation data
+#'
+#' @family estimation functions
+#'
+#' @author Abby Walter, \email{abby_walter@@fws.gov}
+
+mgmtUnitSelect <-
+  function(data) {
+    data |>
+      select(
+        c(
+          "mu_abbr",
+          "mu_no",
+          "state",
+          "BigN",
+          "t_days_hunted",
+          "var_t_days_hunted",
+          "pct_ci_t_days_hunted",
+          "t_retrieved",
+          "var_t_retrieved",
+          "pct_ci_t_retrieved",
+          "t_unretrieved",
+          "var_t_unretrieved",
+          "pct_ci_t_unretrieved",
+          "t_p_active_hunters",
+          "var_t_p_active_hunters",
+          "percCIActHunt",
+          "retrieved_per_active_hunter",
+          "var_retrieved_per_active_hunter",
+          "pct_ci_retrieved_per_active_hunter"
+        )
+      )
+  }
+
+#' Flyway estimates
+#'
+#' The internal \code{flywayTotals} function summarizes estimates to the flyway
+#' level.
+#'
+#' @importFrom dplyr summarize
+#' @importFrom dplyr across
+#'
+#' @param data Estimation data
+#'
+#' @family estimation functions
+#'
+#' @author Abby Walter, \email{abby_walter@@fws.gov}
+
+flywayTotals <-
+  function(data) {
+    data |>
+      summarize(
+        across(
+          c(
+            "BigN",
+            "t_days_hunted",
+            "var_t_days_hunted",
+            "t_retrieved",
+            "var_t_retrieved",
+            "t_unretrieved",
+            "var_t_unretrieved",
+            "t_p_active_hunters",
+            "var_t_p_active_hunters",
+            "retrieved_per_active_hunter",
+            "var_retrieved_per_active_hunter"
+          ), 
+          \(x) sum(x, na.rm = T)),
+        .by = "flyway")
+  }
+
+#' Management unit estimates
+#'
+#' The internal \code{mgmtUnitTotals} function summarizes estimates to the management
+#' unit level.
+#'
+#' @importFrom dplyr filter
+#' @importFrom dplyr group_by
+#' @importFrom dplyr summarize
+#' @importFrom dplyr across
+#' @importFrom rlang .data
+#'
+#' @param data Estimation data
+#'
+#' @family estimation functions
+#'
+#' @author Abby Walter, \email{abby_walter@@fws.gov}
+
+mgmtUnitTotals <-
+  function(data){
+    data |>
+      filter(!is.na(.data$mu_abbr)) |> 
+      summarize(
+        across(
+          c(
+            "BigN",
+            "t_days_hunted",
+            "var_t_days_hunted",
+            "t_retrieved",
+            "var_t_retrieved",
+            "t_unretrieved",
+            "var_t_unretrieved",
+            "t_p_active_hunters",
+            "var_t_p_active_hunters",
+            "retrieved_per_active_hunter",
+            "var_retrieved_per_active_hunter"
+          ), 
+          \(x) sum(x, na.rm = T)),
+        .by = c("mu_abbr", "mu_no"))
+  }
+
+#' Final flyway estimates
+#'
+#' The internal \code{flywayFinal} function produces the final flyway harvest
+#' estimates. For the final estimates for sea ducks and brant, see
+#' \code{\link{flywayFinalSDBR}}.
+#'
+#' @importFrom dplyr mutate
+#' @importFrom dplyr case_when
+#' @importFrom dplyr select
+#' @importFrom rlang .data
+#'
+#' @param data Estimation data
+#'
+#' @family estimation functions
+#'
+#' @author Abby Walter, \email{abby_walter@@fws.gov}
+
+flywayFinal <-
+  function(data) {
+    data |> 
+      mutate(
+        sday = sqrt(.data$var_t_days_hunted),
+        ciDay = 1.96 * .data$sday,
+        pct_ci_t_days_hunted = 100 * .data$ciDay / .data$t_days_hunted,
+        sbag = sqrt(.data$var_t_retrieved),
+        ciBag = 1.96 * .data$sbag,
+        flyway_pct_ci_t_retrieved = 100 * .data$ciBag / .data$t_retrieved,
+        sdown = sqrt(.data$var_t_unretrieved),
+        ciDown = 1.96 * .data$sdown,
+        fpct_ci_t_unretrieved = 100 * .data$ciDown / .data$t_unretrieved,
+        # Not redundant
+        flyNo =
+          case_when(
+            .data$flyway == "AF" ~ 1,
+            .data$flyway == "MF" ~ 2,
+            .data$flyway == "CF" ~ 3,
+            .data$flyway == "PF" ~ 4,
+            .data$flyway == "AK" ~ 5,
+            TRUE ~ NA_integer_
+          ),
+        fstate = .data$flyway
+      ) |> 
+      select(
+        c(
+          "flyway",
+          "flyNo",
+          state = "fstate",
+          "BigN",
+          "t_days_hunted",
+          "var_t_days_hunted",
+          "pct_ci_t_days_hunted",
+          "t_retrieved",
+          "var_t_retrieved",
+          pct_ci_t_retrieved = "flyway_pct_ci_t_retrieved",
+          "t_unretrieved",
+          "var_t_unretrieved",
+          pct_ci_t_unretrieved = "fpct_ci_t_unretrieved",
+          "t_p_active_hunters"
+        )
+      ) 
+  }
+
+#' Final flyway estimates for sea duck and brant
+#'
+#' The internal \code{flywayFinalSDBR} function produces the final flyway
+#' harvest estimates for sea ducks and brant.
+#'
+#' @importFrom dplyr mutate
+#' @importFrom dplyr case_when
+#' @importFrom dplyr select
+#' @importFrom rlang .data
+#'
+#' @param data Estimation data
+#'
+#' @family estimation functions
+#'
+#' @author Abby Walter, \email{abby_walter@@fws.gov}
+
+flywayFinalSDBR <-
+  function(data) {
+    data |>
+      mutate(
+        sday = sqrt(.data$var_t_days_hunted),
+        ciDay = 1.96 * .data$sday,
+        fpercCIDay = 100 * .data$ciDay / .data$t_days_hunted,
+        sbag = sqrt(.data$var_t_retrieved),
+        ciBag = 1.96 * .data$sbag,
+        flyway_pct_ci_t_retrieved = 100 * .data$ciBag / .data$t_retrieved,
+        sdown = sqrt(.data$var_t_unretrieved),
+        ciDown = 1.96 * .data$sdown,
+        fpct_ci_t_unretrieved = 100 * .data$ciDown / .data$t_unretrieved,
+        # Not redundant
+        flyNo =
+          case_when(
+            .data$flyway == "AF" ~ 1,
+            .data$flyway == "PF" ~ 4,
+            .data$flyway == "AK" ~ 5,
+            TRUE ~ NA_integer_
+          ),
+        fstate = .data$flyway
+      ) |>
+      select(
+        c(
+          "flyway",
+          "flyNo",
+          state = "fstate",
+          "BigN",
+          "t_days_hunted",
+          "var_t_days_hunted",
+          pct_ci_t_days_hunted = "fpercCIDay",
+          "t_retrieved",
+          "var_t_retrieved",
+          pct_ci_t_retrieved = "flyway_pct_ci_t_retrieved",
+          "t_unretrieved",
+          "var_t_unretrieved",
+          pct_ci_t_unretrieved = "fpct_ci_t_unretrieved",
+          "t_p_active_hunters"
+        )
+      ) 
+  }
+
+#' Final management unit estimates
+#'
+#' The internal \code{mgmtUnitFinal} function produces the final management unit
+#' harvest estimates.
+#'
+#' @importFrom dplyr mutate
+#' @importFrom dplyr select
+#' @importFrom dplyr rename_with
+#' @importFrom stringr str_replace
+#' @importFrom rlang .data
+#'
+#' @param data Estimation data
+#'
+#' @family estimation functions
+#'
+#' @author Abby Walter, \email{abby_walter@@fws.gov}
+
+mgmtUnitFinal <-
+  function(data) {
+    data |> 
+      mutate(
+        state = .data$mu_abbr,
+        sday = sqrt(.data$var_t_days_hunted),
+        ciDay = 1.96 * .data$sday,
+        pct_ci_t_days_hunted = 100 * .data$ciDay / .data$t_days_hunted,
+        sbag = sqrt(.data$var_t_retrieved),
+        ciBag = 1.96 * .data$sbag,
+        mu_pct_ci_t_retrieved = 100 * .data$ciBag / .data$t_retrieved,
+        sdown = sqrt(.data$var_t_unretrieved),
+        ciDown = 1.96 * .data$sdown,
+        mu_pct_ci_t_unretrieved = 100 * .data$ciDown / .data$t_unretrieved
+      ) |> 
+      select(
+        c(
+          "mu_abbr",
+          "mu_no",
+          "state",
+          "BigN",
+          "t_days_hunted",
+          "var_t_days_hunted",
+          "pct_ci_t_days_hunted",
+          "t_retrieved",
+          "var_t_retrieved",
+          "mu_pct_ci_t_retrieved",
+          "t_unretrieved",
+          "var_t_unretrieved",
+          "mu_pct_ci_t_unretrieved",
+          "t_p_active_hunters"
+        )
+      ) |> 
+      rename_with(\(x) str_replace(x, "^mu\\_p", "p"))
+  }
+
+#' Final United States estimates
+#'
+#' The internal \code{usFinal} function produces the final national harvest
+#' estimates. For the final estimates for doves, see \code{\link{usFinalDV}}.
+#'
+#' @importFrom dplyr mutate
+#' @importFrom dplyr group_by
+#' @importFrom dplyr summarize
+#' @importFrom dplyr across
+#' @importFrom dplyr relocate
+#' @importFrom dplyr select
+#' @importFrom rlang .data
+#'
+#' @param data Estimation data
+#'
+#' @family estimation functions
+#'
+#' @author Abby Walter, \email{abby_walter@@fws.gov}
+
+usFinal <-
+  function(data) {
+    data |> 
+      mutate(flyNo = 6) |>
+      group_by(.data$flyNo) |>
+      summarize(
+        across(
+          c(
+            "BigN",
+            "t_days_hunted",
+            "var_t_days_hunted",
+            "t_retrieved",
+            "var_t_retrieved",
+            "t_unretrieved",
+            "var_t_unretrieved",
+            "t_p_active_hunters"
+          ), 
+          \(x) sum(x, na.rm = TRUE))
+      ) |> 
+      mutate(
+        ussDay = sqrt(.data$var_t_days_hunted),
+        usciDay = 1.96 * .data$ussDay,
+        pct_ci_t_days_hunted = 100 * .data$usciDay / .data$t_days_hunted,
+        ussBag = sqrt(.data$var_t_retrieved),
+        usciBag = 1.96 * .data$ussBag,
+        pct_ci_t_retrieved = 100 * .data$usciBag / .data$t_retrieved,
+        ussDown = sqrt(.data$var_t_unretrieved),
+        usciDown = 1.96 * .data$ussDown,
+        pct_ci_t_unretrieved = 100 * .data$usciDown / .data$t_unretrieved,
+        flyway = "US",
+        state = "US"
+      ) |> 
+      relocate(.data$flyway, .before = "flyNo") |>
+      relocate(.data$state, .after = "flyNo") |>
+      relocate(.data$pct_ci_t_days_hunted, .after = "var_t_days_hunted") |>
+      relocate(.data$pct_ci_t_retrieved, .after = "var_t_retrieved") |>
+      relocate(.data$pct_ci_t_unretrieved, .after = "var_t_unretrieved") |>
+      select(
+        -c("ussDay", "usciDay", "ussBag", "usciBag", "ussDown", "usciDown"))
+  }
+
+#' Final United States estimates for doves
+#'
+#' The internal \code{ususFinalDVFinal} function produces the final national
+#' harvest estimates for Mourning Doves and White-winged Doves.
+#'
+#' @importFrom dplyr mutate
+#' @importFrom dplyr group_by
+#' @importFrom dplyr summarize
+#' @importFrom dplyr across
+#' @importFrom dplyr relocate
+#' @importFrom dplyr select
+#' @importFrom rlang .data
+#'
+#' @param data Estimation data
+#'
+#' @family estimation functions
+#'
+#' @author Abby Walter, \email{abby_walter@@fws.gov}
+
+usFinalDV <-
+  function(data) {
+    data |> 
+      mutate(mu_abbr = "US") |>
+      group_by(.data$mu_abbr) |>
+      summarize(
+        across(
+          c(
+            "BigN",
+            "t_days_hunted",
+            "var_t_days_hunted",
+            "t_retrieved",
+            "var_t_retrieved",
+            "t_unretrieved",
+            "var_t_unretrieved",
+            "t_p_active_hunters"
+          ), 
+          \(x) sum(x, na.rm = TRUE))
+      ) |> 
+      mutate(
+        ussDay = sqrt(.data$var_t_days_hunted),
+        usciDay = 1.96 * .data$ussDay,
+        pct_ci_t_days_hunted = 100 * .data$usciDay / .data$t_days_hunted,
+        ussBag = sqrt(.data$var_t_retrieved),
+        usciBag = 1.96 * .data$ussBag,
+        pct_ci_t_retrieved = 100 * .data$usciBag / .data$t_retrieved,
+        ussDown = sqrt(.data$var_t_unretrieved),
+        usciDown = 1.96 * .data$ussDown,
+        pct_ci_t_unretrieved = 100 * .data$usciDown / .data$t_unretrieved,
+        state = "US",
+        mu_no = 6
+      ) |> 
+      relocate(.data$state, .after = "mu_abbr") |> 
+      relocate(.data$pct_ci_t_days_hunted, .after = "var_t_days_hunted") |> 
+      relocate(.data$pct_ci_t_retrieved, .after = "var_t_retrieved") |> 
+      relocate(.data$pct_ci_t_unretrieved, .after = "var_t_unretrieved") |> 
+      select(
+        -c("ussDay", "usciDay", "ussBag", "usciBag", "ussDown", "usciDown"))
+  }
+

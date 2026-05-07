@@ -19,11 +19,25 @@ using the product of \code{\link{calcAllStats}}.
 }
 \seealso{
 Other estimation functions: 
+\code{\link{assignFlyway}()},
+\code{\link{assignFlywaySDBR}()},
+\code{\link{assignMgmtUnit}()},
 \code{\link{calcAllStats}()},
 \code{\link{calcFreq}()},
 \code{\link{calcSumMeanVar}()},
-\code{\link{estimate}()},
-\code{\link{summarizeByState}()}
+\code{\link{flywayFinal}()},
+\code{\link{flywayFinalSDBR}()},
+\code{\link{flywayTotals}()},
+\code{\link{harvestEstimates}()},
+\code{\link{hunterEstimates}()},
+\code{\link{mgmtUnitFinal}()},
+\code{\link{mgmtUnitSelect}()},
+\code{\link{mgmtUnitTotals}()},
+\code{\link{speciesEstimate}()},
+\code{\link{stateSelect}()},
+\code{\link{stateTotals}()},
+\code{\link{usFinal}()},
+\code{\link{usFinalDV}()}
 }
 \author{
 Abby Walter, \email{abby_walter@fws.gov}
