@@ -59,6 +59,9 @@ REF_STATES_CR_NORTH <-
     "Montana",
     "Kansas")
 
+# States with a Sandhill Crane season
+REF_STATES_CR <- c("CO", "KS", "MT", "ND", "NM", "OK", "SD", "TX", "UT", "WY")
+
 # States with a Band-tailed Pigeon (BTPI) season
 REF_STATES_BTPI <- c("AZ", "CA", "CO", "NM", "OR", "UT", "WA")
 
