@@ -17,6 +17,7 @@ Internal function that fails if \code{NA} values are found in the
 Other failure functions: 
 \code{\link{failNARetrieved}()},
 \code{\link{failStateCount}()},
+\code{\link{failSurveyStates}()},
 \code{\link{failspp}()},
 \code{\link{failtype}()}
 }

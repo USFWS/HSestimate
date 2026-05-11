@@ -46,6 +46,71 @@ REF_STATES_AND_ABBRS <-
     sampled_state = state.name) |>
   filter(state != "HI")
 
+# Vector of states with HIP
+REF_STATES_ALL <- sort(state.abb[state.abb != "HI"])
+
+# Duck states
+REF_STATES_DK <- REF_STATES_ALL
+
+# States with a combined duck and merganser season
+REF_STATES_DUCKMERG <-
+  c("AL", "AR", "CO", "DE", "FL", "GA", "IA", "IL", "IN", "KS", "KY", "LA",
+    "MA", "ME", "MI", "MN", "MS", "NC", "ND", "NE", "NH", "NJ", "OH", "OK",
+    "PA", "RI", "SC", "SD", "TN", "TX", "VA", "VT", "WI", "WV", "WY")
+# AF and MF only...
+# must be changed CT, MD, NY, MO are "ducks including"...? ask RR
+
+# Goose states
+REF_STATES_GS <- REF_STATES_ALL[REF_STATES_ALL != "FL"]
+
+# Mourning Dove states
+REF_STATES_MODO <- 
+  REF_STATES_ALL[!REF_STATES_ALL %in% c("AK", "CT", "MA", "ME", "MI", "NH", 
+                                        "NJ", "NY", "VT")]
+
+# White-winged Dove (WWDO) main/primary harvest states
+REF_STATES_WWDO_MAIN <-
+  c("AL", "AZ", "CA", "FL", "LA", "MS", "NM", "NV", "OK", "TX")
+
+# White-winged Dove (WWDO) edge states (these states border the main states)
+REF_STATES_WWDO_EDGE <- c("AR", "CO", "GA", "KS", "UT")
+
+# Table of expected White-winged Dove (WWDO) occurrence by state
+REF_STATES_WWDO_DF <-
+  REF_STATES_AND_ABBRS |>
+  mutate(
+    wwdo_state_status =
+      case_when(
+        state %in% REF_STATES_WWDO_MAIN ~ "main",
+        state %in% REF_STATES_WWDO_EDGE ~ "edge",
+        TRUE ~ "none"))
+
+# States with woodcock season
+REF_STATES_WK <- 
+  REF_STATES_ALL[!REF_STATES_ALL %in% c("AK", "AZ", "CA", "CO", "ID", "MT", 
+                                        "ND", "NM", "NV", "OR", "SD", "UT", 
+                                        "WA", "WY")]
+
+# States with snipe season
+REF_STATES_SNIPE <- REF_STATES_ALL
+
+# States with open season for American Coots
+REF_STATES_COOTS <- REF_STATES_ALL[REF_STATES_ALL != "AK"]
+
+# States with open season for rails
+REF_STATES_RAILS <-
+  REF_STATES_ALL[!REF_STATES_ALL %in% c("AK", "AZ", "CA", "ID", "MT", "ND", 
+                                        "NH", "NV", "OR", "SD", "UT", "VT",
+                                        "WA")]
+  
+
+# States with open season for gallinules
+REF_STATES_GALLS <-
+  REF_STATES_ALL[!REF_STATES_ALL %in% c("AK", "CO", "CT", "IA", "ID", "IL", 
+                                        "IN", "KS", "MA", "MD", "ME", "MO",
+                                        "MT", "ND", "NE", "NH", "OR", "RI", 
+                                        "SD", "UT", "VT", "WA", "WY")]
+
 # Southern states with a Sandhill Crane season
 REF_STATES_CR_SOUTH <- c("Texas", "New Mexico", "Oklahoma")
 
@@ -65,6 +130,11 @@ REF_STATES_CR <- c("CO", "KS", "MT", "ND", "NM", "OK", "SD", "TX", "UT", "WY")
 # States with a Band-tailed Pigeon (BTPI) season
 REF_STATES_BTPI <- c("AZ", "CA", "CO", "NM", "OR", "UT", "WA")
 
+# States with a Brant season
+REF_STATES_BR <-
+  c("AK", "CA", "CT", "DE", "MA", "MD", "ME", "NC", "NH", "NJ", "NY", "OR",
+    "RI", "VA", "WA")
+
 # States with a Sea Duck season
 REF_STATES_SD <-
   c("AK", "CA", "CT", "DE", "MA", "MD", "ME", "NH", "NJ", "NY", "OR", "RI",
@@ -73,56 +143,13 @@ REF_STATES_SD <-
 # Sea Duck states in the Atlantic Flyway
 REF_STATES_SD_AF <- REF_STATES_SD[REF_STATES_SD %in% REF_STATES_AF]
 
-# States with a Brant season
-REF_STATES_BR <-
-  c("AK", "CA", "CT", "DE", "MA", "MD", "ME", "NC", "NH", "NJ", "NY", "OR",
-    "RI", "VA", "WA")
-
-# States with a combined duck and merganser season
-REF_STATES_DUCKMERG <-
-  c("AL", "AR", "CO", "DE", "FL", "GA", "IA", "IL", "IN", "KS", "KY", "LA",
-    "MA", "ME", "MI", "MN", "MS", "NC", "ND", "NE", "NH", "NJ", "OH", "OK",
-    "PA", "RI", "SC", "SD", "TN", "TX", "VA", "VT", "WI", "WV", "WY")
-# AF and MF only...
-# must be changed CT, MD, NY, MO are "ducks including"...? ask RR
-
-# White-winged Dove (WWDO) main/primary harvest states
-REF_STATES_WWDO_MAIN <-
-  c("AL", "AZ", "CA", "FL", "LA", "MS", "NM", "NV", "OK", "TX")
-
-# White-winged Dove (WWDO) edge states (these states border the main states)
-REF_STATES_WWDO_EDGE <- c("AR", "CO", "GA", "KS", "UT")
-
-# Table of expected White-winged Dove (WWDO) occurrence by state
-REF_STATES_WWDO_DF <-
-  REF_STATES_AND_ABBRS |>
-  mutate(
-    wwdo_state_status =
-      case_when(
-        state %in% REF_STATES_WWDO_MAIN ~ "main",
-        state %in% REF_STATES_WWDO_EDGE ~ "edge",
-        TRUE ~ "none"))
-
-# States with NO open season for American Coots
-REF_STATES_NO_COOTS <- "AK"
-
-# States with NO open season for rails
-REF_STATES_NO_RAILS <-
-  c("AK", "AZ", "CA", "ID", "MT", "ND", "NH", "NV", "OR", "SD", "UT", "VT",
-    "WA")
-
-# States with NO open season for gallinules
-REF_STATES_NO_GALLS <-
-  c("AK", "CO", "CT", "IA", "ID", "IL", "IN", "KS", "MA", "MD", "ME", "MO",
-    "MT", "ND", "NE", "NH", "OR", "RI", "SD", "UT", "VT", "WA", "WY")
-
 # number of expected states -----------------------------------------------
 
 REF_N_STATES_WF <- 49
 REF_N_STATES_DV <- 40
-REF_N_STATES_CR <- 11
-REF_N_STATES_SCRG <- 39
 REF_N_STATES_WK <- 35
+REF_N_STATES_SCRG <- 49
+REF_N_STATES_CR <- 12
 
 # party -------------------------------------------------------------------
 

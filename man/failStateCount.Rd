@@ -20,6 +20,7 @@ Internal function that fails if the number of states expected is not met.
 Other failure functions: 
 \code{\link{failNADaysHunted}()},
 \code{\link{failNARetrieved}()},
+\code{\link{failSurveyStates}()},
 \code{\link{failspp}()},
 \code{\link{failtype}()}
 }

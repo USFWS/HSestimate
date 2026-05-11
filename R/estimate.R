@@ -20,6 +20,7 @@
 
 speciesEstimate <-
   function(totals_df, spp_counts, type) {
+    failSurveyStates(totals_df, type)
 
     if (type %in% c("Snipe", "Coots")) {
       spp_counts <-

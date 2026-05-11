@@ -18,6 +18,7 @@ Other failure functions:
 \code{\link{failNADaysHunted}()},
 \code{\link{failNARetrieved}()},
 \code{\link{failStateCount}()},
+\code{\link{failSurveyStates}()},
 \code{\link{failtype}()}
 }
 \author{
