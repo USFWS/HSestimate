@@ -79,6 +79,7 @@
     - `failStateCount()` returns a message if the number of states in the season or daily data does not match the expected count.
     - `failNARetrieved()` fails if `NA` values are found in the `retrieved` field.
     - `failNADaysHunted()` fails if `NA` values are found in the `days_hunted` field.
+    - `failSurveyStates()` fails if the list of states in the data being used to generate estimates is different from the standard list of expected states for that species group.
 - Update `test-check.R`
 
 ## Minor changes / bug fixes
@@ -88,7 +89,16 @@
 - Renamed `variables.R` to `constants.R`
   - Set `REF_DAY_LIMIT_WK` to `63`
   - Reordered and alphabetized vectors.
-  - Added `REF_STATES_NO_COOTS`, `REF_STATES_NO_GALLS`, and `REF_STATES_NO_RAILS`
+  - Added internal reference objects:
+    - `REF_STATES_ALL`
+    - `REF_STATES_DK`
+    - `REF_STATES_GS`
+    - `REF_STATES_MODO`
+    - `REF_STATES_WK`
+    - `REF_STATES_COOTS`
+    - `REF_STATES_RAILS`
+    - `REF_STATES_GALLS`
+    - `REF_STATES_BTPI`
 
 # migbirdHS 1.0.1
 
