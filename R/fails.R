@@ -88,6 +88,10 @@ failspp <-
   function(species) {
     stopifnot(
       "`species` must be 'WF', 'DV', 'SCRG', 'WK', or 'CR'." =
+        !is.null(species))
+    
+    stopifnot(
+      "`species` must be 'WF', 'DV', 'SCRG', 'WK', or 'CR'." =
         species %in% c("WF", "DV", "SCRG", "WK", "CR"))
   }
 
@@ -106,6 +110,10 @@ failspp <-
 
 failtype <-
   function(type) {
+    stopifnot(
+      "Error: type must be one of: 'Ducks', 'Geese', 'Brant'... etc" =
+        !is.null(type))
+    
     stopifnot(
       "Error: type must be one of: 'Ducks', 'Geese', 'Brant'... etc" =
         type %in% c(
