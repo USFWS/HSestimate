@@ -111,29 +111,27 @@ REF_STATES_GALLS <-
                                         "MT", "ND", "NE", "NH", "OR", "RI", 
                                         "SD", "UT", "VT", "WA", "WY")]
 
+# States with a Sandhill Crane season
+REF_STATES_CR <- 
+  c("AK", "CO", "KS", "MN", "MT", "ND", "NM", "OK", "SD", "TX", "WY")
+
 # Southern states with a Sandhill Crane season
 REF_STATES_CR_SOUTH <- c("Texas", "New Mexico", "Oklahoma")
 
 # Northern states with a Sandhill Crane season
-REF_STATES_CR_NORTH <-
-  c("South Dakota",
-    "North Dakota",
-    "Wyoming",
-    "Colorado",
-    "Utah",
-    "Montana",
-    "Kansas")
-
-# States with a Sandhill Crane season
-REF_STATES_CR <- c("CO", "KS", "MT", "ND", "NM", "OK", "SD", "TX", "UT", "WY")
+REF_STATES_CR_NORTH <- 
+  REF_STATES_AND_ABBRS |>
+  filter(
+    .data$state %in% REF_STATES_CR[!REF_STATES_CR %in% c("TX", "NM", "OK")]) |> 
+  pull(.data$sampled_state)
 
 # States with a Band-tailed Pigeon (BTPI) season
 REF_STATES_BTPI <- c("AZ", "CA", "CO", "NM", "OR", "UT", "WA")
 
 # States with a Brant season
 REF_STATES_BR <-
-  c("AK", "CA", "CT", "DE", "MA", "MD", "ME", "NC", "NH", "NJ", "NY", "OR",
-    "RI", "VA", "WA")
+  c("AK", "CA", "CT", "DE", "MA", "MD", "NC", "NH", "NJ", "NY", "OR", "RI", 
+    "VA", "WA")
 
 # States with a Sea Duck season
 REF_STATES_SD <-
