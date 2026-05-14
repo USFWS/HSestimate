@@ -54,11 +54,9 @@ REF_STATES_DK <- REF_STATES_ALL
 
 # States with a combined duck and merganser season
 REF_STATES_DUCKMERG <-
-  c("AL", "AR", "CO", "DE", "FL", "GA", "IA", "IL", "IN", "KS", "KY", "LA",
-    "MA", "ME", "MI", "MN", "MS", "NC", "ND", "NE", "NH", "NJ", "OH", "OK",
-    "PA", "RI", "SC", "SD", "TN", "TX", "VA", "VT", "WI", "WV", "WY")
-# AF and MF only...
-# must be changed CT, MD, NY, MO are "ducks including"...? ask RR
+  c("AL", "AR", "FL", "GA", "IA", "IL", "IN", "KY", "LA", "MA", "ME", "MI", 
+    "MN", "MS", "NC", "NH", "NJ", "OH", "PA", "RI", "SC", "TN", "VA", "VT", 
+    "WI", "WV")
 
 # Goose states
 REF_STATES_GS <- REF_STATES_ALL[REF_STATES_ALL != "FL"]
