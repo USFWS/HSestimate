@@ -118,10 +118,8 @@ REF_STATES_CR_SOUTH <- c("Texas", "New Mexico", "Oklahoma")
 
 # Northern states with a Sandhill Crane season
 REF_STATES_CR_NORTH <- 
-  REF_STATES_AND_ABBRS |>
-  filter(
-    .data$state %in% REF_STATES_CR[!REF_STATES_CR %in% c("TX", "NM", "OK")]) |> 
-  pull(.data$sampled_state)
+  c("Colorado", "Kansas", "Minnesota", "Montana", "North Dakota", 
+    "South Dakota", "Wyoming")
 
 # States with a Band-tailed Pigeon (BTPI) season
 REF_STATES_BTPI <- c("AZ", "CA", "CO", "NM", "OR", "UT", "WA")
