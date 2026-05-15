@@ -143,7 +143,7 @@ REF_N_STATES_WF <- 49
 REF_N_STATES_DV <- 40
 REF_N_STATES_WK <- 35
 REF_N_STATES_SCRG <- 49
-REF_N_STATES_CR <- 12
+REF_N_STATES_CR <- 11
 
 # party -------------------------------------------------------------------
 
