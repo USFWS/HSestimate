@@ -34,21 +34,19 @@ Other daily data helpers:
 \code{\link{partyHuntFinder}()}
 
 Other season data helpers: 
-\code{\link{checkSeasonCR}()},
 \code{\link{checkSeasonDV}()},
-\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{checkSeasonWFSCRGWKCR}()},
 \code{\link{convertWWDO}()},
 \code{\link{joinSeason}()},
 \code{\link{naDaysHunted}()},
 \code{\link{seasonDNH}()},
 \code{\link{seasonOverBag}()},
 \code{\link{seasonOverBagDV}()},
-\code{\link{tooManyDaysHunted}()},
-\code{\link{tooManyDaysHuntedCR}()}
+\code{\link{tooManyDaysHunted}()}
 
 Other waterfowl functions: 
 \code{\link{checkDailyWF}()},
-\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{checkSeasonWFSCRGWKCR}()},
 \code{\link{checkWF}()},
 \code{\link{dailyOverBag}()},
 \code{\link{dailyOverBagDKSD}()},

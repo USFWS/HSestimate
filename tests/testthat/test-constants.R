@@ -8,16 +8,6 @@ test_that("bag limits assigned as expected", {
   expect_all_true(REF_BAG_TOLERANCE == 2)
 })
 
-test_that("day limits assigned as expected", {
-  expect_all_true(REF_DAY_LIMIT_WF == 107)
-  expect_all_true(REF_DAY_LIMIT_DV == 107)
-  expect_all_true(REF_DAY_LIMIT_WK == 63)
-  expect_all_true(REF_DAY_LIMIT_SCRG == 107)
-  expect_all_true(REF_DAY_LIMIT_CR_AK == 106)
-  expect_all_true(REF_DAY_LIMIT_CR_SOUTH == 92)
-  expect_all_true(REF_DAY_LIMIT_CR_NORTH == 60)
-})
-
 test_that("flyways assigned as expected", {
   AF <-
     c("CT", "DE", "FL", "GA", "MA", "MD", "ME", "NC", "NH", "NJ", "NY", "PA",
@@ -61,22 +51,22 @@ test_that("states assigned as expected", {
     c("AK", "CO", "CT", "IA", "ID", "IL", "IN", "KS", "MA", "MD", "ME", "MO", 
       "MT", "ND", "NE", "NH", "OR", "RI", "SD", "UT", "VT", "WA", "WY")
   
-  cr <- c("CO", "KS", "MT", "ND", "NM", "OK", "SD", "TX", "UT", "WY")
+  cr <- c("AK", "CO", "KS", "MN", "MT", "ND", "NM", "OK", "SD", "TX", "WY")
   
   bt <- c("AZ", "CA", "CO", "NM", "OR", "UT", "WA")
   
   br <- 
-    c("AK", "CA", "CT", "DE", "MA", "MD", "ME", "NC", "NH", "NJ", "NY", "OR",
-      "RI", "VA", "WA")
+    c("AK", "CA", "CT", "DE", "MA", "MD", "NC", "NH", "NJ", "NY", "OR", "RI", 
+      "VA", "WA")
   
   sd <- 
     c("AK", "CA", "CT", "DE", "MA", "MD", "ME", "NH", "NJ", "NY", "OR", "RI",
       "VA", "WA")
   
   duckmerg <-
-    c("AL", "AR", "CO", "DE", "FL", "GA", "IA", "IL", "IN", "KS", "KY", "LA",
-      "MA", "ME", "MI", "MN", "MS", "NC", "ND", "NE", "NH", "NJ", "OH", "OK",
-      "PA", "RI", "SC", "SD", "TN", "TX", "VA", "VT", "WI", "WV", "WY")
+    c("AL", "AR", "FL", "GA", "IA", "IL", "IN", "KY", "LA", "MA", "ME", "MI", 
+      "MN", "MS", "NC", "NH", "NJ", "OH", "PA", "RI", "SC", "TN", "VA", "VT",
+      "WI", "WV")
   
   expect_all_true(REF_STATES_ALL == all_states)
   expect_all_true(REF_STATES_DK == all_states)
@@ -101,7 +91,7 @@ test_that("number of states assigned as expected", {
   DV <- 40
   WK <- 35
   SCRG <- 49
-  CR <- 12
+  CR <- 11
   
   expect_all_true(REF_N_STATES_WF == WF)
   expect_all_true(REF_N_STATES_DV == DV)

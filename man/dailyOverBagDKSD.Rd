@@ -22,9 +22,8 @@ Other checking functions:
 \code{\link{checkDailyDV}()},
 \code{\link{checkDailySCRGWKCR}()},
 \code{\link{checkDailyWF}()},
-\code{\link{checkSeasonCR}()},
 \code{\link{checkSeasonDV}()},
-\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{checkSeasonWFSCRGWKCR}()},
 \code{\link{checkWF}()},
 \code{\link{dailyOverBag}()},
 \code{\link{dailyOverBagWWMO}()},
@@ -34,8 +33,7 @@ Other checking functions:
 \code{\link{seasonOverBag}()},
 \code{\link{seasonOverBagDV}()},
 \code{\link{surveyCheck}()},
-\code{\link{tooManyDaysHunted}()},
-\code{\link{tooManyDaysHuntedCR}()}
+\code{\link{tooManyDaysHunted}()}
 
 Other daily data helpers: 
 \code{\link{checkDailyDV}()},
@@ -55,12 +53,11 @@ Other error assigning functions:
 \code{\link{seasonDNH}()},
 \code{\link{seasonOverBag}()},
 \code{\link{seasonOverBagDV}()},
-\code{\link{tooManyDaysHunted}()},
-\code{\link{tooManyDaysHuntedCR}()}
+\code{\link{tooManyDaysHunted}()}
 
 Other waterfowl functions: 
 \code{\link{checkDailyWF}()},
-\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{checkSeasonWFSCRGWKCR}()},
 \code{\link{checkWF}()},
 \code{\link{convertSDBR}()},
 \code{\link{dailyOverBag}()},

@@ -290,3 +290,88 @@ wrangleDates <-
 
     return(dates)
   }
+
+#' Wrangle day limits
+#'
+#' Wrangle the raw max bag reference table to get hunting season day limits for
+#' all states and species.
+#'
+#' @importFrom dplyr select
+#' @importFrom dplyr filter
+#' @importFrom dplyr mutate
+#' @importFrom lubridate ymd
+#' @importFrom dplyr bind_rows
+#' @importFrom purrr map2
+#' @importFrom tidyr unnest
+#' @importFrom dplyr summarize
+#' @importFrom dplyr n_distinct
+#' @importFrom dplyr left_join
+#' @importFrom rlang .data
+#'
+#' @param maxbag_raw Raw max bag tibble
+#'
+#' @family wrangling functions
+#'
+#' @author Abby Walter, \email{abby_walter@@fws.gov}
+#'
+#' @export
+
+wrangleDayLimits <-
+  function(maxbag_raw) {
+    
+    dates_wrangled <-
+      wrangleRef(maxbag_raw) |>
+      select(
+        "seasonyear",
+        state = "st",
+        "speciesgroup",
+        "open",
+        "close",
+        sp_group_estimated = "spp"
+      ) |>
+      filter(!is.na(.data$sp_group_estimated) &
+               !is.na(.data$open) &
+               !is.na(.data$close)) |>
+      mutate(
+        open = ymd(.data$open), 
+        close = ymd(.data$close)
+      )
+    
+    exact_state_spp_day_limits <-
+      dates_wrangled |> 
+      filter(.data$sp_group_estimated == "MODO-WWDO") |> 
+      mutate(sp_group_estimated = "Mourning Dove") |> 
+      bind_rows(
+        dates_wrangled |> 
+          filter(.data$sp_group_estimated == "MODO-WWDO") |> 
+          mutate(sp_group_estimated = "White-Winged Dove")) |> 
+      bind_rows(
+        dates_wrangled |> 
+          filter(.data$sp_group_estimated == "CootsGallinules") |> 
+          mutate(sp_group_estimated = "Coots")) |> 
+      bind_rows(
+        dates_wrangled |> 
+          filter(.data$sp_group_estimated == "CootsGallinules") |> 
+          mutate(sp_group_estimated = "Gallinules")) |> 
+      bind_rows(
+        dates_wrangled |>
+          filter(!.data$sp_group_estimated %in% 
+                   c("CootsGallinules", "MODO-WWDO"))) |> 
+      mutate(day_seq = map2(.data$open, .data$close, seq, by = "day")) |> 
+      unnest(cols = "day_seq") |> 
+      summarize(
+        earliest_open = min(ymd(.data$open), na.rm = T),
+        latest_close = max(ymd(.data$close), na.rm = T),
+        day_limit = n_distinct(.data$day_seq),
+        .by = c("seasonyear", "state", "sp_group_estimated")
+      ) |> 
+      left_join(REF_STATES_AND_ABBRS, by = "state") |> 
+      select(
+        "sampled_state",
+        "sp_group_estimated",
+        "earliest_open",
+        "latest_close",
+        "day_limit"
+      )
+    
+  }

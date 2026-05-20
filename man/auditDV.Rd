@@ -21,9 +21,8 @@ Other checking functions:
 \code{\link{checkDailyDV}()},
 \code{\link{checkDailySCRGWKCR}()},
 \code{\link{checkDailyWF}()},
-\code{\link{checkSeasonCR}()},
 \code{\link{checkSeasonDV}()},
-\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{checkSeasonWFSCRGWKCR}()},
 \code{\link{checkWF}()},
 \code{\link{dailyOverBag}()},
 \code{\link{dailyOverBagDKSD}()},
@@ -34,8 +33,7 @@ Other checking functions:
 \code{\link{seasonOverBag}()},
 \code{\link{seasonOverBagDV}()},
 \code{\link{surveyCheck}()},
-\code{\link{tooManyDaysHunted}()},
-\code{\link{tooManyDaysHuntedCR}()}
+\code{\link{tooManyDaysHunted}()}
 
 Other dove functions: 
 \code{\link{boxPlotWWDO}()},

@@ -16,6 +16,7 @@ Internal function which does initial data cleaning in
 \seealso{
 Other wrangling functions: 
 \code{\link{wrangleDates}()},
+\code{\link{wrangleDayLimits}()},
 \code{\link{wrangleMaxBag}()}
 }
 \author{

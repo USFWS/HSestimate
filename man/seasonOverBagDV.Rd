@@ -22,9 +22,8 @@ Other checking functions:
 \code{\link{checkDailyDV}()},
 \code{\link{checkDailySCRGWKCR}()},
 \code{\link{checkDailyWF}()},
-\code{\link{checkSeasonCR}()},
 \code{\link{checkSeasonDV}()},
-\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{checkSeasonWFSCRGWKCR}()},
 \code{\link{checkWF}()},
 \code{\link{dailyOverBag}()},
 \code{\link{dailyOverBagDKSD}()},
@@ -34,21 +33,18 @@ Other checking functions:
 \code{\link{seasonDNH}()},
 \code{\link{seasonOverBag}()},
 \code{\link{surveyCheck}()},
-\code{\link{tooManyDaysHunted}()},
-\code{\link{tooManyDaysHuntedCR}()}
+\code{\link{tooManyDaysHunted}()}
 
 Other season data helpers: 
-\code{\link{checkSeasonCR}()},
 \code{\link{checkSeasonDV}()},
-\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{checkSeasonWFSCRGWKCR}()},
 \code{\link{convertSDBR}()},
 \code{\link{convertWWDO}()},
 \code{\link{joinSeason}()},
 \code{\link{naDaysHunted}()},
 \code{\link{seasonDNH}()},
 \code{\link{seasonOverBag}()},
-\code{\link{tooManyDaysHunted}()},
-\code{\link{tooManyDaysHuntedCR}()}
+\code{\link{tooManyDaysHunted}()}
 
 Other error assigning functions: 
 \code{\link{dailyOverBag}()},
@@ -58,8 +54,7 @@ Other error assigning functions:
 \code{\link{partyHuntFinder}()},
 \code{\link{seasonDNH}()},
 \code{\link{seasonOverBag}()},
-\code{\link{tooManyDaysHunted}()},
-\code{\link{tooManyDaysHuntedCR}()}
+\code{\link{tooManyDaysHunted}()}
 
 Other dove functions: 
 \code{\link{auditDV}()},

@@ -4,14 +4,14 @@
 \alias{surveyCheck}
 \title{Check survey data}
 \usage{
-surveyCheck(dailies_df, season_df, maxbag_df, species)
+surveyCheck(dailies_df, season_df, maxbag_raw, species)
 }
 \arguments{
 \item{dailies_df}{Daily data tibble}
 
 \item{season_df}{Season data tibble}
 
-\item{maxbag_df}{Reference data tibble}
+\item{maxbag_raw}{Raw reference data tibble}
 
 \item{species}{Species abbreviation, may be one of: 'WF', 'DV', 'SCRG', 'WK',
 or 'CR'.}
@@ -27,9 +27,8 @@ Other checking functions:
 \code{\link{checkDailyDV}()},
 \code{\link{checkDailySCRGWKCR}()},
 \code{\link{checkDailyWF}()},
-\code{\link{checkSeasonCR}()},
 \code{\link{checkSeasonDV}()},
-\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{checkSeasonWFSCRGWKCR}()},
 \code{\link{checkWF}()},
 \code{\link{dailyOverBag}()},
 \code{\link{dailyOverBagDKSD}()},
@@ -39,19 +38,16 @@ Other checking functions:
 \code{\link{seasonDNH}()},
 \code{\link{seasonOverBag}()},
 \code{\link{seasonOverBagDV}()},
-\code{\link{tooManyDaysHunted}()},
-\code{\link{tooManyDaysHuntedCR}()}
+\code{\link{tooManyDaysHunted}()}
 
 Other crane functions: 
 \code{\link{audit}()},
 \code{\link{checkDailySCRGWKCR}()},
-\code{\link{checkSeasonCR}()},
 \code{\link{dailyOverBag}()},
 \code{\link{naDaysHunted}()},
 \code{\link{partyHuntFinder}()},
 \code{\link{seasonDNH}()},
-\code{\link{seasonOverBag}()},
-\code{\link{tooManyDaysHuntedCR}()}
+\code{\link{seasonOverBag}()}
 
 Other dove functions: 
 \code{\link{auditDV}()},
@@ -70,7 +66,7 @@ Other dove functions:
 Other SCRG functions: 
 \code{\link{audit}()},
 \code{\link{checkDailySCRGWKCR}()},
-\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{checkSeasonWFSCRGWKCR}()},
 \code{\link{dailyOverBag}()},
 \code{\link{naDaysHunted}()},
 \code{\link{partyHuntFinder}()},
@@ -80,7 +76,7 @@ Other SCRG functions:
 
 Other waterfowl functions: 
 \code{\link{checkDailyWF}()},
-\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{checkSeasonWFSCRGWKCR}()},
 \code{\link{checkWF}()},
 \code{\link{convertSDBR}()},
 \code{\link{dailyOverBag}()},
@@ -94,7 +90,7 @@ Other waterfowl functions:
 Other woodcock functions: 
 \code{\link{audit}()},
 \code{\link{checkDailySCRGWKCR}()},
-\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{checkSeasonWFSCRGWKCR}()},
 \code{\link{dailyOverBag}()},
 \code{\link{naDaysHunted}()},
 \code{\link{partyHuntFinder}()},

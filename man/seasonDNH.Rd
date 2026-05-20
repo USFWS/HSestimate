@@ -10,10 +10,10 @@ seasonDNH(season_df)
 \item{season_df}{Season data tibble}
 }
 \description{
-Internal function used in \code{\link{checkSeasonWFSCRGWK}},
-\code{\link{checkSeasonCR}}, and \code{\link{checkSeasonDV}}. Finds season
-records with a sum of \code{0} for \code{days_hunted} and sum greater than
-\code{0} for \code{retrieved}. Creates field \code{error4}.
+Internal function used in \code{\link{checkSeasonWFSCRGWKCR}} and
+\code{\link{checkSeasonDV}}. Finds season records with a sum of \code{0} for
+\code{days_hunted} and sum greater than \code{0} for \code{retrieved}.
+Creates field \code{error4}.
 }
 \seealso{
 Other checking functions: 
@@ -22,9 +22,8 @@ Other checking functions:
 \code{\link{checkDailyDV}()},
 \code{\link{checkDailySCRGWKCR}()},
 \code{\link{checkDailyWF}()},
-\code{\link{checkSeasonCR}()},
 \code{\link{checkSeasonDV}()},
-\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{checkSeasonWFSCRGWKCR}()},
 \code{\link{checkWF}()},
 \code{\link{dailyOverBag}()},
 \code{\link{dailyOverBagDKSD}()},
@@ -34,21 +33,18 @@ Other checking functions:
 \code{\link{seasonOverBag}()},
 \code{\link{seasonOverBagDV}()},
 \code{\link{surveyCheck}()},
-\code{\link{tooManyDaysHunted}()},
-\code{\link{tooManyDaysHuntedCR}()}
+\code{\link{tooManyDaysHunted}()}
 
 Other season data helpers: 
-\code{\link{checkSeasonCR}()},
 \code{\link{checkSeasonDV}()},
-\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{checkSeasonWFSCRGWKCR}()},
 \code{\link{convertSDBR}()},
 \code{\link{convertWWDO}()},
 \code{\link{joinSeason}()},
 \code{\link{naDaysHunted}()},
 \code{\link{seasonOverBag}()},
 \code{\link{seasonOverBagDV}()},
-\code{\link{tooManyDaysHunted}()},
-\code{\link{tooManyDaysHuntedCR}()}
+\code{\link{tooManyDaysHunted}()}
 
 Other error assigning functions: 
 \code{\link{dailyOverBag}()},
@@ -58,19 +54,16 @@ Other error assigning functions:
 \code{\link{partyHuntFinder}()},
 \code{\link{seasonOverBag}()},
 \code{\link{seasonOverBagDV}()},
-\code{\link{tooManyDaysHunted}()},
-\code{\link{tooManyDaysHuntedCR}()}
+\code{\link{tooManyDaysHunted}()}
 
 Other crane functions: 
 \code{\link{audit}()},
 \code{\link{checkDailySCRGWKCR}()},
-\code{\link{checkSeasonCR}()},
 \code{\link{dailyOverBag}()},
 \code{\link{naDaysHunted}()},
 \code{\link{partyHuntFinder}()},
 \code{\link{seasonOverBag}()},
-\code{\link{surveyCheck}()},
-\code{\link{tooManyDaysHuntedCR}()}
+\code{\link{surveyCheck}()}
 
 Other dove functions: 
 \code{\link{auditDV}()},
@@ -89,7 +82,7 @@ Other dove functions:
 Other SCRG functions: 
 \code{\link{audit}()},
 \code{\link{checkDailySCRGWKCR}()},
-\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{checkSeasonWFSCRGWKCR}()},
 \code{\link{dailyOverBag}()},
 \code{\link{naDaysHunted}()},
 \code{\link{partyHuntFinder}()},
@@ -99,7 +92,7 @@ Other SCRG functions:
 
 Other waterfowl functions: 
 \code{\link{checkDailyWF}()},
-\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{checkSeasonWFSCRGWKCR}()},
 \code{\link{checkWF}()},
 \code{\link{convertSDBR}()},
 \code{\link{dailyOverBag}()},
@@ -113,7 +106,7 @@ Other waterfowl functions:
 Other woodcock functions: 
 \code{\link{audit}()},
 \code{\link{checkDailySCRGWKCR}()},
-\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{checkSeasonWFSCRGWKCR}()},
 \code{\link{dailyOverBag}()},
 \code{\link{naDaysHunted}()},
 \code{\link{partyHuntFinder}()},

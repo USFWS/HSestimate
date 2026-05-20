@@ -4,12 +4,14 @@
 \alias{checkSeasonDV}
 \title{Check dove season data}
 \usage{
-checkSeasonDV(season_df, maxbag_df)
+checkSeasonDV(season_df, maxbag_df, maxbag_raw)
 }
 \arguments{
 \item{season_df}{Season data tibble}
 
 \item{maxbag_df}{Reference data tibble}
+
+\item{maxbag_raw}{Raw reference data tibble}
 }
 \description{
 Internal function to check season survey data for doves. Used in
@@ -22,8 +24,7 @@ Other checking functions:
 \code{\link{checkDailyDV}()},
 \code{\link{checkDailySCRGWKCR}()},
 \code{\link{checkDailyWF}()},
-\code{\link{checkSeasonCR}()},
-\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{checkSeasonWFSCRGWKCR}()},
 \code{\link{checkWF}()},
 \code{\link{dailyOverBag}()},
 \code{\link{dailyOverBagDKSD}()},
@@ -34,12 +35,10 @@ Other checking functions:
 \code{\link{seasonOverBag}()},
 \code{\link{seasonOverBagDV}()},
 \code{\link{surveyCheck}()},
-\code{\link{tooManyDaysHunted}()},
-\code{\link{tooManyDaysHuntedCR}()}
+\code{\link{tooManyDaysHunted}()}
 
 Other season data helpers: 
-\code{\link{checkSeasonCR}()},
-\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{checkSeasonWFSCRGWKCR}()},
 \code{\link{convertSDBR}()},
 \code{\link{convertWWDO}()},
 \code{\link{joinSeason}()},
@@ -47,8 +46,7 @@ Other season data helpers:
 \code{\link{seasonDNH}()},
 \code{\link{seasonOverBag}()},
 \code{\link{seasonOverBagDV}()},
-\code{\link{tooManyDaysHunted}()},
-\code{\link{tooManyDaysHuntedCR}()}
+\code{\link{tooManyDaysHunted}()}
 
 Other dove functions: 
 \code{\link{auditDV}()},

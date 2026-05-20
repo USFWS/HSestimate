@@ -24,9 +24,8 @@ Other checking functions:
 \code{\link{checkDailyDV}()},
 \code{\link{checkDailySCRGWKCR}()},
 \code{\link{checkDailyWF}()},
-\code{\link{checkSeasonCR}()},
 \code{\link{checkSeasonDV}()},
-\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{checkSeasonWFSCRGWKCR}()},
 \code{\link{checkWF}()},
 \code{\link{dailyOverBagDKSD}()},
 \code{\link{dailyOverBagWWMO}()},
@@ -36,8 +35,7 @@ Other checking functions:
 \code{\link{seasonOverBag}()},
 \code{\link{seasonOverBagDV}()},
 \code{\link{surveyCheck}()},
-\code{\link{tooManyDaysHunted}()},
-\code{\link{tooManyDaysHuntedCR}()}
+\code{\link{tooManyDaysHunted}()}
 
 Other daily data helpers: 
 \code{\link{checkDailyDV}()},
@@ -57,19 +55,16 @@ Other error assigning functions:
 \code{\link{seasonDNH}()},
 \code{\link{seasonOverBag}()},
 \code{\link{seasonOverBagDV}()},
-\code{\link{tooManyDaysHunted}()},
-\code{\link{tooManyDaysHuntedCR}()}
+\code{\link{tooManyDaysHunted}()}
 
 Other crane functions: 
 \code{\link{audit}()},
 \code{\link{checkDailySCRGWKCR}()},
-\code{\link{checkSeasonCR}()},
 \code{\link{naDaysHunted}()},
 \code{\link{partyHuntFinder}()},
 \code{\link{seasonDNH}()},
 \code{\link{seasonOverBag}()},
-\code{\link{surveyCheck}()},
-\code{\link{tooManyDaysHuntedCR}()}
+\code{\link{surveyCheck}()}
 
 Other dove functions: 
 \code{\link{auditDV}()},
@@ -88,7 +83,7 @@ Other dove functions:
 Other SCRG functions: 
 \code{\link{audit}()},
 \code{\link{checkDailySCRGWKCR}()},
-\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{checkSeasonWFSCRGWKCR}()},
 \code{\link{naDaysHunted}()},
 \code{\link{partyHuntFinder}()},
 \code{\link{seasonDNH}()},
@@ -98,7 +93,7 @@ Other SCRG functions:
 
 Other waterfowl functions: 
 \code{\link{checkDailyWF}()},
-\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{checkSeasonWFSCRGWKCR}()},
 \code{\link{checkWF}()},
 \code{\link{convertSDBR}()},
 \code{\link{dailyOverBagDKSD}()},
@@ -112,7 +107,7 @@ Other waterfowl functions:
 Other woodcock functions: 
 \code{\link{audit}()},
 \code{\link{checkDailySCRGWKCR}()},
-\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{checkSeasonWFSCRGWKCR}()},
 \code{\link{naDaysHunted}()},
 \code{\link{partyHuntFinder}()},
 \code{\link{seasonDNH}()},

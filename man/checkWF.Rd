@@ -4,7 +4,7 @@
 \alias{checkWF}
 \title{Check waterfowl survey data}
 \usage{
-checkWF(dailies_df, season_df, maxbag_df)
+checkWF(dailies_df, season_df, maxbag_df, maxbag_raw)
 }
 \arguments{
 \item{dailies_df}{Daily data tibble}
@@ -12,6 +12,8 @@ checkWF(dailies_df, season_df, maxbag_df)
 \item{season_df}{Season data tibble}
 
 \item{maxbag_df}{Reference data tibble}
+
+\item{maxbag_raw}{Raw reference data tibble}
 }
 \description{
 Internal function used in \code{\link{surveyCheck}} that checks season and
@@ -24,9 +26,8 @@ Other checking functions:
 \code{\link{checkDailyDV}()},
 \code{\link{checkDailySCRGWKCR}()},
 \code{\link{checkDailyWF}()},
-\code{\link{checkSeasonCR}()},
 \code{\link{checkSeasonDV}()},
-\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{checkSeasonWFSCRGWKCR}()},
 \code{\link{dailyOverBag}()},
 \code{\link{dailyOverBagDKSD}()},
 \code{\link{dailyOverBagWWMO}()},
@@ -36,12 +37,11 @@ Other checking functions:
 \code{\link{seasonOverBag}()},
 \code{\link{seasonOverBagDV}()},
 \code{\link{surveyCheck}()},
-\code{\link{tooManyDaysHunted}()},
-\code{\link{tooManyDaysHuntedCR}()}
+\code{\link{tooManyDaysHunted}()}
 
 Other waterfowl functions: 
 \code{\link{checkDailyWF}()},
-\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{checkSeasonWFSCRGWKCR}()},
 \code{\link{convertSDBR}()},
 \code{\link{dailyOverBag}()},
 \code{\link{dailyOverBagDKSD}()},

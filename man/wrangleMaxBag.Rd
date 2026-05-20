@@ -16,6 +16,7 @@ species.
 \seealso{
 Other wrangling functions: 
 \code{\link{wrangleDates}()},
+\code{\link{wrangleDayLimits}()},
 \code{\link{wrangleRef}()}
 }
 \author{

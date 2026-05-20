@@ -21,9 +21,8 @@ Other checking functions:
 \code{\link{auditDV}()},
 \code{\link{checkDailyDV}()},
 \code{\link{checkDailyWF}()},
-\code{\link{checkSeasonCR}()},
 \code{\link{checkSeasonDV}()},
-\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{checkSeasonWFSCRGWKCR}()},
 \code{\link{checkWF}()},
 \code{\link{dailyOverBag}()},
 \code{\link{dailyOverBagDKSD}()},
@@ -34,8 +33,7 @@ Other checking functions:
 \code{\link{seasonOverBag}()},
 \code{\link{seasonOverBagDV}()},
 \code{\link{surveyCheck}()},
-\code{\link{tooManyDaysHunted}()},
-\code{\link{tooManyDaysHuntedCR}()}
+\code{\link{tooManyDaysHunted}()}
 
 Other daily data helpers: 
 \code{\link{checkDailyDV}()},
@@ -49,18 +47,16 @@ Other daily data helpers:
 
 Other crane functions: 
 \code{\link{audit}()},
-\code{\link{checkSeasonCR}()},
 \code{\link{dailyOverBag}()},
 \code{\link{naDaysHunted}()},
 \code{\link{partyHuntFinder}()},
 \code{\link{seasonDNH}()},
 \code{\link{seasonOverBag}()},
-\code{\link{surveyCheck}()},
-\code{\link{tooManyDaysHuntedCR}()}
+\code{\link{surveyCheck}()}
 
 Other SCRG functions: 
 \code{\link{audit}()},
-\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{checkSeasonWFSCRGWKCR}()},
 \code{\link{dailyOverBag}()},
 \code{\link{naDaysHunted}()},
 \code{\link{partyHuntFinder}()},
@@ -71,7 +67,7 @@ Other SCRG functions:
 
 Other woodcock functions: 
 \code{\link{audit}()},
-\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{checkSeasonWFSCRGWKCR}()},
 \code{\link{dailyOverBag}()},
 \code{\link{naDaysHunted}()},
 \code{\link{partyHuntFinder}()},

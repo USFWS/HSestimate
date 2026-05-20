@@ -13,8 +13,7 @@ joinSeason(season_df, maxbag_df)
 }
 \description{
 Internal function to join in maxbag fields to season data. Used in
-\code{\link{checkSeasonWFSCRGWK}}, \code{\link{checkSeasonDV}}, and
-\code{\link{checkSeasonCR}}.
+\code{\link{checkSeasonWFSCRGWKCR}} and \code{\link{checkSeasonDV}}.
 }
 \seealso{
 Other checking functions: 
@@ -23,9 +22,8 @@ Other checking functions:
 \code{\link{checkDailyDV}()},
 \code{\link{checkDailySCRGWKCR}()},
 \code{\link{checkDailyWF}()},
-\code{\link{checkSeasonCR}()},
 \code{\link{checkSeasonDV}()},
-\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{checkSeasonWFSCRGWKCR}()},
 \code{\link{checkWF}()},
 \code{\link{dailyOverBag}()},
 \code{\link{dailyOverBagDKSD}()},
@@ -35,21 +33,18 @@ Other checking functions:
 \code{\link{seasonOverBag}()},
 \code{\link{seasonOverBagDV}()},
 \code{\link{surveyCheck}()},
-\code{\link{tooManyDaysHunted}()},
-\code{\link{tooManyDaysHuntedCR}()}
+\code{\link{tooManyDaysHunted}()}
 
 Other season data helpers: 
-\code{\link{checkSeasonCR}()},
 \code{\link{checkSeasonDV}()},
-\code{\link{checkSeasonWFSCRGWK}()},
+\code{\link{checkSeasonWFSCRGWKCR}()},
 \code{\link{convertSDBR}()},
 \code{\link{convertWWDO}()},
 \code{\link{naDaysHunted}()},
 \code{\link{seasonDNH}()},
 \code{\link{seasonOverBag}()},
 \code{\link{seasonOverBagDV}()},
-\code{\link{tooManyDaysHunted}()},
-\code{\link{tooManyDaysHuntedCR}()}
+\code{\link{tooManyDaysHunted}()}
 }
 \author{
 Abby Walter, \email{abby_walter@fws.gov}

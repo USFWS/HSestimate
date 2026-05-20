@@ -5,7 +5,7 @@
 #'
 #' @param dailies_df Daily data tibble
 #' @param season_df Season data tibble
-#' @param maxbag_df Reference data tibble
+#' @param maxbag_raw Raw reference data tibble
 #' @param species Species abbreviation, may be one of: 'WF', 'DV', 'SCRG', 'WK',
 #'   or 'CR'.
 #'
@@ -21,45 +21,45 @@
 #' @export
 
 surveyCheck <-
-  function(dailies_df, season_df, maxbag_df, species) {
+  function(dailies_df, season_df, maxbag_raw, species) {
     failspp(species)
     failNADaysHunted(season_df)
     failNARetrieved(season_df)
     failNARetrieved(dailies_df)
+    
+    maxbag_df <- wrangleMaxBag(maxbag_raw)
 
     if (species == "CR") {
       failStateCount(season_df, dailies_df, REF_N_STATES_CR)
 
       daily_check <- checkDailySCRGWKCR(dailies_df, maxbag_df)
-      season_check <- checkSeasonCR(season_df, maxbag_df)
+      season_check <- checkSeasonWFSCRGWKCR(season_df, maxbag_df, maxbag_raw)
       audit(daily_check, season_check)
 
     } else if (species == "DV") {
       failStateCount(season_df, dailies_df, REF_N_STATES_DV)
 
       daily_check <- checkDailyDV(dailies_df, maxbag_df)
-      season_check <- checkSeasonDV(season_df, maxbag_df)
+      season_check <- checkSeasonDV(season_df, maxbag_df, maxbag_raw)
       auditDV(daily_check, season_check)
 
     } else if (species == "WK") {
       failStateCount(season_df, dailies_df, REF_N_STATES_WK)
 
-      day_limit <- REF_DAY_LIMIT_WK
       daily_check <- checkDailySCRGWKCR(dailies_df, maxbag_df)
-      season_check <- checkSeasonWFSCRGWK(season_df, maxbag_df, day_limit)
+      season_check <- checkSeasonWFSCRGWKCR(season_df, maxbag_df, maxbag_raw)
       audit(daily_check, season_check)
 
     } else if (species == "SCRG") {
       failStateCount(season_df, dailies_df, REF_N_STATES_SCRG)
 
-      day_limit <- REF_DAY_LIMIT_SCRG
       daily_check <- checkDailySCRGWKCR(dailies_df, maxbag_df)
-      season_check <- checkSeasonWFSCRGWK(season_df, maxbag_df, day_limit)
+      season_check <- checkSeasonWFSCRGWKCR(season_df, maxbag_df, maxbag_raw)
       audit(daily_check, season_check)
 
     } else if (species == "WF") {
       failStateCount(season_df, dailies_df, REF_N_STATES_WF)
-      checkWF(dailies_df, season_df, maxbag_df)
+      checkWF(dailies_df, season_df, maxbag_df, maxbag_raw)
 
     }
   }
@@ -226,6 +226,7 @@ auditDV <-
 #' @param dailies_df Daily data tibble
 #' @param season_df Season data tibble
 #' @param maxbag_df Reference data tibble
+#' @param maxbag_raw Raw reference data tibble
 #'
 #' @family checking functions
 #' @family waterfowl functions
@@ -233,13 +234,13 @@ auditDV <-
 #' @author Abby Walter, \email{abby_walter@@fws.gov}
 
 checkWF <-
-  function(dailies_df, season_df, maxbag_df) {
+  function(dailies_df, season_df, maxbag_df, maxbag_raw) {
 
     # Check dailies
     daily_check <- checkDailyWF(dailies_df, maxbag_df)
 
     # Check season
-    season_check <- checkSeasonWFSCRGWK(season_df, maxbag_df, REF_DAY_LIMIT_WF)
+    season_check <- checkSeasonWFSCRGWKCR(season_df, maxbag_df, maxbag_raw)
 
     daily_error_ids <-
       daily_check |>
@@ -380,7 +381,7 @@ checkDailyDV <-
 #'
 #' @param season_df Season data tibble
 #' @param maxbag_df Reference data tibble
-#' @param day_limit Day limit for species being checked
+#' @param maxbag_raw Raw reference data tibble
 #'
 #' @family checking functions
 #' @family season data helpers
@@ -390,38 +391,12 @@ checkDailyDV <-
 #'
 #' @author Abby Walter, \email{abby_walter@@fws.gov}
 
-checkSeasonWFSCRGWK <-
-  function(season_df, maxbag_df, day_limit) {
+checkSeasonWFSCRGWKCR <-
+  function(season_df, maxbag_df, maxbag_raw) {
 
     season_totals_df <- joinSeason(season_df, maxbag_df)
     season_check1 <- naDaysHunted(season_totals_df)
-    season_check2 <- tooManyDaysHunted(season_check1, day_limit)
-    season_check3 <- seasonOverBag(season_check2)
-    season_check4 <- seasonDNH(season_check3)
-
-    return(season_check4)
-  }
-
-#' Check crane season data
-#'
-#' Internal function to check season survey data for cranes. Used in
-#' \code{\link{surveyCheck}}.
-#'
-#' @param season_df Season data tibble
-#' @param maxbag_df Reference data tibble
-#'
-#' @family checking functions
-#' @family season data helpers
-#' @family crane functions
-#'
-#' @author Abby Walter, \email{abby_walter@@fws.gov}
-
-checkSeasonCR <-
-  function(season_df, maxbag_df) {
-
-    season_totals_df <- joinSeason(season_df, maxbag_df)
-    season_check1 <- naDaysHunted(season_totals_df)
-    season_check2 <- tooManyDaysHuntedCR(season_check1)
+    season_check2 <- tooManyDaysHunted(season_check1, maxbag_raw)
     season_check3 <- seasonOverBag(season_check2)
     season_check4 <- seasonDNH(season_check3)
 
@@ -435,6 +410,7 @@ checkSeasonCR <-
 #'
 #' @param season_df Season data tibble
 #' @param maxbag_df Reference data tibble
+#' @param maxbag_raw Raw reference data tibble
 #'
 #' @family checking functions
 #' @family season data helpers
@@ -443,12 +419,12 @@ checkSeasonCR <-
 #' @author Abby Walter, \email{abby_walter@@fws.gov}
 
 checkSeasonDV <-
-  function(season_df, maxbag_df) {
+  function(season_df, maxbag_df, maxbag_raw) {
 
     season_totals_df <- joinSeason(season_df, maxbag_df)
     season_totals_df_wwdo <- convertWWDO(season_totals_df, type = "season")
     season_check1 <- naDaysHunted(season_totals_df_wwdo)
-    season_check2 <- tooManyDaysHunted(season_check1, REF_DAY_LIMIT_DV)
+    season_check2 <- tooManyDaysHunted(season_check1, maxbag_raw)
     season_check3 <- seasonOverBagDV(season_check2)
     season_check4 <- seasonDNH(season_check3)
 
@@ -458,8 +434,7 @@ checkSeasonDV <-
 #' Join maxbag to season data
 #'
 #' Internal function to join in maxbag fields to season data. Used in
-#' \code{\link{checkSeasonWFSCRGWK}}, \code{\link{checkSeasonDV}}, and
-#' \code{\link{checkSeasonCR}}.
+#' \code{\link{checkSeasonWFSCRGWKCR}} and \code{\link{checkSeasonDV}}.
 #'
 #' @importFrom dplyr left_join
 #' @importFrom dplyr select
@@ -487,10 +462,9 @@ joinSeason <-
 
 #' Find records with NA days hunted
 #'
-#' Internal function used in \code{\link{checkSeasonWFSCRGWK}},
-#' \code{\link{checkSeasonCR}}, and \code{\link{checkSeasonDV}}. Finds season
-#' records with \code{NA} values in \code{days_hunted} field. Creates field
-#' \code{error1}.
+#' Internal function used in \code{\link{checkSeasonWFSCRGWKCR}} and
+#' \code{\link{checkSeasonDV}}. Finds season records with \code{NA} values in
+#' \code{days_hunted} field. Creates field \code{error1}.
 #'
 #' @importFrom dplyr mutate
 #' @importFrom dplyr filter
@@ -528,17 +502,16 @@ naDaysHunted <-
 
 #' Find records with too many days hunted
 #'
-#' Internal function used in \code{\link{checkSeasonWFSCRGWK}} and
+#' Internal function used in \code{\link{checkSeasonWFSCRGWKCR}} and
 #' \code{\link{checkSeasonDV}}. Finds season records with too many days hunted.
-#' Creates field \code{error2}. For cranes, see
-#' \code{\link{tooManyDaysHuntedCR}}.
+#' Creates field \code{error2}.
 #'
 #' @importFrom dplyr mutate
 #' @importFrom dplyr filter
 #' @importFrom rlang .data
 #'
 #' @param season_df Season data tibble
-#' @param day_limit Day limit for species being checked
+#' @param maxbag_raw Raw reference data tibble
 #'
 #' @family checking functions
 #' @family season data helpers
@@ -551,103 +524,36 @@ naDaysHunted <-
 #' @author Abby Walter, \email{abby_walter@@fws.gov}
 
 tooManyDaysHunted <-
-  function(season_df, day_limit) {
-
-    # Flag records with value > day_limit in days_hunted from season_df
+  function(season_df, maxbag_raw) {
+    
+    day_limits <- wrangleDayLimits(maxbag_raw)
+    
+    # Flag records with days_hunted > day_limit
     totals_validated <-
       season_df |>
+      left_join(
+        day_limits |> 
+          select(-c("earliest_open", "latest_close")), 
+        by = c("sampled_state", "sp_group_estimated")) |> 
       mutate(error2 =
-               ifelse(.data$days_hunted > day_limit, "too_many_days", NA))
+               ifelse(.data$days_hunted > .data$day_limit, "too_many_days", NA))
 
     message(paste(
       "Season: There are",
-      nrow(season_df |> filter(.data$days_hunted > day_limit)),
-      "records with >",
-      day_limit,
-      "days_hunted.",
+      nrow(totals_validated |> filter(!is.na(.data$error2))),
+      "records with a value in days_hunted greater than the season length.",
       sep = " "
     ))
 
     return(totals_validated)
   }
 
-#' Find records with too many days hunting cranes
-#'
-#' Internal function used in \code{\link{checkSeasonCR}}. Finds season records
-#' with too many days hunted for cranes. Creates field \code{error2}. For
-#' species other than cranes, see \code{\link{tooManyDaysHunted}}.
-#'
-#' @importFrom dplyr mutate
-#' @importFrom dplyr case_when
-#' @importFrom dplyr filter
-#' @importFrom rlang .data
-#'
-#' @param crtotals_df Crane data
-#'
-#' @family checking functions
-#' @family season data helpers
-#' @family error assigning functions
-#' @family crane functions
-#'
-#' @author Abby Walter, \email{abby_walter@@fws.gov}
-
-tooManyDaysHuntedCR <-
-  function(crtotals_df) {
-
-    crtotals_validated <-
-      crtotals_df |>
-      mutate(
-        error2 =
-          case_when(
-            .data$sampled_state == "Alaska" &
-              .data$days_hunted > REF_DAY_LIMIT_CR_AK ~
-              paste(
-                "too many days hunted (limit",
-                REF_DAY_LIMIT_CR_AK,
-                "in",
-                "AK)",
-                sep = " "
-              ),
-            .data$sampled_state %in% REF_STATES_CR_SOUTH &
-              .data$days_hunted > REF_DAY_LIMIT_CR_SOUTH ~
-              paste0(
-                "too many days hunted (limit ",
-                REF_DAY_LIMIT_CR_SOUTH,
-                " in ",
-                paste(REF_STATES_CR_SOUTH, collapse = ", "),
-                ")"
-              ),
-            .data$sampled_state %in% REF_STATES_CR_NORTH &
-              .data$days_hunted > REF_DAY_LIMIT_CR_NORTH ~
-              paste0(
-                "too many days hunted (limit ",
-                REF_DAY_LIMIT_CR_NORTH,
-                " in ",
-                paste(REF_STATES_CR_NORTH, collapse = ", "),
-                ")"
-              ),
-            TRUE ~ NA_character_
-          )
-      )
-
-    message(
-      paste(
-        "Season: There are",
-        nrow(crtotals_validated |> filter(!is.na(.data$error2))),
-        "records exceeding the state limit for crane days_hunted.",
-        sep = " "
-      )
-    )
-
-    return(crtotals_validated)
-  }
-
 #' Find season did-not-hunts
 #'
-#' Internal function used in \code{\link{checkSeasonWFSCRGWK}},
-#' \code{\link{checkSeasonCR}}, and \code{\link{checkSeasonDV}}. Finds season
-#' records with a sum of \code{0} for \code{days_hunted} and sum greater than
-#' \code{0} for \code{retrieved}. Creates field \code{error4}.
+#' Internal function used in \code{\link{checkSeasonWFSCRGWKCR}} and
+#' \code{\link{checkSeasonDV}}. Finds season records with a sum of \code{0} for
+#' \code{days_hunted} and sum greater than \code{0} for \code{retrieved}.
+#' Creates field \code{error4}.
 #'
 #' @importFrom dplyr mutate
 #' @importFrom dplyr select
@@ -699,10 +605,9 @@ seasonDNH <-
 
 #' Season over bag
 #'
-#' Internal function used in \code{\link{checkSeasonWFSCRGWK}} and
-#' \code{\link{checkSeasonCR}}. Flags records with average overbags in season
-#' totals more than the overbag tolerance. Creates field \code{error3}. For
-#' doves, see \code{\link{seasonOverBagDV}}.
+#' Internal function used in \code{\link{checkSeasonWFSCRGWKCR}}. Flags records
+#' with average overbags in season totals more than the overbag tolerance.
+#' Creates field \code{error3}. For doves, see \code{\link{seasonOverBagDV}}.
 #'
 #' @importFrom dplyr mutate
 #' @importFrom dplyr filter

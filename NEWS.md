@@ -43,8 +43,7 @@
         - `dailyOverBag()` assigns `error3` for all species (including doves and waterfowl).
       - Season
         - `naDaysHunted()` assigns `error1`.
-        - `tooManyDaysHunted()` assigns `error2` for all species groups except cranes.
-          - `tooManyDaysHuntedCR()` assigns `error2` for cranes.
+        - `tooManyDaysHunted()` assigns `error2` for all species groups. It calculates the exact number of days allowed hunting for each state and species combination, even when different types of seasons (e.g., youth, veteran, regular, etc) overlap.
         - `seasonOverBag()` assigns `error3` for all species groups except doves.
           - `seasonOverBagDV()` assigns `error3` for doves.
         - `seasonDNH()` assigns `error4`.
@@ -87,7 +86,7 @@
 - Fixed bugs in `convertWWDO()`
   - `dplyr::case_when()` not compatible with using `type` in conditional statements, so moved `errors_df` creation.
 - Renamed `variables.R` to `constants.R`
-  - Set `REF_DAY_LIMIT_WK` to `63`
+  - Eliminate all `REF_DAY_LIMIT_` internal reference objects.
   - Reordered and alphabetized vectors.
   - Added internal reference objects:
     - `REF_STATES_ALL`

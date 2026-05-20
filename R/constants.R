@@ -13,16 +13,6 @@ REF_BAG_LIMIT_WWDO_EDGE <- 10
 REF_BAG_LIMIT_MODOWWDO <- 15
 REF_BAG_TOLERANCE <- 2
 
-# day limits --------------------------------------------------------------
-
-REF_DAY_LIMIT_WF <- 107
-REF_DAY_LIMIT_DV <- 107
-REF_DAY_LIMIT_WK <- 63
-REF_DAY_LIMIT_SCRG <- 107
-REF_DAY_LIMIT_CR_AK <- 106
-REF_DAY_LIMIT_CR_SOUTH <- 92
-REF_DAY_LIMIT_CR_NORTH <- 60
-
 # flyways -----------------------------------------------------------------
 
 REF_STATES_AF <-
