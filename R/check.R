@@ -73,6 +73,7 @@ surveyCheck <-
 #'
 #' @importFrom dplyr filter
 #' @importFrom dplyr if_any
+#' @importFrom dplyr matches
 #' @importFrom dplyr contains
 #' @importFrom dplyr distinct
 #' @importFrom dplyr pull
@@ -95,7 +96,7 @@ audit <-
 
     daily_error_ids <-
       daily_check |>
-      filter(if_any(contains("error"), \(x) ! is.na(x))) |>
+      filter(if_any(matches("error[2-4]{1}"), \(x) ! is.na(x))) |>
       distinct(.data$surveyID) |>
       pull()
 
@@ -166,7 +167,7 @@ auditDV <-
 
     daily_error_ids <-
       daily_check |>
-      filter(if_any(matches("error[1-4]{1}"), \(x) ! is.na(x))) |>
+      filter(if_any(matches("error[2-4]{1}"), \(x) ! is.na(x))) |>
       distinct(.data$surveyID) |>
       pull()
 
