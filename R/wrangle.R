@@ -337,8 +337,7 @@ wrangleDayLimits <-
         close = ymd(.data$close)
       )
     
-    exact_state_spp_day_limits <-
-      dates_wrangled |> 
+    dates_wrangled |> 
       filter(.data$sp_group_estimated == "MODO-WWDO") |> 
       mutate(sp_group_estimated = "Mourning Dove") |> 
       bind_rows(
@@ -357,6 +356,12 @@ wrangleDayLimits <-
         dates_wrangled |>
           filter(!.data$sp_group_estimated %in% 
                    c("CootsGallinules", "MODO-WWDO"))) |> 
+      bind_rows(
+        dates_wrangled |> 
+          filter(.data$speciesgroup == "Ducks") |> 
+          mutate(
+            speciesgroup = "Sea Ducks",
+            species_group_estimated = "Specially Regulated Sea Ducks")) |> 
       mutate(day_seq = map2(.data$open, .data$close, seq, by = "day")) |> 
       unnest(cols = "day_seq") |> 
       summarize(
