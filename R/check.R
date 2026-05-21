@@ -666,6 +666,8 @@ seasonOverBag <-
 #' @importFrom dplyr mutate
 #' @importFrom dplyr select
 #' @importFrom dplyr filter
+#' @importFrom dplyr pull
+#' @importFrom dplyr case_when
 #' @importFrom rlang .data
 #'
 #' @param dvtotals_df Season data tibble
@@ -680,6 +682,11 @@ seasonOverBag <-
 seasonOverBagDV <-
   function(dvtotals_df) {
 
+    wwdo_edge <-
+      REF_STATES_WWDO_DF |> 
+      filter(.data$wwdo_state_status == "edge") |> 
+      pull(sampled_state)
+    
     dvtotals_validated <-
       dvtotals_df |>
       mutate(
@@ -688,6 +695,9 @@ seasonOverBagDV <-
              .data$retrieved[.data$sp_group_estimated == "Mourning Dove"]) /
           (.data$days_hunted[.data$sp_group_estimated == "White-Winged Dove"] +
              .data$days_hunted[.data$sp_group_estimated == "Mourning Dove"]),
+        diff = 
+          .data$retrieved[.data$sp_group_estimated == "Mourning Dove"] -
+            .data$retrieved[.data$sp_group_estimated == "White-Winged Dove"],
         .by = "surveyID"
       ) |>
       mutate(
@@ -695,8 +705,8 @@ seasonOverBagDV <-
           ifelse(
             ((.data$retrieved / .data$days_hunted) - .data$maxbag) >
               REF_BAG_TOLERANCE,
-            paste0(
-              "average_bag_too_high: ",
+            paste(
+              "average_bag_too_high:",
               round(.data$retrieved / .data$days_hunted, 1)
             ),
             NA
@@ -707,17 +717,23 @@ seasonOverBagDV <-
               c("White-Winged Dove", "Mourning Dove") &
               is.na(.data$error_three) &
               .data$modowwdo > (REF_BAG_LIMIT_MODOWWDO + REF_BAG_TOLERANCE),
-            paste0("modo_plus_wwdo_too_high: ", round(.data$modowwdo, 1)),
+            paste("modo_plus_wwdo_too_high:", round(.data$modowwdo, 1)),
+            NA
+          ),
+        error_five = 
+          ifelse(
+            .data$diff < 0 & .data$sampled_state %in% wwdo_edge,
+            paste("WWDO_retrieved_exceeds_MODO_retrieved:", abs(.data$diff)),
             NA
           ),
         error3 =
-          ifelse(
-            !is.na(.data$error_three),
-            .data$error_three,
-            .data$error_four
+          case_when(
+            !is.na(.data$error_three) ~ .data$error_three,
+            !is.na(.data$error_four) ~ .data$error_four,
+            !is.na(.data$error_five) ~ .data$error_five
           )
       ) |>
-      select(-c("modowwdo", "error_three", "error_four"))
+      select(-c("modowwdo", "diff", "error_three", "error_four", "error_five"))
 
     message(
       paste(
