@@ -306,13 +306,13 @@ convertWWDO <-
                    .data$unretrieved > 0) ~
                 paste("non-WWDO state reported value(s) > 0 for days_hunted,",
                       "retrieved, and/or unretrieved"),
-              # Flag WWDO records from edge WWDO states with retrieved +
-              # unretrieved > edge state limit
+              # Flag WWDO records from edge WWDO states with retrieved >= edge
+              # state limit
               .data$sp_group_estimated == "White-Winged Dove" &
                 .data$wwdo_state_status == "edge" &
-                (.data$retrieved + .data$unretrieved) > REF_BAG_LIMIT_WWDO_EDGE ~
-                paste("edge WWDO state reported >", REF_BAG_LIMIT_WWDO_EDGE,
-                      "for retrieved and/or unretrieved"),
+                .data$retrieved >= REF_BAG_LIMIT_WWDO_EDGE ~
+                paste("edge WWDO state reported", REF_BAG_LIMIT_WWDO_EDGE,
+                      "or more for retrieved value"),
               TRUE ~ NA_character_))
 
       wwdo_validated <-
@@ -323,7 +323,7 @@ convertWWDO <-
         mutate(
           days_hunted = ifelse(!is.na(.data$wwdo_error), 0, .data$days_hunted),
           retrieved = ifelse(!is.na(.data$wwdo_error), 0, .data$retrieved),
-          unretrieved = ifelse(!is.na(.data$wwdo_error), 0, .data$unretrieved)
+          unretrieved = ifelse(!is.na(.data$wwdo_error), NA, .data$unretrieved)
         ) |>
         select(-"wwdo_state_status")
 
@@ -345,13 +345,13 @@ convertWWDO <-
                 (.data$retrieved > 0 | .data$unretrieved > 0) ~
                 paste("non-WWDO state reported value(s) > 0 for retrieved and/or",
                       "unretrieved"),
-              # Flag WWDO records from edge WWDO states with retrieved +
-              # unretrieved > edge state limit
+              # Flag WWDO records from edge WWDO states with retrieved >= edge
+              # state limit
               .data$sp_group_estimated == "White-Winged Dove" &
                 .data$wwdo_state_status == "edge" &
-                (.data$retrieved + .data$unretrieved) > REF_BAG_LIMIT_WWDO_EDGE ~
-                paste("edge WWDO state reported >", REF_BAG_LIMIT_WWDO_EDGE,
-                      "for retrieved and/or unretrieved"),
+                .data$retrieved >= REF_BAG_LIMIT_WWDO_EDGE ~
+                paste("edge WWDO state reported", REF_BAG_LIMIT_WWDO_EDGE,
+                      "or more for retrieved value"),
               TRUE ~ NA_character_))
 
       wwdo_validated <-
@@ -361,7 +361,7 @@ convertWWDO <-
         # retrieved and unretrieved to 0
         mutate(
           retrieved = ifelse(!is.na(.data$wwdo_error), 0, .data$retrieved),
-          unretrieved = ifelse(!is.na(.data$wwdo_error), 0, .data$unretrieved)
+          unretrieved = ifelse(!is.na(.data$wwdo_error), NA, .data$unretrieved)
         ) |>
         select(-"wwdo_state_status")
     }
