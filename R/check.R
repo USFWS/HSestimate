@@ -72,6 +72,9 @@ surveyCheck <-
 #' \code{\link{checkWF}}.
 #'
 #' @importFrom dplyr filter
+#' @importFrom dplyr summarize
+#' @importFrom dplyr left_join
+#' @importFrom dplyr mutate
 #' @importFrom dplyr if_any
 #' @importFrom dplyr matches
 #' @importFrom dplyr contains
@@ -94,6 +97,15 @@ surveyCheck <-
 audit <-
   function(daily_check, season_check) {
 
+    party_ref <-
+      daily_check |>
+      filter(
+        FALSE %in% is.na(.data$error1), 
+        .by = c(.data$surveyID, .data$sp_group_estimated)) |>
+      summarize(
+        recalc_retrieved = sum(.data$retrieved, na.rm = T), 
+        .by = c("surveyID", "sp_group_estimated"))
+    
     daily_error_ids <-
       daily_check |>
       filter(if_any(matches("error[2-4]{1}"), \(x) ! is.na(x))) |>
@@ -121,7 +133,18 @@ audit <-
       filter(!.data$surveyID %in% season_error_ids) |>
       # Do not include any survey IDs with an error in the dailies
       filter(!.data$surveyID %in% daily_error_ids) |>
-      select(!contains("error"))
+      select(!contains("error")) |> 
+      # Edit values based on party hunt recalculations
+      left_join(
+        party_ref, 
+        by = c("surveyID", "sp_group_estimated")) |>
+      mutate(
+        retrieved = 
+          ifelse(
+            !is.na(.data$recalc_retrieved), 
+            .data$recalc_retrieved, 
+            .data$retrieved)) |> 
+      select(-"recalc_retrieved")
 
     season_audit <-
       season_check |>
@@ -145,6 +168,9 @@ audit <-
 #' and audits for doves.
 #'
 #' @importFrom dplyr filter
+#' @importFrom dplyr summarize
+#' @importFrom dplyr left_join
+#' @importFrom dplyr mutate
 #' @importFrom dplyr if_any
 #' @importFrom dplyr matches
 #' @importFrom dplyr contains
@@ -165,6 +191,15 @@ audit <-
 auditDV <-
   function(daily_check, season_check) {
 
+    party_ref <-
+      daily_check |>
+      filter(
+        FALSE %in% is.na(.data$error1), 
+        .by = c(.data$surveyID, .data$sp_group_estimated)) |>
+      summarize(
+        recalc_retrieved = sum(.data$retrieved, na.rm = T), 
+        .by = c("surveyID", "sp_group_estimated"))
+    
     daily_error_ids <-
       daily_check |>
       filter(if_any(matches("error[2-4]{1}"), \(x) ! is.na(x))) |>
@@ -192,7 +227,18 @@ auditDV <-
       filter(!.data$surveyID %in% season_error_ids) |>
       # Do not include any survey IDs with an error in the dailies
       filter(!.data$surveyID %in% daily_error_ids) |>
-      select(!contains("error"))
+      select(!contains("error")) |> 
+      # Edit values based on party hunt recalculations
+      left_join(
+        party_ref, 
+        by = c("surveyID", "sp_group_estimated")) |>
+      mutate(
+        retrieved = 
+          ifelse(
+            !is.na(.data$recalc_retrieved), 
+            .data$recalc_retrieved, 
+            .data$retrieved)) |> 
+      select(-"recalc_retrieved")
 
     season_audit <-
       season_check |>
@@ -216,6 +262,9 @@ auditDV <-
 #' daily data for waterfowl and returns corrections and audits in a list.
 #'
 #' @importFrom dplyr filter
+#' @importFrom dplyr summarize
+#' @importFrom dplyr left_join
+#' @importFrom dplyr mutate
 #' @importFrom dplyr if_any
 #' @importFrom dplyr contains
 #' @importFrom dplyr distinct
@@ -243,6 +292,15 @@ checkWF <-
     # Check season
     season_check <- checkSeasonWFSCRGWKCR(season_df, maxbag_df, maxbag_raw)
 
+    party_ref <-
+      daily_check |>
+      filter(
+        FALSE %in% is.na(.data$error1), 
+        .by = c(.data$surveyID, .data$sp_group_estimated)) |>
+      summarize(
+        recalc_retrieved = sum(.data$retrieved, na.rm = T), 
+        .by = c("surveyID", "sp_group_estimated"))
+    
     daily_error_ids <-
       daily_check |>
       filter(if_any(contains("error"), \(x) ! is.na(x))) |>
@@ -270,7 +328,18 @@ checkWF <-
       filter(!.data$surveyID %in% season_error_ids) |>
       # Do not include any survey IDs with an error in the dailies
       filter(!.data$surveyID %in% daily_error_ids) |>
-      select(!contains("error"))
+      select(!contains("error")) |> 
+      # Edit values based on party hunt recalculations
+      left_join(
+        party_ref, 
+        by = c("surveyID", "sp_group_estimated")) |>
+      mutate(
+        retrieved = 
+          ifelse(
+            !is.na(.data$recalc_retrieved), 
+            .data$recalc_retrieved, 
+            .data$retrieved)) |> 
+      select(-"recalc_retrieved")
 
     season_audit <-
       season_check |>
@@ -686,7 +755,7 @@ seasonOverBagDV <-
     wwdo_edge <-
       REF_STATES_WWDO_DF |> 
       filter(.data$wwdo_state_status == "edge") |> 
-      pull(sampled_state)
+      pull(.data$sampled_state)
     
     dvtotals_validated <-
       dvtotals_df |>
