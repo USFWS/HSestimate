@@ -10,7 +10,8 @@ harvestEstimates(data)
 \item{data}{Estimation data}
 }
 \description{
-The internal \code{harvestEstimates} function calculates variables for estimates.
+The internal \code{harvestEstimates} function calculates variables for
+estimates.
 }
 \seealso{
 Other estimation functions: 

@@ -10,8 +10,8 @@ mgmtUnitSelect(data)
 \item{data}{Estimation data}
 }
 \description{
-The internal \code{mgmtUnitSelect} function selects desired management unit level
-estimate data fields.
+The internal \code{mgmtUnitSelect} function selects desired management unit
+level estimate data fields.
 }
 \seealso{
 Other estimation functions: 

@@ -10,8 +10,8 @@ mgmtUnitTotals(data)
 \item{data}{Estimation data}
 }
 \description{
-The internal \code{mgmtUnitTotals} function summarizes estimates to the management
-unit level.
+The internal \code{mgmtUnitTotals} function summarizes estimates to the
+management unit level.
 }
 \seealso{
 Other estimation functions: 

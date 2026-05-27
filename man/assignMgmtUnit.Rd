@@ -12,8 +12,8 @@ assignMgmtUnit(data, management_units)
 \item{management_units}{Tibble of management units}
 }
 \description{
-The internal \code{assignMgmtUnit} function assigns management unit abbreviations
-and management unit numbers to estimation data.
+The internal \code{assignMgmtUnit} function assigns management unit
+abbreviations and management unit numbers to estimation data.
 }
 \seealso{
 Other estimation functions: 
