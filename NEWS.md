@@ -25,7 +25,9 @@
   - Create more internal helper functions and move most of the internal helpers back in to `R/check.R`; other files like `R/errorIDs.R` and `R/overbag.R` were deleted (see [e6656cf](https://github.com/USFWS/HSestimate/commit/e6656cf2c2560bed2732792ef858c8f70893a0bd)).
   - Create `surveyCheck()` (previously named `editCheck()`), the exported checking function which runs internal functions depending on species group.
   - Internal helpers:
-    - `audit()` and `auditDV()` create the list of daily corrected, daily audit, season corrected, and season audit tibbles.
+    - `audit()` and `auditDV()` 
+      - Create the list of daily corrected, daily audit, season corrected, and season audit tibbles.
+      - Use recalculated and reassigned `retrieved` values changed by checking party hunts and converting sea duck and brant harvest.
     - `checkWF()` is used for waterfowl instead of a combination of `surveyCheck()` and `audit()`, since waterfowl must have SD and BR harvest converted to DK and GS, respectively, in a special step.
     - Check daily data
       - `checkDailyWF()` is used for waterfowl.
@@ -80,6 +82,7 @@
     - `failNADaysHunted()` fails if `NA` values are found in the `days_hunted` field.
     - `failSurveyStates()` fails if the list of states in the data being used to generate estimates is different from the standard list of expected states for that species group.
 - Update `test-check.R`
+- Added package startup message (see `zzz.R`)
 
 ## Minor changes / bug fixes
 
