@@ -194,7 +194,7 @@ wrangleMaxBag <-
               c("CootsGallinules", "MODO-WWDO", "GeeseBrant"))) |>
       bind_rows(sd_maxbag) |>
       left_join(
-        state_numbers |>
+        REF_STATE_NUMBERS |>
           rename(
             sampled_state = .data$description,
             state = .data$abbreviation,
@@ -281,7 +281,7 @@ wrangleDates <-
         latest_close = max(.data$close),
         .by = "sampled_state") |>
       left_join(
-        state_numbers |>
+        REF_STATE_NUMBERS |>
           rename(
             sampled_state = .data$description,
             SampleST = .data$abbreviation,

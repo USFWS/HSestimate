@@ -6,6 +6,7 @@
   - In addition to checking Harvest Survey data, `HSestimate` will now also generate totals files and calculate harvest estimates.
 - `Imports`
   - Add `{purrr}`
+  - Add `{utils}`
 - Introduced `@family` tags to function documentation to help navigate networks of helper functions and species groups. New tags include:
   - `crane functions`
   - `dove functions`
@@ -101,6 +102,8 @@
     - `REF_STATES_RAILS`
     - `REF_STATES_GALLS`
     - `REF_STATES_BTPI`
+- Added new `variables.R` for package versions and season assignment.
+- Rename `state_numbers` to `REF_STATE_NUMBERS`.
 
 # migbirdHS 1.0.1
 
