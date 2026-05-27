@@ -22,7 +22,7 @@
     "repositoryURL": "https://github.com/USFWS/HSestimate.git",
     "vcs": "git",
 
-    "laborHours": 330,
+    "laborHours": 345,
 
     "tags": [
       "usfws",
@@ -39,7 +39,7 @@
     },
 
     "date": {
-      "metadataLastUpdated": "2026-05-05"
+      "metadataLastUpdated": "2026-05-27"
     }
   }
 ]
