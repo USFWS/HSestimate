@@ -31,6 +31,7 @@ convertSDBR <-
 #' @importFrom dplyr pull
 #' @importFrom dplyr filter
 #' @importFrom dplyr summarize
+#' @importFrom dplyr case_when
 #' @importFrom dplyr mutate
 #' @importFrom dplyr rename
 #' @importFrom dplyr left_join
@@ -87,51 +88,32 @@ convertSeaDuckToDuck <-
         season_df <-
           season_df |>
           mutate(
-            retrieved =
+            days_hunted = 
               ifelse(
                 .data$surveyID == sdbysurveyID$surveyID[i] &
-                  .data$sp_group_estimated == "Ducks",
-                .data$retrieved + sdbysurveyID$sum_retrieved[i],
-                .data$retrieved)
+                  .data$sp_group_estimated == "Specially Regulated Sea Ducks", 
+                0,
+                .data$days_hunted
+              ),
+            retrieved =
+              case_when(
+                .data$surveyID == sdbysurveyID$surveyID[i] &
+                  .data$sp_group_estimated == "Ducks" ~
+                  .data$retrieved + sdbysurveyID$sum_retrieved[i],
+                .data$surveyID == sdbysurveyID$surveyID[i] &
+                  .data$sp_group_estimated == "Specially Regulated Sea Ducks" ~ 
+                  0,
+                .default = .data$retrieved)
           )
       }
-
-      # Create a df to double check that the addition was conducted correctly
-      # for each surveyID
-      validate <-
-        sdbysurveyID |>
-        rename(sum_bad_seaducks_retrieved = .data$sum_retrieved) |>
-        left_join(
-          season_df_orig |>
-            filter(.data$surveyID %in% sdbysurveyID$surveyID &
-                     .data$sp_group_estimated == "Ducks") |>
-            select(.data$surveyID, original_ducks_retrieved = .data$retrieved),
-          by = "surveyID") |>
-        left_join(
-          season_df |>
-            filter(.data$surveyID %in% sdbysurveyID$surveyID &
-                     .data$sp_group_estimated == "Ducks") |>
-            select(.data$surveyID, new_ducks_retrieved = .data$retrieved),
-          by = "surveyID") |>
-        mutate(
-          check =
-            .data$original_ducks_retrieved +
-            .data$sum_bad_seaducks_retrieved) |>
-        filter(.data$check != .data$new_ducks_retrieved)
-
-      if (nrow(validate) != 0) {
-        message("Error in adding sea duck harvest to duck sums.")
-      } else {
-        message("Sea duck harvest correctly added to ducks.")
-      }
-
-      return(season_df)
+      
     } else {
       message(
         paste0(
           "Daily data does not contain any seaducks harvested in non-seaduck ",
           "states."))
     }
+    return(season_df)
   }
 
 #' Convert brant to geese for brant records from non-brant states
@@ -144,6 +126,7 @@ convertSeaDuckToDuck <-
 #' @importFrom dplyr filter
 #' @importFrom dplyr summarize
 #' @importFrom dplyr mutate
+#' @importFrom dplyr case_when
 #' @importFrom dplyr rename
 #' @importFrom dplyr left_join
 #' @importFrom dplyr select
@@ -200,50 +183,31 @@ convertBrantToGeese <-
         season_df <-
           season_df |>
           mutate(
-            retrieved =
+            days_hunted = 
               ifelse(
                 .data$surveyID == brantbysurveyID$surveyID[i] &
-                  .data$sp_group_estimated == "Geese",
-                .data$retrieved + brantbysurveyID$sum_retrieved[i],
-                .data$retrieved)
+                  .data$sp_group_estimated == "Brant", 
+                0,
+                .data$days_hunted
+              ),
+            retrieved =
+              case_when(
+                .data$surveyID == brantbysurveyID$surveyID[i] &
+                  .data$sp_group_estimated == "Geese" ~
+                  .data$retrieved + brantbysurveyID$sum_retrieved[i],
+                .data$surveyID == brantbysurveyID$surveyID[i] &
+                  .data$sp_group_estimated == "Brant" ~ 0,
+                .default = .data$retrieved)
           )
       }
 
-      # Create a df to double check that the addition was conducted correctly
-      # for each surveyID
-      validate <-
-        brantbysurveyID |>
-        rename(sum_bad_brant_retrieved = .data$sum_retrieved) |>
-        left_join(
-          season_df_orig |>
-            filter(.data$surveyID %in% brantbysurveyID$surveyID &
-                     .data$sp_group_estimated == "Geese") |>
-            select(.data$surveyID, original_geese_retrieved = .data$retrieved),
-          by = "surveyID") |>
-        left_join(
-          season_df |>
-            filter(.data$surveyID %in% brantbysurveyID$surveyID &
-                     .data$sp_group_estimated == "Geese") |>
-            select(.data$surveyID, new_geese_retrieved = .data$retrieved),
-          by = "surveyID") |>
-        mutate(
-          check =
-            .data$original_geese_retrieved + .data$sum_bad_brant_retrieved) |>
-        filter(.data$check != .data$new_geese_retrieved)
-
-      if (nrow(validate) != 0) {
-        message("Error in adding brant harvest to geese sums.")
-      } else {
-        message("Brant harvest correctly added to geese.")
-      }
-
-      return(season_df)
     } else {
       message(
         paste0(
           "Daily data does not contain any brant harvested in non-brant ",
           "states."))
     }
+    return(season_df)
   }
 
 #' Find season or daily WWDO harvest effort in non-WWDO states and convert to
