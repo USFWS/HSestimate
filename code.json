@@ -3,7 +3,7 @@
     "name": "HSestimate",
     "organization": "U.S. Fish and Wildlife",
     "description": "An R package for migratory game bird harvest estimation",
-    "version": "v1.0.1",
+    "version": "v2.0.0",
     "status": "Operational",
 
     "permissions": {
