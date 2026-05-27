@@ -318,7 +318,7 @@ wrangleDates <-
 
 wrangleDayLimits <-
   function(maxbag_raw) {
-    
+
     dates_wrangled <-
       wrangleRef(maxbag_raw) |>
       select(
@@ -333,44 +333,44 @@ wrangleDayLimits <-
                !is.na(.data$open) &
                !is.na(.data$close)) |>
       mutate(
-        open = ymd(.data$open), 
+        open = ymd(.data$open),
         close = ymd(.data$close)
       )
-    
-    dates_wrangled |> 
-      filter(.data$sp_group_estimated == "MODO-WWDO") |> 
-      mutate(sp_group_estimated = "Mourning Dove") |> 
-      bind_rows(
-        dates_wrangled |> 
-          filter(.data$sp_group_estimated == "MODO-WWDO") |> 
-          mutate(sp_group_estimated = "White-Winged Dove")) |> 
-      bind_rows(
-        dates_wrangled |> 
-          filter(.data$sp_group_estimated == "CootsGallinules") |> 
-          mutate(sp_group_estimated = "Coots")) |> 
-      bind_rows(
-        dates_wrangled |> 
-          filter(.data$sp_group_estimated == "CootsGallinules") |> 
-          mutate(sp_group_estimated = "Gallinules")) |> 
+
+    dates_wrangled |>
+      filter(.data$sp_group_estimated == "MODO-WWDO") |>
+      mutate(sp_group_estimated = "Mourning Dove") |>
       bind_rows(
         dates_wrangled |>
-          filter(!.data$sp_group_estimated %in% 
-                   c("CootsGallinules", "MODO-WWDO"))) |> 
+          filter(.data$sp_group_estimated == "MODO-WWDO") |>
+          mutate(sp_group_estimated = "White-Winged Dove")) |>
       bind_rows(
-        dates_wrangled |> 
-          filter(.data$speciesgroup == "Ducks") |> 
+        dates_wrangled |>
+          filter(.data$sp_group_estimated == "CootsGallinules") |>
+          mutate(sp_group_estimated = "Coots")) |>
+      bind_rows(
+        dates_wrangled |>
+          filter(.data$sp_group_estimated == "CootsGallinules") |>
+          mutate(sp_group_estimated = "Gallinules")) |>
+      bind_rows(
+        dates_wrangled |>
+          filter(!.data$sp_group_estimated %in%
+                   c("CootsGallinules", "MODO-WWDO"))) |>
+      bind_rows(
+        dates_wrangled |>
+          filter(.data$speciesgroup == "Ducks") |>
           mutate(
             speciesgroup = "Sea Ducks",
-            species_group_estimated = "Specially Regulated Sea Ducks")) |> 
-      mutate(day_seq = map2(.data$open, .data$close, seq, by = "day")) |> 
-      unnest(cols = "day_seq") |> 
+            species_group_estimated = "Specially Regulated Sea Ducks")) |>
+      mutate(day_seq = map2(.data$open, .data$close, seq, by = "day")) |>
+      unnest(cols = "day_seq") |>
       summarize(
-        earliest_open = min(ymd(.data$open), na.rm = T),
-        latest_close = max(ymd(.data$close), na.rm = T),
+        earliest_open = min(ymd(.data$open), na.rm = TRUE),
+        latest_close = max(ymd(.data$close), na.rm = TRUE),
         day_limit = n_distinct(.data$day_seq),
         .by = c("seasonyear", "state", "sp_group_estimated")
-      ) |> 
-      left_join(REF_STATES_AND_ABBRS, by = "state") |> 
+      ) |>
+      left_join(REF_STATES_AND_ABBRS, by = "state") |>
       select(
         "sampled_state",
         "sp_group_estimated",
@@ -378,5 +378,5 @@ wrangleDayLimits <-
         "latest_close",
         "day_limit"
       )
-    
+
   }

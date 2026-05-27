@@ -1,10 +1,10 @@
 #' @importFrom utils packageVersion
 
 .onAttach <- function(libname, pkgname = "HSestimate") {
-  
+
   local_version <- packageVersion(pkgname)
   season <- names(REF_RELEASES[REF_RELEASES == local_version])
-  
+
   try({
     desc_url <-
       paste0(
@@ -13,7 +13,7 @@
     remote_desc <- readLines(desc_url, warn = FALSE)
     remote_version <-
       gsub("Version: ", "", remote_desc[grep("^Version: ", remote_desc)])
-    
+
     # If the local package version is not in the REF_RELEASES internal object,
     # return a message.
     if (!local_version %in% REF_RELEASES) {

@@ -200,19 +200,23 @@ calcVar <-
         q_successful = 1 - !!sym(s_mean),
         # Day/license hunter variance
         var_lday =
-          (!!sym(paste0("days_hunted_", type, "_var")) / .data$n_hunters) * .data$fpcf,
+          (!!sym(paste0("days_hunted_", type, "_var")) / .data$n_hunters) *
+          .data$fpcf,
         # Bag/license hunter variance
         var_lbag =
-          (!!sym(paste0("retrieved_", type, "_var")) / .data$n_hunters) * .data$fpcf,
+          (!!sym(paste0("retrieved_", type, "_var")) / .data$n_hunters) *
+          .data$fpcf,
         # Down/license hunter variance
         var_ldwn =
-          (!!sym(paste0("unretrieved_", type, "_var")) / .data$n_hunters) * .data$fpcf,
+          (!!sym(paste0("unretrieved_", type, "_var")) / .data$n_hunters) *
+          .data$fpcf,
         # Variance of proportion of active hunters
         var_prop_active_hunters =
           (!!sym(a_mean) * .data$q_active * .data$fpcf) / (.data$n_hunters - 1),
         # Variance of proportion of successful hunters
         var_prop_successful_hunters =
-          (!!sym(s_mean) * .data$q_successful * .data$fpcf) / (.data$n_hunters - 1),
+          (!!sym(s_mean) * .data$q_successful * .data$fpcf) /
+          (.data$n_hunters - 1),
         # Total days by stratum
         t_days_hunted =
           !!sym(paste0("days_hunted_", type, "_mean")) * .data$stratum_count,
@@ -345,10 +349,10 @@ stateTotals <-
 
 assignFlyway <-
   function(data) {
-    data |> 
+    data |>
       # Define flyway units
       mutate(
-        flyway = 
+        flyway =
           case_when(
             .data$state %in% REF_STATES_AF ~ "AF",
             .data$state %in% REF_STATES_MF ~ "MF",
@@ -356,15 +360,15 @@ assignFlyway <-
             .data$state %in% REF_STATES_PF ~ "PF",
             .data$state == "AK" ~ "AK",
             TRUE ~ NA_character_),
-        flyNo = 
+        flyNo =
           case_when(
             .data$flyway == "AF" ~ 1,
             .data$flyway == "MF" ~ 2,
             .data$flyway == "CF" ~ 3,
             .data$flyway == "PF" ~ 4,
             .data$flyway == "AK" ~ 5,
-            TRUE ~ NA_integer_)) |> 
-      relocate(.data$flyway, .before = "state") |> 
+            TRUE ~ NA_integer_)) |>
+      relocate(.data$flyway, .before = "state") |>
       relocate(.data$flyNo, .after = "flyway")
   }
 
@@ -386,29 +390,29 @@ assignFlyway <-
 
 assignFlywaySDBR <-
   function(data) {
-    data |> 
+    data |>
       # Define flyway units
       mutate(
-        flyway = 
+        flyway =
           case_when(
             .data$state %in% REF_STATES_SD_AF ~ "AF",
             .data$state %in% c("CA", "OR", "WA") ~ "PF",
             .data$state == "AK" ~ "AK",
             TRUE ~ NA_character_),
-        flyNo = 
+        flyNo =
           case_when(
             .data$flyway == "AF" ~ 1,
             .data$flyway == "PF" ~ 4,
             .data$flyway == "AK" ~ 5,
-            TRUE ~ NA_integer_)) |> 
-      relocate(.data$flyway, .before = "state") |> 
+            TRUE ~ NA_integer_)) |>
+      relocate(.data$flyway, .before = "state") |>
       relocate(.data$flyNo, .after = "flyway")
   }
 
 #' Assign management units
 #'
-#' The internal \code{assignMgmtUnit} function assigns management unit abbreviations
-#' and management unit numbers to estimation data.
+#' The internal \code{assignMgmtUnit} function assigns management unit
+#' abbreviations and management unit numbers to estimation data.
 #'
 #' @importFrom dplyr left_join
 #' @importFrom dplyr mutate
@@ -425,17 +429,17 @@ assignFlywaySDBR <-
 
 assignMgmtUnit <-
   function(data, management_units) {
-    data |> 
+    data |>
       # Define management units
-      left_join(management_units, by = "state") |> 
+      left_join(management_units, by = "state") |>
       mutate(
-        mu_no = 
+        mu_no =
           case_when(
-            .data$mu_abbr == "EMU" ~ 1, 
-            .data$mu_abbr == "CMU" ~ 2, 
+            .data$mu_abbr == "EMU" ~ 1,
+            .data$mu_abbr == "CMU" ~ 2,
             .data$mu_abbr == "WMU" ~ 3,
-            TRUE ~ NA_integer_)) |> 
-      relocate(.data$mu_abbr, .before = "state") |> 
+            TRUE ~ NA_integer_)) |>
+      relocate(.data$mu_abbr, .before = "state") |>
       relocate(.data$mu_no, .before = "mu_abbr")
   }
 
@@ -458,26 +462,27 @@ hunterEstimates <-
     data |>
       mutate(
         # Denominator for variance of state proportions
-        bign_squared = 
+        bign_squared =
           .data$BigN^2,
         # State proportion of active hunters
-        s_t_p_active_hunters = 
+        s_t_p_active_hunters =
           .data$t_p_active_hunters / .data$BigN,
         # State proportion of successful hunters
-        s_t_p_successful_hunters = 
+        s_t_p_successful_hunters =
           .data$t_p_successful_hunters / .data$BigN,
         # Variance of state proportion of active hunters
-        var_s_t_p_active_hunters = 
+        var_s_t_p_active_hunters =
           .data$var_t_p_active_hunters / .data$bign_squared,
         # Variance of state proportion of successful hunters
-        var_s_t_p_successful_hunters = 
+        var_s_t_p_successful_hunters =
           .data$var_t_p_successful_hunters / .data$bign_squared
       )
   }
 
 #' Calculate harvest estimation fields
 #'
-#' The internal \code{harvestEstimates} function calculates variables for estimates.
+#' The internal \code{harvestEstimates} function calculates variables for
+#' estimates.
 #'
 #' @importFrom dplyr mutate
 #' @importFrom rlang .data
@@ -493,46 +498,46 @@ harvestEstimates <-
     data |>
       mutate(
         # Bag per active hunter
-        retrieved_per_active_hunter = 
+        retrieved_per_active_hunter =
           .data$t_retrieved / .data$t_p_active_hunters,
         # Variance for bag per active hunter
         var_retrieved_per_active_hunter =
           (.data$var_t_retrieved +
-              (.data$t_retrieved * 
-                 .data$t_retrieved * 
+              (.data$t_retrieved *
+                 .data$t_retrieved *
                  .data$var_t_p_active_hunters) /
               (.data$t_p_active_hunters * .data$t_p_active_hunters)) /
           (.data$t_p_active_hunters * .data$t_p_active_hunters),
         # Bag per hunter standard error
-        se_retrieved_per_active_hunter = 
+        se_retrieved_per_active_hunter =
           sqrt(.data$var_retrieved_per_active_hunter),
         # Bag per hunter 95% confidence interval
-        ci_retrieved_per_active_hunter = 
+        ci_retrieved_per_active_hunter =
           1.96 * .data$se_retrieved_per_active_hunter,
         # Bag per hunter +/- % 95%
-        pct_ci_retrieved_per_active_hunter = 
-          100 * (.data$ci_retrieved_per_active_hunter / 
+        pct_ci_retrieved_per_active_hunter =
+          100 * (.data$ci_retrieved_per_active_hunter /
                    .data$retrieved_per_active_hunter),
         # Days hunted standard error
         se_t_days_hunted = sqrt(.data$var_t_days_hunted),
         # Days hunted 95% confidence interval
         ci_t_days_hunted  = 1.96 * .data$se_t_days_hunted,
         # Days hunted +/- % 95%
-        pct_ci_t_days_hunted = 
+        pct_ci_t_days_hunted =
           100 * (.data$ci_t_days_hunted / .data$t_days_hunted),
         # Retrieved standard error
         se_t_retrieved = sqrt(.data$var_t_retrieved),
         # Retrieved 95% confidence interval
         ci_t_retrieved = 1.96 * .data$se_t_retrieved,
         # Retrieved +/- % 95%
-        pct_ci_t_retrieved = 
+        pct_ci_t_retrieved =
           100 * (.data$ci_t_retrieved / .data$t_retrieved),
         # Unretrieved standard error
         se_t_unretrieved = sqrt(.data$var_t_unretrieved),
         # Unretrieved 95% confidence interval
         ci_t_unretrieved = 1.96 * .data$se_t_unretrieved,
         # Unretrieved +/- % 95%
-        pct_ci_t_unretrieved = 
+        pct_ci_t_unretrieved =
           100 * (.data$ci_t_unretrieved / .data$t_unretrieved),
         # Proportion of active hunters standard error
         pact_se = sqrt(.data$var_s_t_p_active_hunters),
@@ -592,8 +597,8 @@ stateSelect <-
 
 #' Select fields for management unit level estimates
 #'
-#' The internal \code{mgmtUnitSelect} function selects desired management unit level
-#' estimate data fields.
+#' The internal \code{mgmtUnitSelect} function selects desired management unit
+#' level estimate data fields.
 #'
 #' @importFrom dplyr select
 #'
@@ -662,15 +667,15 @@ flywayTotals <-
             "var_t_p_active_hunters",
             "retrieved_per_active_hunter",
             "var_retrieved_per_active_hunter"
-          ), 
-          \(x) sum(x, na.rm = T)),
+          ),
+          \(x) sum(x, na.rm = TRUE)),
         .by = "flyway")
   }
 
 #' Management unit estimates
 #'
-#' The internal \code{mgmtUnitTotals} function summarizes estimates to the management
-#' unit level.
+#' The internal \code{mgmtUnitTotals} function summarizes estimates to the
+#' management unit level.
 #'
 #' @importFrom dplyr filter
 #' @importFrom dplyr group_by
@@ -685,9 +690,9 @@ flywayTotals <-
 #' @author Abby Walter, \email{abby_walter@@fws.gov}
 
 mgmtUnitTotals <-
-  function(data){
+  function(data) {
     data |>
-      filter(!is.na(.data$mu_abbr)) |> 
+      filter(!is.na(.data$mu_abbr)) |>
       summarize(
         across(
           c(
@@ -702,8 +707,8 @@ mgmtUnitTotals <-
             "var_t_p_active_hunters",
             "retrieved_per_active_hunter",
             "var_retrieved_per_active_hunter"
-          ), 
-          \(x) sum(x, na.rm = T)),
+          ),
+          \(x) sum(x, na.rm = TRUE)),
         .by = c("mu_abbr", "mu_no"))
   }
 
@@ -726,7 +731,7 @@ mgmtUnitTotals <-
 
 flywayFinal <-
   function(data) {
-    data |> 
+    data |>
       mutate(
         sday = sqrt(.data$var_t_days_hunted),
         ciDay = 1.96 * .data$sday,
@@ -748,7 +753,7 @@ flywayFinal <-
             TRUE ~ NA_integer_
           ),
         fstate = .data$flyway
-      ) |> 
+      ) |>
       select(
         c(
           "flyway",
@@ -766,7 +771,7 @@ flywayFinal <-
           pct_ci_t_unretrieved = "fpct_ci_t_unretrieved",
           "t_p_active_hunters"
         )
-      ) 
+      )
   }
 
 #' Final flyway estimates for sea duck and brant
@@ -825,7 +830,7 @@ flywayFinalSDBR <-
           pct_ci_t_unretrieved = "fpct_ci_t_unretrieved",
           "t_p_active_hunters"
         )
-      ) 
+      )
   }
 
 #' Final management unit estimates
@@ -847,7 +852,7 @@ flywayFinalSDBR <-
 
 mgmtUnitFinal <-
   function(data) {
-    data |> 
+    data |>
       mutate(
         state = .data$mu_abbr,
         sday = sqrt(.data$var_t_days_hunted),
@@ -859,7 +864,7 @@ mgmtUnitFinal <-
         sdown = sqrt(.data$var_t_unretrieved),
         ciDown = 1.96 * .data$sdown,
         mu_pct_ci_t_unretrieved = 100 * .data$ciDown / .data$t_unretrieved
-      ) |> 
+      ) |>
       select(
         c(
           "mu_abbr",
@@ -877,7 +882,7 @@ mgmtUnitFinal <-
           "mu_pct_ci_t_unretrieved",
           "t_p_active_hunters"
         )
-      ) |> 
+      ) |>
       rename_with(\(x) str_replace(x, "^mu\\_p", "p"))
   }
 
@@ -902,7 +907,7 @@ mgmtUnitFinal <-
 
 usFinal <-
   function(data) {
-    data |> 
+    data |>
       mutate(flyNo = 6) |>
       group_by(.data$flyNo) |>
       summarize(
@@ -916,9 +921,9 @@ usFinal <-
             "t_unretrieved",
             "var_t_unretrieved",
             "t_p_active_hunters"
-          ), 
+          ),
           \(x) sum(x, na.rm = TRUE))
-      ) |> 
+      ) |>
       mutate(
         ussDay = sqrt(.data$var_t_days_hunted),
         usciDay = 1.96 * .data$ussDay,
@@ -931,7 +936,7 @@ usFinal <-
         pct_ci_t_unretrieved = 100 * .data$usciDown / .data$t_unretrieved,
         flyway = "US",
         state = "US"
-      ) |> 
+      ) |>
       relocate(.data$flyway, .before = "flyNo") |>
       relocate(.data$state, .after = "flyNo") |>
       relocate(.data$pct_ci_t_days_hunted, .after = "var_t_days_hunted") |>
@@ -962,7 +967,7 @@ usFinal <-
 
 usFinalDV <-
   function(data) {
-    data |> 
+    data |>
       mutate(mu_abbr = "US") |>
       group_by(.data$mu_abbr) |>
       summarize(
@@ -976,9 +981,9 @@ usFinalDV <-
             "t_unretrieved",
             "var_t_unretrieved",
             "t_p_active_hunters"
-          ), 
+          ),
           \(x) sum(x, na.rm = TRUE))
-      ) |> 
+      ) |>
       mutate(
         ussDay = sqrt(.data$var_t_days_hunted),
         usciDay = 1.96 * .data$ussDay,
@@ -991,12 +996,11 @@ usFinalDV <-
         pct_ci_t_unretrieved = 100 * .data$usciDown / .data$t_unretrieved,
         state = "US",
         mu_no = 6
-      ) |> 
-      relocate(.data$state, .after = "mu_abbr") |> 
-      relocate(.data$pct_ci_t_days_hunted, .after = "var_t_days_hunted") |> 
-      relocate(.data$pct_ci_t_retrieved, .after = "var_t_retrieved") |> 
-      relocate(.data$pct_ci_t_unretrieved, .after = "var_t_unretrieved") |> 
+      ) |>
+      relocate(.data$state, .after = "mu_abbr") |>
+      relocate(.data$pct_ci_t_days_hunted, .after = "var_t_days_hunted") |>
+      relocate(.data$pct_ci_t_retrieved, .after = "var_t_retrieved") |>
+      relocate(.data$pct_ci_t_unretrieved, .after = "var_t_unretrieved") |>
       select(
         -c("ussDay", "usciDay", "ussBag", "usciBag", "ussDown", "usciDown"))
   }
-

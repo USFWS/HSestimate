@@ -44,16 +44,16 @@ REF_STATES_DK <- REF_STATES_ALL
 
 # States with a combined duck and merganser season
 REF_STATES_DUCKMERG <-
-  c("AL", "AR", "FL", "GA", "IA", "IL", "IN", "KY", "LA", "MA", "ME", "MI", 
-    "MN", "MS", "NC", "NH", "NJ", "OH", "PA", "RI", "SC", "TN", "VA", "VT", 
+  c("AL", "AR", "FL", "GA", "IA", "IL", "IN", "KY", "LA", "MA", "ME", "MI",
+    "MN", "MS", "NC", "NH", "NJ", "OH", "PA", "RI", "SC", "TN", "VA", "VT",
     "WI", "WV")
 
 # Goose states
 REF_STATES_GS <- REF_STATES_ALL[REF_STATES_ALL != "FL"]
 
 # Mourning Dove states
-REF_STATES_MODO <- 
-  REF_STATES_ALL[!REF_STATES_ALL %in% c("AK", "CT", "MA", "ME", "MI", "NH", 
+REF_STATES_MODO <-
+  REF_STATES_ALL[!REF_STATES_ALL %in% c("AK", "CT", "MA", "ME", "MI", "NH",
                                         "NJ", "NY", "VT")]
 
 # White-winged Dove (WWDO) main/primary harvest states
@@ -74,9 +74,9 @@ REF_STATES_WWDO_DF <-
         TRUE ~ "none"))
 
 # States with woodcock season
-REF_STATES_WK <- 
-  REF_STATES_ALL[!REF_STATES_ALL %in% c("AK", "AZ", "CA", "CO", "ID", "MT", 
-                                        "ND", "NM", "NV", "OR", "SD", "UT", 
+REF_STATES_WK <-
+  REF_STATES_ALL[!REF_STATES_ALL %in% c("AK", "AZ", "CA", "CO", "ID", "MT",
+                                        "ND", "NM", "NV", "OR", "SD", "UT",
                                         "WA", "WY")]
 
 # States with snipe season
@@ -87,28 +87,27 @@ REF_STATES_COOTS <- REF_STATES_ALL[REF_STATES_ALL != "AK"]
 
 # States with open season for rails
 REF_STATES_RAILS <-
-  REF_STATES_ALL[!REF_STATES_ALL %in% c("AK", "AZ", "CA", "ID", "MT", "ND", 
+  REF_STATES_ALL[!REF_STATES_ALL %in% c("AK", "AZ", "CA", "ID", "MT", "ND",
                                         "NH", "NV", "OR", "SD", "UT", "VT",
                                         "WA")]
-  
 
 # States with open season for gallinules
 REF_STATES_GALLS <-
-  REF_STATES_ALL[!REF_STATES_ALL %in% c("AK", "CO", "CT", "IA", "ID", "IL", 
+  REF_STATES_ALL[!REF_STATES_ALL %in% c("AK", "CO", "CT", "IA", "ID", "IL",
                                         "IN", "KS", "MA", "MD", "ME", "MO",
-                                        "MT", "ND", "NE", "NH", "OR", "RI", 
+                                        "MT", "ND", "NE", "NH", "OR", "RI",
                                         "SD", "UT", "VT", "WA", "WY")]
 
 # States with a Sandhill Crane season
-REF_STATES_CR <- 
+REF_STATES_CR <-
   c("AK", "CO", "KS", "MN", "MT", "ND", "NM", "OK", "SD", "TX", "WY")
 
 # Southern states with a Sandhill Crane season
 REF_STATES_CR_SOUTH <- c("Texas", "New Mexico", "Oklahoma")
 
 # Northern states with a Sandhill Crane season
-REF_STATES_CR_NORTH <- 
-  c("Colorado", "Kansas", "Minnesota", "Montana", "North Dakota", 
+REF_STATES_CR_NORTH <-
+  c("Colorado", "Kansas", "Minnesota", "Montana", "North Dakota",
     "South Dakota", "Wyoming")
 
 # States with a Band-tailed Pigeon (BTPI) season
@@ -116,7 +115,7 @@ REF_STATES_BTPI <- c("AZ", "CA", "CO", "NM", "OR", "UT", "WA")
 
 # States with a Brant season
 REF_STATES_BR <-
-  c("AK", "CA", "CT", "DE", "MA", "MD", "NC", "NH", "NJ", "NY", "OR", "RI", 
+  c("AK", "CA", "CT", "DE", "MA", "MD", "NC", "NH", "NJ", "NY", "OR", "RI",
     "VA", "WA")
 
 # States with a Sea Duck season

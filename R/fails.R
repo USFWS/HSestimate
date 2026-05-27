@@ -89,7 +89,7 @@ failspp <-
     stopifnot(
       "`species` must be 'WF', 'DV', 'SCRG', 'WK', or 'CR'." =
         !is.null(species))
-    
+
     stopifnot(
       "`species` must be 'WF', 'DV', 'SCRG', 'WK', or 'CR'." =
         species %in% c("WF", "DV", "SCRG", "WK", "CR"))
@@ -113,7 +113,7 @@ failtype <-
     stopifnot(
       "Error: type must be one of: 'Ducks', 'Geese', 'Brant'... etc" =
         !is.null(type))
-    
+
     stopifnot(
       "Error: type must be one of: 'Ducks', 'Geese', 'Brant'... etc" =
         type %in% c(
@@ -151,13 +151,13 @@ failtype <-
 failSurveyStates <-
   function(data, type) {
     failtype(type)
-    
+
     survey_states <-
-      data |> 
-      distinct(.data$state) |> 
-      pull(.data$state) |> 
+      data |>
+      distinct(.data$state) |>
+      pull(.data$state) |>
       sort()
-    
+
     reference_states <-
       if (type == "Ducks") {
         REF_STATES_DK
@@ -185,8 +185,8 @@ failSurveyStates <-
         REF_STATES_BR
       } else if (type == "SeaDucks") {
         REF_STATES_SD
-      } 
-    
+      }
+
     stopifnot("Error: States in data do not match reference list." =
                 survey_states == reference_states)
   }

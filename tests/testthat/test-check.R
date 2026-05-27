@@ -7,7 +7,7 @@ test_that("naDaysHunted works", {
 })
 
 # test_that("tooManyDaysHunted works", {
-#   
+#
 # })
 
 test_that("seasonDNH works", {

@@ -12,15 +12,15 @@ test_that("flyways assigned as expected", {
   AF <-
     c("CT", "DE", "FL", "GA", "MA", "MD", "ME", "NC", "NH", "NJ", "NY", "PA",
       "RI", "SC", "VA", "VT", "WV")
-  
+
   MF <-
     c("AL", "AR", "IA", "IL", "IN", "KY", "LA", "MI", "MN", "MO", "MS", "OH",
       "TN", "WI")
-  
+
   CF <- c("CO", "KS", "ND", "NE", "NM", "OK", "SD", "TX", "WY")
-  
+
   PF <- c("AZ", "CA", "ID", "MT", "NV", "OR", "UT", "WA")
-  
+
   expect_all_true(REF_STATES_AF == AF)
   expect_all_true(REF_STATES_CF == CF)
   expect_all_true(REF_STATES_MF == MF)
@@ -28,46 +28,46 @@ test_that("flyways assigned as expected", {
 })
 
 test_that("states assigned as expected", {
-  all_states <- 
-    c("AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DE", "FL", "GA", "IA", "ID", 
-      "IL", "IN", "KS", "KY", "LA", "MA", "MD", "ME", "MI", "MN", "MO", "MS", 
-      "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", 
-      "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", 
+  all_states <-
+    c("AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DE", "FL", "GA", "IA", "ID",
+      "IL", "IN", "KS", "KY", "LA", "MA", "MD", "ME", "MI", "MN", "MO", "MS",
+      "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR",
+      "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV",
       "WY")
-  
+
   no_dv <- c("AK", "CT", "MA", "ME", "MI", "NH", "NJ", "NY", "VT")
-  
+
   wwdo_main <- c("AL", "AZ", "CA", "FL", "LA", "MS", "NM", "NV", "OK", "TX")
-  
-  no_wk <- 
-    c("AK", "AZ", "CA", "CO", "ID", "MT", "ND", "NM", "NV", "OR", "SD", "UT", 
+
+  no_wk <-
+    c("AK", "AZ", "CA", "CO", "ID", "MT", "ND", "NM", "NV", "OR", "SD", "UT",
       "WA", "WY")
-  
-  no_rails <- 
-    c("AK", "AZ", "CA", "ID", "MT", "ND", "NH", "NV", "OR", "SD", "UT", "VT", 
+
+  no_rails <-
+    c("AK", "AZ", "CA", "ID", "MT", "ND", "NH", "NV", "OR", "SD", "UT", "VT",
       "WA")
-  
-  no_galls <- 
-    c("AK", "CO", "CT", "IA", "ID", "IL", "IN", "KS", "MA", "MD", "ME", "MO", 
+
+  no_galls <-
+    c("AK", "CO", "CT", "IA", "ID", "IL", "IN", "KS", "MA", "MD", "ME", "MO",
       "MT", "ND", "NE", "NH", "OR", "RI", "SD", "UT", "VT", "WA", "WY")
-  
+
   cr <- c("AK", "CO", "KS", "MN", "MT", "ND", "NM", "OK", "SD", "TX", "WY")
-  
+
   bt <- c("AZ", "CA", "CO", "NM", "OR", "UT", "WA")
-  
-  br <- 
-    c("AK", "CA", "CT", "DE", "MA", "MD", "NC", "NH", "NJ", "NY", "OR", "RI", 
+
+  br <-
+    c("AK", "CA", "CT", "DE", "MA", "MD", "NC", "NH", "NJ", "NY", "OR", "RI",
       "VA", "WA")
-  
-  sd <- 
+
+  sd <-
     c("AK", "CA", "CT", "DE", "MA", "MD", "ME", "NH", "NJ", "NY", "OR", "RI",
       "VA", "WA")
-  
+
   duckmerg <-
-    c("AL", "AR", "FL", "GA", "IA", "IL", "IN", "KY", "LA", "MA", "ME", "MI", 
+    c("AL", "AR", "FL", "GA", "IA", "IL", "IN", "KY", "LA", "MA", "ME", "MI",
       "MN", "MS", "NC", "NH", "NJ", "OH", "PA", "RI", "SC", "TN", "VA", "VT",
       "WI", "WV")
-  
+
   expect_all_true(REF_STATES_ALL == all_states)
   expect_all_true(REF_STATES_DK == all_states)
   expect_all_true(REF_STATES_GS == all_states[all_states != "FL"])
@@ -92,7 +92,7 @@ test_that("number of states assigned as expected", {
   WK <- 35
   SCRG <- 49
   CR <- 11
-  
+
   expect_all_true(REF_N_STATES_WF == WF)
   expect_all_true(REF_N_STATES_DV == DV)
   expect_all_true(REF_N_STATES_WK == WK)

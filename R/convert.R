@@ -80,18 +80,16 @@ convertSeaDuckToDuck <-
         nonsdtots |>
         summarize(sum_retrieved = sum(.data$retrieved), .by = "surveyID")
 
-      season_df_orig <- season_df
-
       # Add the number of seaducks harvested to the total number of ducks
       # harvested in the season totals for each surveyID
       for (i in seq_len(nrow(sdbysurveyID))) {
         season_df <-
           season_df |>
           mutate(
-            days_hunted = 
+            days_hunted =
               ifelse(
                 .data$surveyID == sdbysurveyID$surveyID[i] &
-                  .data$sp_group_estimated == "Specially Regulated Sea Ducks", 
+                  .data$sp_group_estimated == "Specially Regulated Sea Ducks",
                 0,
                 .data$days_hunted
               ),
@@ -101,12 +99,12 @@ convertSeaDuckToDuck <-
                   .data$sp_group_estimated == "Ducks" ~
                   .data$retrieved + sdbysurveyID$sum_retrieved[i],
                 .data$surveyID == sdbysurveyID$surveyID[i] &
-                  .data$sp_group_estimated == "Specially Regulated Sea Ducks" ~ 
+                  .data$sp_group_estimated == "Specially Regulated Sea Ducks" ~
                   0,
                 .default = .data$retrieved)
           )
       }
-      
+
     } else {
       message(
         paste0(
@@ -174,8 +172,6 @@ convertBrantToGeese <-
         nonbrtots |>
         summarize(sum_retrieved = sum(.data$retrieved), by = "surveyID")
 
-      season_df_orig <- season_df
-
       # Add the number of brant harvested to the total number of geese
       # harvested in the season totals for each surveyID
       for (i in seq_len(nrow(brantbysurveyID)))  {
@@ -183,10 +179,10 @@ convertBrantToGeese <-
         season_df <-
           season_df |>
           mutate(
-            days_hunted = 
+            days_hunted =
               ifelse(
                 .data$surveyID == brantbysurveyID$surveyID[i] &
-                  .data$sp_group_estimated == "Brant", 
+                  .data$sp_group_estimated == "Brant",
                 0,
                 .data$days_hunted
               ),
@@ -307,8 +303,9 @@ convertWWDO <-
               .data$sp_group_estimated == "White-Winged Dove" &
                 .data$wwdo_state_status == "none" &
                 (.data$retrieved > 0 | .data$unretrieved > 0) ~
-                paste("non-WWDO state reported value(s) > 0 for retrieved and/or",
-                      "unretrieved"),
+                paste(
+                  "non-WWDO state reported value(s) > 0 for retrieved and/or",
+                  "unretrieved"),
               # Flag WWDO records from edge WWDO states with retrieved >= edge
               # state limit
               .data$sp_group_estimated == "White-Winged Dove" &

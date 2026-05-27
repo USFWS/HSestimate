@@ -26,7 +26,7 @@ surveyCheck <-
     failNADaysHunted(season_df)
     failNARetrieved(season_df)
     failNARetrieved(dailies_df)
-    
+
     maxbag_df <- wrangleMaxBag(maxbag_raw)
 
     if (species == "CR") {
@@ -100,12 +100,12 @@ audit <-
     party_ref <-
       daily_check |>
       filter(
-        FALSE %in% is.na(.data$error1), 
+        FALSE %in% is.na(.data$error1),
         .by = c(.data$surveyID, .data$sp_group_estimated)) |>
       summarize(
-        recalc_retrieved = sum(.data$retrieved, na.rm = T), 
+        recalc_retrieved = sum(.data$retrieved, na.rm = TRUE),
         .by = c("surveyID", "sp_group_estimated"))
-    
+
     daily_error_ids <-
       daily_check |>
       filter(if_any(matches("error[2-4]{1}"), \(x) ! is.na(x))) |>
@@ -133,17 +133,17 @@ audit <-
       filter(!.data$surveyID %in% season_error_ids) |>
       # Do not include any survey IDs with an error in the dailies
       filter(!.data$surveyID %in% daily_error_ids) |>
-      select(!contains("error")) |> 
+      select(!contains("error")) |>
       # Edit values based on party hunt recalculations
       left_join(
-        party_ref, 
+        party_ref,
         by = c("surveyID", "sp_group_estimated")) |>
       mutate(
-        retrieved = 
+        retrieved =
           ifelse(
-            !is.na(.data$recalc_retrieved), 
-            .data$recalc_retrieved, 
-            .data$retrieved)) |> 
+            !is.na(.data$recalc_retrieved),
+            .data$recalc_retrieved,
+            .data$retrieved)) |>
       select(-"recalc_retrieved")
 
     season_audit <-
@@ -194,12 +194,12 @@ auditDV <-
     party_ref <-
       daily_check |>
       filter(
-        FALSE %in% is.na(.data$error1), 
+        FALSE %in% is.na(.data$error1),
         .by = c(.data$surveyID, .data$sp_group_estimated)) |>
       summarize(
-        recalc_retrieved = sum(.data$retrieved, na.rm = T), 
+        recalc_retrieved = sum(.data$retrieved, na.rm = TRUE),
         .by = c("surveyID", "sp_group_estimated"))
-    
+
     daily_error_ids <-
       daily_check |>
       filter(if_any(matches("error[2-4]{1}"), \(x) ! is.na(x))) |>
@@ -227,17 +227,17 @@ auditDV <-
       filter(!.data$surveyID %in% season_error_ids) |>
       # Do not include any survey IDs with an error in the dailies
       filter(!.data$surveyID %in% daily_error_ids) |>
-      select(!contains("error")) |> 
+      select(!contains("error")) |>
       # Edit values based on party hunt recalculations
       left_join(
-        party_ref, 
+        party_ref,
         by = c("surveyID", "sp_group_estimated")) |>
       mutate(
-        retrieved = 
+        retrieved =
           ifelse(
-            !is.na(.data$recalc_retrieved), 
-            .data$recalc_retrieved, 
-            .data$retrieved)) |> 
+            !is.na(.data$recalc_retrieved),
+            .data$recalc_retrieved,
+            .data$retrieved)) |>
       select(-"recalc_retrieved")
 
     season_audit <-
@@ -295,12 +295,12 @@ checkWF <-
     party_ref <-
       daily_check |>
       filter(
-        FALSE %in% is.na(.data$error1), 
+        FALSE %in% is.na(.data$error1),
         .by = c(.data$surveyID, .data$sp_group_estimated)) |>
       summarize(
-        recalc_retrieved = sum(.data$retrieved, na.rm = T), 
+        recalc_retrieved = sum(.data$retrieved, na.rm = TRUE),
         .by = c("surveyID", "sp_group_estimated"))
-    
+
     daily_error_ids <-
       daily_check |>
       filter(if_any(contains("error"), \(x) ! is.na(x))) |>
@@ -328,17 +328,17 @@ checkWF <-
       filter(!.data$surveyID %in% season_error_ids) |>
       # Do not include any survey IDs with an error in the dailies
       filter(!.data$surveyID %in% daily_error_ids) |>
-      select(!contains("error")) |> 
+      select(!contains("error")) |>
       # Edit values based on party hunt recalculations
       left_join(
-        party_ref, 
+        party_ref,
         by = c("surveyID", "sp_group_estimated")) |>
       mutate(
-        retrieved = 
+        retrieved =
           ifelse(
-            !is.na(.data$recalc_retrieved), 
-            .data$recalc_retrieved, 
-            .data$retrieved)) |> 
+            !is.na(.data$recalc_retrieved),
+            .data$recalc_retrieved,
+            .data$retrieved)) |>
       select(-"recalc_retrieved")
 
     season_audit <-
@@ -595,16 +595,16 @@ naDaysHunted <-
 
 tooManyDaysHunted <-
   function(season_df, maxbag_raw) {
-    
+
     day_limits <- wrangleDayLimits(maxbag_raw)
-    
+
     # Flag records with days_hunted > day_limit
     totals_validated <-
       season_df |>
       left_join(
-        day_limits |> 
-          select(-c("earliest_open", "latest_close")), 
-        by = c("sampled_state", "sp_group_estimated")) |> 
+        day_limits |>
+          select(-c("earliest_open", "latest_close")),
+        by = c("sampled_state", "sp_group_estimated")) |>
       mutate(error2 =
                ifelse(.data$days_hunted > .data$day_limit, "too_many_days", NA))
 
@@ -753,10 +753,10 @@ seasonOverBagDV <-
   function(dvtotals_df) {
 
     wwdo_edge <-
-      REF_STATES_WWDO_DF |> 
-      filter(.data$wwdo_state_status == "edge") |> 
+      REF_STATES_WWDO_DF |>
+      filter(.data$wwdo_state_status == "edge") |>
       pull(.data$sampled_state)
-    
+
     dvtotals_validated <-
       dvtotals_df |>
       mutate(
@@ -765,7 +765,7 @@ seasonOverBagDV <-
              .data$retrieved[.data$sp_group_estimated == "Mourning Dove"]) /
           (.data$days_hunted[.data$sp_group_estimated == "White-Winged Dove"] +
              .data$days_hunted[.data$sp_group_estimated == "Mourning Dove"]),
-        diff = 
+        diff =
           .data$retrieved[.data$sp_group_estimated == "Mourning Dove"] -
             .data$retrieved[.data$sp_group_estimated == "White-Winged Dove"],
         .by = "surveyID"
@@ -790,7 +790,7 @@ seasonOverBagDV <-
             paste("modo_plus_wwdo_too_high:", round(.data$modowwdo, 1)),
             NA
           ),
-        error_five = 
+        error_five =
           ifelse(
             .data$diff < 0 & .data$sampled_state %in% wwdo_edge,
             paste("WWDO_retrieved_exceeds_MODO_retrieved:", abs(.data$diff)),
