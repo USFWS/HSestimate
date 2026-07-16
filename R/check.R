@@ -523,7 +523,7 @@ joinSeason <-
   function(season_df, maxbag_df) {
     season_df |>
       left_join(maxbag_df |>
-                  select(-c("state", "stateno")),
+                  select(-c("state", "stateno")) |> distinct(),
                 by = c("sampled_state", "sp_group_estimated")) |>
       left_join(maxbag_df |>
                   distinct(.data$sampled_state, .data$state, .data$stateno),
